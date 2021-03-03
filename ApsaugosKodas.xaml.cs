@@ -67,6 +67,11 @@ namespace FinewareWPF
                 fourDigitError.Visibility = Visibility.Visible;
                 fourDigitError.Text = "Kodas turi būti 4-ių skaičių";
             }
+            else if (!fourDigitTextBox.Password.All(char.IsDigit))
+            {
+                fourDigitError.Visibility = Visibility.Visible;
+                fourDigitError.Text = "Kodą turi sudaryti tik skaičiai";
+            }
             else
             {
                 fourDigitError.Visibility = Visibility.Hidden;
@@ -84,6 +89,11 @@ namespace FinewareWPF
             {
                 sixDigitError.Visibility = Visibility.Visible;
                 sixDigitError.Text = "Kodas turi būti 6-ių skaičių";
+            }
+            else if (!sixDigitTextBox.Password.All(char.IsDigit))
+            {
+                sixDigitError.Visibility = Visibility.Visible;
+                sixDigitError.Text = "Kodą turi sudaryti tik skaičiai";
             }
             else
             {
