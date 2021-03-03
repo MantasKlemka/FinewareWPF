@@ -1,0 +1,25 @@
+﻿<Window x:Class="FinewareWPF.ApsaugosKodas"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FinewareWPF"
+        mc:Ignorable="d"
+        Title="ApsaugosKodas" Height="300" Width="370.281">
+    <Grid>
+        <Label Content="Prašome susikurti apsaugos kodus" HorizontalAlignment="Left" Margin="87,42,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <PasswordBox x:Name="sixDigitTextBox" HorizontalAlignment="Left" Height="23" Margin="224,99,0,0" VerticalAlignment="Top" Width="51" MaxLength="6" LostFocus="SixDigitValidation"/>
+        <PasswordBox x:Name="fourDigitTextBox_2" HorizontalAlignment="Left" Height="23" Margin="92,157,0,0" VerticalAlignment="Top" Width="37" MaxLength="4" LostFocus="FourDigitValidation"/>
+        <PasswordBox x:Name="fourDigitTextBox" HorizontalAlignment="Left" Height="23" Margin="92,99,0,0" VerticalAlignment="Top" Width="37" MaxLength="4" LostFocus="FourDigitValidation"/>
+        <PasswordBox x:Name="sixDigitTextBox_2" HorizontalAlignment="Left" Height="23" Margin="224,157,0,0" VerticalAlignment="Top" Width="51" MaxLength="6" LostFocus="SixDigitValidation"/>
+        <Label Content="4 skaičių" HorizontalAlignment="Left" Margin="81,68,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="60"/>
+        <Label Content="6 skaičių" HorizontalAlignment="Left" Margin="219,68,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="60"/>
+        <Label Content="Pakartokite" HorizontalAlignment="Left" Margin="207,127,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="85"/>
+        <Label Content="Pakartokite" HorizontalAlignment="Left" Margin="68,127,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="85"/>
+        <Button x:Name="prisijungtiButton" Content="Pateikti" HorizontalAlignment="Left" Margin="144,230,0,0" VerticalAlignment="Top" Width="75" Click="CreateButton"/>
+        <TextBlock x:Name="fourDigitError" Margin="35,185,0,0" Foreground="Red" Visibility="Visible" RenderTransformOrigin="0.49,0.464" TextAlignment="Center" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="148"><Run Text=""/></TextBlock>
+        <TextBlock x:Name="sixDigitError" Margin="188,185,0,0" Foreground="Red" Visibility="Visible" RenderTransformOrigin="0.49,0.464" TextAlignment="Center" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="142"><Run Text=""/></TextBlock>
+
+
+    </Grid>
+</Window>
