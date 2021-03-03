@@ -81,11 +81,26 @@
     <Compile Include="ApsaugosKodas.xaml.cs">
       <DependentUpon>ApsaugosKodas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EmailPatikrinimas.xaml.cs">
+      <DependentUpon>EmailPatikrinimas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EmailPriminimas.xaml.cs">
+      <DependentUpon>EmailPriminimas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Prisijungimas.xaml.cs">
       <DependentUpon>Prisijungimas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SiustiLaiska.cs" />
     <Compile Include="Vartotojas.cs" />
     <Page Include="ApsaugosKodas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EmailPatikrinimas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EmailPriminimas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,16 @@
+﻿<Window x:Class="FinewareWPF.EmailPatikrinimas"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FinewareWPF"
+        mc:Ignorable="d"
+        Title="EmailPatikrinimas" Height="450" Width="800">
+    <Grid>
+        <Button Content="Patvirtinti" Margin="357,293,361.6,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Label Content="Įveskite gautą kodą:" HorizontalAlignment="Left" Margin="193,220,0,0" VerticalAlignment="Top"/>
+        <Label Content="El. pašto patikrinimas" Margin="280,21,280,0" VerticalAlignment="Top" FontSize="24"/>
+        <TextBox x:Name="EmailBox" Height="23" Margin="335,220,335,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

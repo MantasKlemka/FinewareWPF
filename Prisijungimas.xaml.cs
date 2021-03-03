@@ -91,7 +91,7 @@ namespace FinewareWPF
         }
 
         // tikrina ir gražina paskyra jei ji yra duomenų bazėje
-        Vartotojas CorrectEmail(Dictionary<string, Vartotojas> list, out string key)
+        public Vartotojas CorrectEmail(Dictionary<string, Vartotojas> list, out string key)
         {
             Vartotojas paskyra = null;
             // ieskome reikiamos paskyros
@@ -107,6 +107,13 @@ namespace FinewareWPF
             }
             key = "";
             return paskyra;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var sw = new EmailPriminimas();
+            sw.Show();
+            Close();
         }
     }
 }

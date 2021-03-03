@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,22 +26,20 @@ namespace FinewareWPF
     /// </summary>
     public partial class Registracija : Window
     {
-        string vardas;
-        string pavarde;
-        string epastas;
-        string slaptazodis;
+        public static string vardas;
+        public static string pavarde;
+        public static string epastas;
+        public static string slaptazodis;
 
-        IFirebaseClient client;
-        IFirebaseConfig config = new FirebaseConfig
-        {
-            AuthSecret = "TBJejG2mnXINGAfpm9YPA3Ke51uWlxrf9UNTt64H",
-            BasePath = "https://fineware-759f7-default-rtdb.firebaseio.com/"
-        };
+        public static string projektoEpastas = "finewareproject@gmail.com";
+        public static string projektoSlaptazodis = "fineware112";
+        public static string randomCode;
+
+
 
         public Registracija()
         {
             InitializeComponent();
-            client = new FireSharp.FirebaseClient(config);
         }
 
         private async void RegisterButton(object sender, RoutedEventArgs e)
@@ -58,17 +58,23 @@ namespace FinewareWPF
             // tikrinama ar nėra klaidų susijusių su langeliais
             if (!slaptazodzioError_1.IsVisible & !slaptazodzioError_2.IsVisible & !vardoError.IsVisible & !pavardesError.IsVisible & !ePastoError.IsVisible)
             {
-                // sukuriamas vartotojas
-                Vartotojas vartotojas = new Vartotojas(vardas, pavarde, epastas, slaptazodis);
-                // vartotojas ikeliamas į duomenų bazę
-                PushResponse response = await client.PushAsync("Paskyros/", vartotojas);
-                // perjungiame į prisijungimo langą
-                var loginForm = new Prisijungimas();
-                loginForm.generalEventText.Content = "Paskyra sukurta, galite prisijungti!";
-                loginForm.generalEventText.Foreground = Brushes.Green;
-                loginForm.generalEventText.Visibility = Visibility.Visible;
-                loginForm.Show();
-                Close();
+                Random rand = new Random();
+                randomCode = (rand.Next(10000, 99999)).ToString();
+                try
+                {
+                    string messageBody = "Jūsu patvirtinimo kodas yra: " + randomCode;
+                    string messageSubject = "Registracijos patvirtinimo kodas";
+                    MailMessage message = SiustiLaiska.CreateMessage(epastas, projektoEpastas, messageBody, messageSubject);
+                    SiustiLaiska.SendMessage(projektoEpastas, projektoSlaptazodis, message);
+                    var EmailCode = new EmailPatikrinimas();
+                    EmailCode.Show();
+                    Close();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Nepavyko išsiusti kodo!");
+                }
+
             }
         }
 
