@@ -35,11 +35,18 @@ namespace FinewareWPF
         public static string projektoSlaptazodis = "fineware112";
         public static string randomCode;
 
+        IFirebaseClient client;
+        IFirebaseConfig config = new FirebaseConfig
+        {
+            AuthSecret = "TBJejG2mnXINGAfpm9YPA3Ke51uWlxrf9UNTt64H",
+            BasePath = "https://fineware-759f7-default-rtdb.firebaseio.com/"
+        };
 
 
         public Registracija()
         {
             InitializeComponent();
+            client = new FireSharp.FirebaseClient(config);
         }
 
         private async void RegisterButton(object sender, RoutedEventArgs e)
@@ -55,26 +62,43 @@ namespace FinewareWPF
             pavarde = pavardesTextBox.Text;
             epastas = ePastoTextBox.Text;
             slaptazodis = slaptazodzioTextBox_1.Password;
-            // tikrinama ar nėra klaidų susijusių su langeliais
-            if (!slaptazodzioError_1.IsVisible & !slaptazodzioError_2.IsVisible & !vardoError.IsVisible & !pavardesError.IsVisible & !ePastoError.IsVisible)
+           
+            // tikriname ar neegzistuoja paskyra su šiuo email
+            var response = await client.GetAsync("Paskyros/");
+            Dictionary<string, Vartotojas> list = response.ResultAs<Dictionary<string, Vartotojas>>();
+            // ieškome ar egzistuoja tokia paskyra duomenų bazėje
+            Vartotojas paskyra = new Vartotojas();
+            string key = "";
+            paskyra = CorrectEmail(list, out key);
+            // jei neegzistuoja
+            if(key == "")
             {
-                Random rand = new Random();
-                randomCode = (rand.Next(10000, 99999)).ToString();
-                try
+                ePastoError.Visibility = Visibility.Hidden;
+                // tikrinama ar nėra klaidų susijusių su langeliais
+                if (!slaptazodzioError_1.IsVisible & !slaptazodzioError_2.IsVisible & !vardoError.IsVisible & !pavardesError.IsVisible & !ePastoError.IsVisible)
                 {
-                    string messageBody = "Jūsu patvirtinimo kodas yra: " + randomCode;
-                    string messageSubject = "Registracijos patvirtinimo kodas";
-                    MailMessage message = SiustiLaiska.CreateMessage(epastas, projektoEpastas, messageBody, messageSubject);
-                    SiustiLaiska.SendMessage(projektoEpastas, projektoSlaptazodis, message);
-                    var EmailCode = new EmailPatikrinimas();
-                    EmailCode.Show();
-                    Close();
+                    Random rand = new Random();
+                    randomCode = (rand.Next(10000, 99999)).ToString();
+                    try
+                    {
+                        string messageBody = "Jūsu patvirtinimo kodas yra: " + randomCode;
+                        string messageSubject = "Registracijos patvirtinimo kodas";
+                        MailMessage message = SiustiLaiska.CreateMessage(epastas, projektoEpastas, messageBody, messageSubject);
+                        SiustiLaiska.SendMessage(projektoEpastas, projektoSlaptazodis, message);
+                        var EmailCode = new EmailPatikrinimas();
+                        EmailCode.Show();
+                        Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Nepavyko išsiusti kodo!");
+                    }
                 }
-                catch(Exception ex)
-                {
-                    MessageBox.Show("Nepavyko išsiusti kodo!");
-                }
-
+            }
+            else
+            {
+                ePastoError.Content = "Toks paštas užimtas";
+                ePastoError.Visibility = Visibility.Visible;
             }
         }
 
@@ -189,6 +213,28 @@ namespace FinewareWPF
                 ePastoError.Visibility = Visibility.Visible;
                 ePastoError.Content = "Prašome užpildyti langelį";
             }
+        }
+
+        public Vartotojas CorrectEmail(Dictionary<string, Vartotojas> list, out string key)
+        {
+            Vartotojas paskyra = null;
+            // ieskome reikiamos paskyros
+            if(list != null)
+            {
+                foreach (var entry in list)
+                {
+                    Vartotojas vartotojas = entry.Value;
+                    if (ePastoTextBox.Text == vartotojas.Epastas)
+                    {
+                        paskyra = vartotojas;
+                        key = entry.Key;
+                        return paskyra;
+                    }
+                }
+            }
+            
+            key = "";
+            return paskyra;
         }
 
         // tikrina ar eilutėje tik raidės
