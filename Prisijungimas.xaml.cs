@@ -120,14 +120,14 @@ namespace FinewareWPF
 
         private void PrisijungtiButton_MouseEnter(object sender, MouseEventArgs e)
         {
-            prisijungtiButton.Opacity = 0.5;
+            prisijungtiLabel.Opacity = 0.5;
             prisijungtiBackground.Opacity = 0.8;
 
         }
 
         private void PrisijungtiButton_MouseLeave(object sender, MouseEventArgs e)
         {
-            prisijungtiButton.Opacity = 1;
+            prisijungtiLabel.Opacity = 1;
             prisijungtiBackground.Opacity = 1;
         }
 
@@ -149,21 +149,6 @@ namespace FinewareWPF
         private void Button_MouseLeave(object sender, MouseEventArgs e)
         {
             pamirsaiButton.Opacity = 1;
-        }
-
-        private void Close_MouseEnter(object sender, MouseEventArgs e)
-        {
-            closeButtonImage.Opacity = 0.5;
-        }
-
-        private void Close_MouseLeave(object sender, MouseEventArgs e)
-        {
-            closeButtonImage.Opacity = 1;
-        }
-
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
         }
     }
 }

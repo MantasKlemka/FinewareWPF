@@ -73,7 +73,6 @@ namespace FinewareWPF
             // jei neegzistuoja
             if(key == "")
             {
-                ePastoError.Visibility = Visibility.Hidden;
                 // tikrinama ar nėra klaidų susijusių su langeliais
                 if (!slaptazodzioError_1.IsVisible & !slaptazodzioError_2.IsVisible & !vardoError.IsVisible & !pavardesError.IsVisible & !ePastoError.IsVisible)
                 {
@@ -248,6 +247,29 @@ namespace FinewareWPF
                 }
             }
             return true;
+        }
+
+        private void PrisijungtiButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            prisijungtiButton.Opacity = 0.5;
+        }
+
+        private void PrisijungtiButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            prisijungtiButton.Opacity = 1;
+        }
+
+        private void RegistruotisButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            registruotisLabel.Opacity = 0.5;
+            registruotisBackround.Opacity = 0.8;
+
+        }
+
+        private void RegistruotisButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            registruotisLabel.Opacity = 1;
+            registruotisBackround.Opacity = 1;
         }
     }
 }
