@@ -5,20 +5,93 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinewareWPF"
         mc:Ignorable="d"
-        Title="Prisijungimas" Height="450" Width="800">
-    <Grid>
-        <Grid>
-            <TextBox x:Name="ePastoTextBox" HorizontalAlignment="Left" Height="23" Margin="362,165,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-            <PasswordBox x:Name="slaptazodzioTextBox" HorizontalAlignment="Left" Height="23" Margin="362,202,0,0" VerticalAlignment="Top" Width="120"/>
-            <Label Content="Elektroninis paštas" HorizontalAlignment="Left" Margin="249,162,0,0" VerticalAlignment="Top"/>
-            <Label Content="Slaptažodis" HorizontalAlignment="Left" Margin="287,202,0,0" VerticalAlignment="Top" Height="23"/>
-            <Label x:Name="generalEventText" Content="" HorizontalAlignment="Left" Margin="287,124,0,0" VerticalAlignment="Top" Height="28" Foreground="Red" Visibility="Visible" Width="299" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-            <Label Content="PRISIJUNGIMAS" HorizontalAlignment="Left" Margin="332,77,0,0" VerticalAlignment="Top" FontSize="24"/>
-            <Button x:Name="prisijungtiButton" Content="Prisijungti" HorizontalAlignment="Left" Margin="376,255,0,0" VerticalAlignment="Top" Width="75" Click="LoginButton"/>
-            <Button x:Name="registruotisButton" Content="Susikurti Paskyrą" HorizontalAlignment="Left" Margin="347,352,0,0" VerticalAlignment="Top" Width="135" Click="RegisterButton" Background="{x:Null}" BorderBrush="{x:Null}"/>
-            <Label Content="Neturi paskyros?" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="365,326,0,0"/>
-            <Button Content="Pamiršote slaptažodį?" HorizontalAlignment="Left" Margin="347,302,0,0" VerticalAlignment="Top" Width="135" Background="{x:Null}" BorderBrush="{x:Null}" Click="Button_Click"/>
-        </Grid>
+        Title="Prisijungimas" Height="836" Width="1165"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen" FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold">
+    <Window.Resources>
+        <Style x:Key="buttonWithoutHighlight" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="customTextBox" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="border" Value="0"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{x:Null}"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{x:Null}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="customPassBox" TargetType="PasswordBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type PasswordBox}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="border" Value="0"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{x:Null}"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{x:Null}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
 
-    </Grid>
+    <Border CornerRadius="23" BorderBrush="Black" BorderThickness="1" Background="White">
+        <Grid>
+            <TextBox x:Name="ePastoTextBox" HorizontalAlignment="Left" Height="25" Margin="208,272,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="436" FontFamily="/FinewareWPF;component/Fonts/#Roboto" RenderTransformOrigin="-0.475,-0.696" FontSize="16" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Foreground="#FF4BC4AA" MaxLength="49" Style="{StaticResource customTextBox}"/>
+            <PasswordBox x:Name="slaptazodzioTextBox" HorizontalAlignment="Left" Height="24" Margin="208,390,0,0" VerticalAlignment="Top" Width="436" FontFamily="/FinewareWPF;component/Fonts/#Roboto" FontSize="16" Background="{x:Null}" BorderBrush="{x:Null}" MaxLength="44" SelectionBrush="{x:Null}" Style="{StaticResource customPassBox}"/>
+            <Label Content="El. paštas" HorizontalAlignment="Left" Margin="208,238,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
+            <Label Content="Slaptažodis" HorizontalAlignment="Left" Margin="208,354,0,0" VerticalAlignment="Top" Height="30" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Width="100" Foreground="#FF77C9AE" FontWeight="Bold"/>
+            <Label x:Name="generalEventText" Content="" HorizontalAlignment="Left" Margin="280,197,0,0" VerticalAlignment="Top" Height="28" Foreground="Red" Visibility="Visible" Width="299" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="/FinewareWPF;component/Fonts/#Roboto"/>
+            <Label x:Name="Title" Content="Prisijungimas" HorizontalAlignment="Left" Margin="303,100,0,0" VerticalAlignment="Top" FontSize="36" FontFamily="/FinewareWPF;component/Fonts/#Roboto" FontWeight="Bold" Foreground="#FF4BC4AA"/>
+            <Button x:Name="prisijungtiButton" Content="Prisijungti" HorizontalAlignment="Left" Margin="208,471,0,309" VerticalAlignment="Center" Width="436" Click="LoginButton" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Height="54" FontSize="20" Background="Transparent" BorderBrush="{x:Null}" Foreground="White" MouseEnter="PrisijungtiButton_MouseEnter" MouseLeave="PrisijungtiButton_MouseLeave"  Style="{StaticResource buttonWithoutHighlight}"/>
+            <Button x:Name="registruotisButton" Content="Susikurti Paskyrą" HorizontalAlignment="Left" Margin="493,624,0,0" VerticalAlignment="Top" Width="151" Click="RegisterButton" Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="/FinewareWPF;component/Fonts/#Roboto" RenderTransformOrigin="0.533,-0.043" FontSize="16" Foreground="#FF77C9AE" FontWeight="Bold" MouseEnter="RegistruotisButton_MouseEnter"  MouseLeave="RegistruotisButton_MouseLeave" Style="{StaticResource buttonWithoutHighlight}"/>
+            <Label x:Name="RegisterLabel" Content="Dar neturite paskyros?" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,615,0,0" FontSize="20" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FFA0A0A0"/>
+            <Button x:Name="pamirsaiButton" Content="Pamiršote slaptažodį?" HorizontalAlignment="Left" Margin="329,555,0,0" VerticalAlignment="Top" Width="194" Background="{x:Null}" BorderBrush="{x:Null}" Click="Button_Click" FontFamily="/FinewareWPF;component/Fonts/#Roboto" FontSize="16" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Foreground="#FFA0A0A0" Style="{StaticResource buttonWithoutHighlight}"/>
+            <Label x:Name="Description" Content="Sveiki sugrįže! Prisijunkite kad galėtumėte naudoti Fineware" HorizontalAlignment="Left" Margin="147,158,0,0" VerticalAlignment="Top" FontSize="20" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FFA8A8A8"/>
+            <Image HorizontalAlignment="Left" Height="834" Margin="804,0,-81,0" VerticalAlignment="Top" Width="440" Source="Images/sidePanel.png" Panel.ZIndex="2"/>
+            <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="106" Margin="936,390,0,0" Source="Images/logoBaltas.png" Panel.ZIndex="3"/>
+            <Image HorizontalAlignment="Left" Height="834" Margin="804,0,-81,0" VerticalAlignment="Top" Width="440" Source="Images/sidePanelBackground.png" Panel.ZIndex="1"/>
+            <Image x:Name="prisijungtiBackground" HorizontalAlignment="Left" Height="102" Margin="186,448,0,0" VerticalAlignment="Top" Width="484" Source="Images/Rectangle.png" Panel.ZIndex="-1"/>
+            <Label x:Name="Copyright" Content="© 2021 Fineware" HorizontalAlignment="Left" Margin="342,767,0,0" VerticalAlignment="Top" FontSize="18" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FFD6CECE" Background="{x:Null}"/>
+            <Image HorizontalAlignment="Left" Height="52" Margin="208,414,0,0" VerticalAlignment="Top" Width="436" Source="Images/Line.png" Panel.ZIndex="5"/>
+            <Image HorizontalAlignment="Left" Height="52" Margin="208,297,0,0" VerticalAlignment="Top" Width="436" Source="Images/Line.png" Panel.ZIndex="5"/>
+            <Button x:Name="closeButton" HorizontalAlignment="Left" Margin="1115,22,0,793" VerticalAlignment="Center" Width="17" Panel.ZIndex="5" Click="CloseButton_Click" Height="19" FontSize="20" Background="Transparent" BorderBrush="{x:Null}" Foreground="White" MouseEnter="Close_MouseEnter" MouseLeave="Close_MouseLeave" Style="{StaticResource buttonWithoutHighlight}"/>
+            <Image x:Name="closeButtonImage" HorizontalAlignment="Left" Height="17" Margin="1116,24,0,0" VerticalAlignment="Top" Width="14" Source="Images/x.png" Panel.ZIndex="4"/>
+        </Grid>
+    </Border>
+
 </Window>

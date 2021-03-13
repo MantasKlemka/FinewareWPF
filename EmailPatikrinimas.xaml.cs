@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
+using System.Security.Cryptography;
 
 namespace FinewareWPF
 {
@@ -38,18 +39,18 @@ namespace FinewareWPF
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            //sukuriamas vartotojas
+            Vartotojas vartotojas = new Vartotojas(Registracija.vardas, Registracija.pavarde, Registracija.epastas, Registracija.slaptazodis);
+            //vartotojas ikeliamas į duomenų bazę
 
-                // sukuriamas vartotojas
-                Vartotojas vartotojas = new Vartotojas(Registracija.vardas, Registracija.pavarde, Registracija.epastas, Registracija.slaptazodis);
-                // vartotojas ikeliamas į duomenų bazę
-                PushResponse response = await client.PushAsync("Paskyros/", vartotojas);
-                // perjungiame į prisijungimo langą
-                var loginForm = new Prisijungimas();
-                loginForm.generalEventText.Content = "Paskyra sukurta, galite prisijungti!";
-                loginForm.generalEventText.Foreground = Brushes.Green;
-                loginForm.generalEventText.Visibility = Visibility.Visible;
-                loginForm.Show();
-                Close();
+            PushResponse response = await client.PushAsync("Paskyros/", vartotojas);
+            //perjungiame į prisijungimo langą
+            var loginForm = new Prisijungimas();
+            loginForm.generalEventText.Content = "Paskyra sukurta, galite prisijungti!";
+            loginForm.generalEventText.Foreground = Brushes.Green;
+            loginForm.generalEventText.Visibility = Visibility.Visible;
+            loginForm.Show();
+            Close();
         }
     }
 }

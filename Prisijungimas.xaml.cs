@@ -40,12 +40,14 @@ namespace FinewareWPF
         {
             Vartotojas paskyra = null;
             string key = "";
-
             // nuskaitom paskyras is duomenu bazes
             var response = await client.GetAsync("Paskyros/");
             Dictionary<string, Vartotojas> list = response.ResultAs<Dictionary<string, Vartotojas>>();
             // ieškome ar egzistuoja tokia paskyra duomenų bazėje
-            paskyra = CorrectEmail(list, out key);
+            if(list != null)
+            {
+                paskyra = CorrectEmail(list, out key);
+            }
 
             // jei paskyra neegzistuoja
             if (paskyra == null)
@@ -113,6 +115,54 @@ namespace FinewareWPF
         {
             var sw = new EmailPriminimas();
             sw.Show();
+            Close();
+        }
+
+        private void PrisijungtiButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            prisijungtiButton.Opacity = 0.5;
+            prisijungtiBackground.Opacity = 0.8;
+
+        }
+
+        private void PrisijungtiButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            prisijungtiButton.Opacity = 1;
+            prisijungtiBackground.Opacity = 1;
+        }
+
+        private void RegistruotisButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            registruotisButton.Opacity = 0.5;
+        }
+
+        private void RegistruotisButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            registruotisButton.Opacity = 1;
+        }
+
+        private void Button_MouseEnter(object sender, MouseEventArgs e)
+        {
+            pamirsaiButton.Opacity = 0.5;
+        }
+
+        private void Button_MouseLeave(object sender, MouseEventArgs e)
+        {
+            pamirsaiButton.Opacity = 1;
+        }
+
+        private void Close_MouseEnter(object sender, MouseEventArgs e)
+        {
+            closeButtonImage.Opacity = 0.5;
+        }
+
+        private void Close_MouseLeave(object sender, MouseEventArgs e)
+        {
+            closeButtonImage.Opacity = 1;
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
             Close();
         }
     }

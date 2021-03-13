@@ -139,6 +139,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Fonts\Roboto-Regular.ttf" />
+    <Resource Include="Fonts\Roboto-Bold.ttf" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -149,6 +151,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\logoBaltas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\sidePanel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\sidePanelBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Rectangle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
