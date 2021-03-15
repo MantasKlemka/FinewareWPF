@@ -5,12 +5,67 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinewareWPF"
         mc:Ignorable="d"
-        Title="EmailPatikrinimas" Height="450" Width="800">
+        Title="EmailPatikrinimas" Height="836" Width="1165" Icon="Images/logo.ico"
+        Background="White"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen" FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold">
+
+    <Window.Resources>
+        <Style x:Key="buttonWithoutHighlight" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="customTextBox" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="border" Value="0"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{x:Null}"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{x:Null}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
     <Grid>
-        <Button Content="Patvirtinti" Margin="357,293,361.6,0" VerticalAlignment="Top" Click="Button_Click"/>
-        <Label Content="Įveskite gautą kodą:" HorizontalAlignment="Left" Margin="193,220,0,0" VerticalAlignment="Top"/>
-        <Label Content="El. pašto patikrinimas" Margin="280,21,280,0" VerticalAlignment="Top" FontSize="24"/>
-        <TextBox x:Name="EmailBox" Height="23" Margin="335,220,335,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="EmailBox" Height="172" Margin="118,275,433,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" SelectionBrush="{x:Null}" Style="{StaticResource customTextBox}" FontSize="162" Foreground="#FF4BC4AA" Panel.ZIndex="5" FontFamily="ISOCTEUR" MaxLength="5" CaretBrush="Transparent"/>
+        <Image HorizontalAlignment="Left" Height="851" Margin="804,-17,-111,-29" VerticalAlignment="Top" Width="464" Source="Images/sidePanel.png" Panel.ZIndex="2"/>
+        <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="106" Margin="936,390,0,0" Source="Images/logoBaltas.png" Panel.ZIndex="3"/>
+        <Image HorizontalAlignment="Left" Height="834" Margin="804,0,-87,-29" VerticalAlignment="Top" Width="440" Source="Images/sidePanelBackground.png" Panel.ZIndex="1"/>
+        <Label x:Name="Title" Content="Patvirtinimas" HorizontalAlignment="Left" Margin="316,100,0,0" VerticalAlignment="Top" FontSize="36" FontFamily="/FinewareWPF;component/Fonts/#Roboto" FontWeight="Bold" Foreground="#FF4BC4AA" />
+        <Label x:Name="Description" Content="Prašome įvesti skaičių kodą kurį išsiunteme į nurodytą el. pašto adresą" HorizontalAlignment="Left" Margin="115,158,0,0" VerticalAlignment="Top" FontSize="20" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FFA8A8A8"/>
+        <Label x:Name="generalEventText" Content="" HorizontalAlignment="Left" Margin="270,211,0,0" VerticalAlignment="Top" Height="28" Foreground="Red" Visibility="Visible" Width="299" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="/FinewareWPF;component/Fonts/#Roboto"/>
+        <Button x:Name="patvirtintiButton" Content="" HorizontalAlignment="Left" Margin="189,564,0,184" VerticalAlignment="Center" Width="436" Click="Button_Click" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Height="57" FontSize="20" Background="Transparent" BorderBrush="{x:Null}" Foreground="White" MouseEnter="PatvirtintiButton_MouseEnter" MouseLeave="PatvirtintiButton_MouseLeave"  Style="{StaticResource buttonWithoutHighlight}" RenderTransformOrigin="0.499,0.509" Panel.ZIndex="1"/>
+        <Image x:Name="patvirtintiBackround" HorizontalAlignment="Left" Height="102" Margin="167,543,0,0" VerticalAlignment="Top" Width="484" Source="Images/Rectangle.png" Panel.ZIndex="-1"/>
+        <Label x:Name="patvirtintiLabel" Content="Patvirtinti" HorizontalAlignment="Left" Margin="370,575,0,0" VerticalAlignment="Top" Height="46" FontSize="20" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Width="208" Foreground="White" Panel.ZIndex="0"/>
+        <Image HorizontalAlignment="Left" Height="140" Margin="141,309,0,0" VerticalAlignment="Top" Width="85" Source="Images/Rectangle 8.png"/>
+        <Image HorizontalAlignment="Left" Height="140" Margin="141,309,0,0" VerticalAlignment="Top" Width="85" Source="Images/Rectangle 8.png"/>
+        <Image HorizontalAlignment="Left" Height="140" Margin="596,309,0,0" VerticalAlignment="Top" Width="85" Source="Images/Rectangle 8.png"/>
+        <Image HorizontalAlignment="Left" Height="140" Margin="484,309,0,0" VerticalAlignment="Top" Width="85" Source="Images/Rectangle 8.png"/>
+        <Image HorizontalAlignment="Left" Height="140" Margin="367,309,0,0" VerticalAlignment="Top" Width="85" Source="Images/Rectangle 8.png"/>
+        <Image HorizontalAlignment="Left" Height="140" Margin="254,309,0,0" VerticalAlignment="Top" Width="85" Source="Images/Rectangle 8.png"/>
+        <Label Content="Įveskite kodą:" HorizontalAlignment="Left" Margin="334,250,0,0" VerticalAlignment="Top" FontSize="22" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
+        <Label x:Name="Copyright" Content="© 2021 Fineware" HorizontalAlignment="Left" Margin="348,751,0,0" VerticalAlignment="Top" FontSize="18" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FFD6CECE" Background="{x:Null}"/>
 
     </Grid>
 </Window>

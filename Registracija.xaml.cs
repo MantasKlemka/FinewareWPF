@@ -51,6 +51,7 @@ namespace FinewareWPF
 
         private async void RegisterButton(object sender, RoutedEventArgs e)
         {
+            registruotisButton.IsEnabled = false;
             // tikrinama ar langeliai atitinka reikalavimus
             PasswordValidation_1(sender, e);
             PasswordValidation_2(sender, e);
@@ -76,6 +77,8 @@ namespace FinewareWPF
                 // tikrinama ar nėra klaidų susijusių su langeliais
                 if (!slaptazodzioError_1.IsVisible & !slaptazodzioError_2.IsVisible & !vardoError.IsVisible & !pavardesError.IsVisible & !ePastoError.IsVisible)
                 {
+                    slaptazodis = Security.HashingPassword(slaptazodis);
+
                     Random rand = new Random();
                     randomCode = (rand.Next(10000, 99999)).ToString();
                     try
@@ -85,19 +88,30 @@ namespace FinewareWPF
                         MailMessage message = SiustiLaiska.CreateMessage(epastas, projektoEpastas, messageBody, messageSubject);
                         SiustiLaiska.SendMessage(projektoEpastas, projektoSlaptazodis, message);
                         var EmailCode = new EmailPatikrinimas();
+                        EmailCode.generalEventText.Content = "Išsiunteme jums kodą į El. paštą!";
+                        EmailCode.generalEventText.Foreground = Brushes.Green;
+                        EmailCode.generalEventText.Visibility = Visibility.Visible;
+                        EmailCode.randomCode = randomCode;
                         EmailCode.Show();
                         Close();
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Nepavyko išsiusti kodo!");
+                        ePastoError.Visibility = Visibility.Visible;
+                        ePastoError.Content = "Toks paštas neegzistuoja!";
+                        registruotisButton.IsEnabled = true;
                     }
+                }
+                else
+                {
+                    registruotisButton.IsEnabled = true;
                 }
             }
             else
             {
                 ePastoError.Content = "Toks paštas užimtas";
                 ePastoError.Visibility = Visibility.Visible;
+                registruotisButton.IsEnabled = true;
             }
         }
 

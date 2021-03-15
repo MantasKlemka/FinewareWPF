@@ -38,6 +38,7 @@ namespace FinewareWPF
 
         private async void LoginButton(object sender, RoutedEventArgs e)
         {
+            prisijungtiButton.IsEnabled = false;
             Vartotojas paskyra = null;
             string key = "";
             // nuskaitom paskyras is duomenu bazes
@@ -55,11 +56,12 @@ namespace FinewareWPF
                 generalEventText.Content = "Tokia paskyra neegzistuoja";
                 generalEventText.Foreground = Brushes.Red;
                 generalEventText.Visibility = Visibility.Visible;
+                prisijungtiButton.IsEnabled = true;
             }
             else
             {
                 // jei tinka slaptažodis
-                if (paskyra.Slaptazodis == slaptazodzioTextBox.Password)
+                if (Security.PasswordMatch(slaptazodzioTextBox.Password, paskyra.Slaptazodis))
                 {
                     // prisijungus prie paskyros kuri neturi apsaugos
                     if(paskyra.ShortSecurityCode == 0 | paskyra.LongSecurityCode == 0)
@@ -74,6 +76,7 @@ namespace FinewareWPF
                     {
                         MessageBox.Show("Prisijungta");
                         generalEventText.Visibility = Visibility.Hidden;
+                        prisijungtiButton.IsEnabled = true;
                     }
                 }
                 else
@@ -81,6 +84,7 @@ namespace FinewareWPF
                     generalEventText.Content = "Neteisingas slaptažodis";
                     generalEventText.Foreground = Brushes.Red;
                     generalEventText.Visibility = Visibility.Visible;
+                    prisijungtiButton.IsEnabled = true;
                 }
             }
         }

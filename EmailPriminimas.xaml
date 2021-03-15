@@ -11,7 +11,7 @@
         <Button Content="Siųsti kodą" HorizontalAlignment="Left" Margin="356,166,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         <Button x:Name="buttoncode" Content="Tikrinti" HorizontalAlignment="Left" Margin="356,293,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
         <TextBox x:Name="codetextbox" HorizontalAlignment="Left" Height="23" Margin="328,244,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Slaptažodžio priminimas" HorizontalAlignment="Left" Margin="267,22,0,0" VerticalAlignment="Top" FontSize="24"/>
+        <Label Content="Slaptažodžio pakeitimas" HorizontalAlignment="Left" Margin="267,22,0,0" VerticalAlignment="Top" FontSize="24"/>
         <Label x:Name="lab1" Content="Įveskite savo El. paštą:" HorizontalAlignment="Left" Margin="181,126,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lab2" Content="Įveskite gautą kodą:" HorizontalAlignment="Left" Margin="181,244,0,0" VerticalAlignment="Top"/>
         <Button Content="Grįžtį" HorizontalAlignment="Left" Margin="356,355,0,0" VerticalAlignment="Top" Width="75" Background="{x:Null}" BorderBrush="{x:Null}" Click="Button_Click_2"/>

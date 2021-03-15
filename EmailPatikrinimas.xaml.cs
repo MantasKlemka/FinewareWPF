@@ -24,6 +24,7 @@ namespace FinewareWPF
     /// </summary>
     public partial class EmailPatikrinimas : Window
     {
+        public string randomCode;
         IFirebaseClient client;
         IFirebaseConfig config = new FirebaseConfig
         {
@@ -39,18 +40,40 @@ namespace FinewareWPF
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            //sukuriamas vartotojas
-            Vartotojas vartotojas = new Vartotojas(Registracija.vardas, Registracija.pavarde, Registracija.epastas, Registracija.slaptazodis);
-            //vartotojas ikeliamas į duomenų bazę
+            patvirtintiButton.IsEnabled = false;
+            if (randomCode == EmailBox.Text)
+            {
+                //sukuriamas vartotojas
+                Vartotojas vartotojas = new Vartotojas(Registracija.vardas, Registracija.pavarde, Registracija.epastas, Registracija.slaptazodis);
+                //vartotojas ikeliamas į duomenų bazę
+                PushResponse response = await client.PushAsync("Paskyros/", vartotojas);
+                //perjungiame į prisijungimo langą
+                var loginForm = new Prisijungimas();
+                loginForm.generalEventText.Content = "Paskyra sukurta, galite prisijungti!";
+                loginForm.generalEventText.Foreground = Brushes.Green;
+                loginForm.generalEventText.Visibility = Visibility.Visible;
+                loginForm.Show();
+                Close();
+            }
+            else
+            {
+                generalEventText.Content = "Neteisingas kodas!";
+                generalEventText.Foreground = Brushes.Red;
+                generalEventText.Visibility = Visibility.Visible;
+                patvirtintiButton.IsEnabled = true;
+            }
+        }
+        private void PatvirtintiButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            patvirtintiLabel.Opacity = 0.5;
+            patvirtintiBackround.Opacity = 0.8;
 
-            PushResponse response = await client.PushAsync("Paskyros/", vartotojas);
-            //perjungiame į prisijungimo langą
-            var loginForm = new Prisijungimas();
-            loginForm.generalEventText.Content = "Paskyra sukurta, galite prisijungti!";
-            loginForm.generalEventText.Foreground = Brushes.Green;
-            loginForm.generalEventText.Visibility = Visibility.Visible;
-            loginForm.Show();
-            Close();
+        }
+
+        private void PatvirtintiButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            patvirtintiLabel.Opacity = 1;
+            patvirtintiBackround.Opacity = 1;
         }
     }
 }

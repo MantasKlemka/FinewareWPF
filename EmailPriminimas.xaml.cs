@@ -43,24 +43,44 @@ namespace FinewareWPF
             client = new FireSharp.FirebaseClient(config);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             Random rand = new Random();
             randomCode = (rand.Next(10000, 99999)).ToString();
-            try
+
+            Vartotojas paskyra = null;
+            string key = "";
+            // nuskaitom paskyras is duomenu bazes
+            var response = await client.GetAsync("Paskyros/");
+            Dictionary<string, Vartotojas> list = response.ResultAs<Dictionary<string, Vartotojas>>();
+            // ieškome ar egzistuoja tokia paskyra duomenų bazėje
+            if (list != null)
             {
-                email = (Emailtextbox.Text).ToString();
-                string messageBody = "Jūsu patvirtinimo kodas yra: " + randomCode;
-                string messageSubject = "Slaptažodžio pakeitimo kodas";
-                MailMessage message = SiustiLaiska.CreateMessage(email, Registracija.projektoEpastas, messageBody, messageSubject);
-                SiustiLaiska.SendMessage(Registracija.projektoEpastas, Registracija.projektoSlaptazodis, message);
-                lab2.Visibility = Visibility.Visible;
-                codetextbox.Visibility = Visibility.Visible;
-                buttoncode.Visibility = Visibility.Visible;
+                paskyra = CorrectEmail(list, out key);
             }
-            catch (Exception ex)
+
+            // jei paskyra egzistuoja
+            if (paskyra != null)
             {
-                MessageBox.Show("Nepavyko išsiusti kodo!");
+                try
+                {
+                    email = (Emailtextbox.Text).ToString();
+                    string messageBody = "Jūsu patvirtinimo kodas yra: " + randomCode;
+                    string messageSubject = "Slaptažodžio pakeitimo kodas";
+                    MailMessage message = SiustiLaiska.CreateMessage(email, Registracija.projektoEpastas, messageBody, messageSubject);
+                    SiustiLaiska.SendMessage(Registracija.projektoEpastas, Registracija.projektoSlaptazodis, message);
+                    lab2.Visibility = Visibility.Visible;
+                    codetextbox.Visibility = Visibility.Visible;
+                    buttoncode.Visibility = Visibility.Visible;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Nepavyko išsiusti kodo!");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Nerasta paskyra");
             }
         }
 
@@ -73,7 +93,20 @@ namespace FinewareWPF
             Vartotojas paskyra = CorrectEmail(list, out key);
             if(randomCode == codetextbox.Text)
             {
-                MessageBox.Show("Jūsų slaptažodis yra: " + paskyra.Slaptazodis);
+                string newPass = Security.RandomPassword();
+                string messageBody = "Jūsu naujas slaptažodis: " + newPass;
+                string messageSubject = "Naujas slaptažodis";
+                MailMessage message = SiustiLaiska.CreateMessage(email, Registracija.projektoEpastas, messageBody, messageSubject);
+                SiustiLaiska.SendMessage(Registracija.projektoEpastas, Registracija.projektoSlaptazodis, message);
+                newPass = Security.HashingPassword(newPass);
+                paskyra.Slaptazodis = newPass;
+                FirebaseResponse update = await client.UpdateAsync("Paskyros/" + key.ToString(), paskyra);
+                var prisijungimas = new Prisijungimas();
+                prisijungimas.generalEventText.Content = "Slaptažodis pakeistas, jį gausite paštu!";
+                prisijungimas.generalEventText.Foreground = Brushes.Green;
+                prisijungimas.generalEventText.Visibility = Visibility.Visible;
+                prisijungimas.Show();
+                Close();
             }
         }
 
