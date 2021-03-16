@@ -5,20 +5,70 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinewareWPF"
         mc:Ignorable="d"
-        Title="ApsaugosKodas" Height="300" Width="443.281">
+        Title="ApsaugosKodas" Height="836" Width="1165" Icon="Images/logo.ico"
+        Background="White"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen" FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold">
+    <Window.Resources>
+        <Style x:Key="buttonWithoutHighlight" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="customPassBox" TargetType="PasswordBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type PasswordBox}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="border" Value="0"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{x:Null}"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{x:Null}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <Label Content="Prašome susikurti apsaugos kodus" HorizontalAlignment="Left" Margin="127,23,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <PasswordBox x:Name="sixDigitTextBox" HorizontalAlignment="Left" Height="23" Margin="293,85,0,0" VerticalAlignment="Top" Width="51" MaxLength="6" LostFocus="SixDigitValidation"/>
-        <PasswordBox x:Name="fourDigitTextBox_2" HorizontalAlignment="Left" Height="23" Margin="112,143,0,0" VerticalAlignment="Top" Width="37" MaxLength="4" LostFocus="FourDigitValidation"/>
-        <PasswordBox x:Name="fourDigitTextBox" HorizontalAlignment="Left" Height="23" Margin="112,85,0,0" VerticalAlignment="Top" Width="37" MaxLength="4" LostFocus="FourDigitValidation"/>
-        <PasswordBox x:Name="sixDigitTextBox_2" HorizontalAlignment="Left" Height="23" Margin="293,143,0,0" VerticalAlignment="Top" Width="51" MaxLength="6" LostFocus="SixDigitValidation"/>
-        <Label Content="4 skaičių" HorizontalAlignment="Left" Margin="101,54,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="60"/>
-        <Label Content="6 skaičių" HorizontalAlignment="Left" Margin="288,54,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="60"/>
-        <Label Content="Pakartokite" HorizontalAlignment="Left" Margin="276,113,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="85"/>
-        <Label Content="Pakartokite" HorizontalAlignment="Left" Margin="88,113,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="85"/>
-        <Button x:Name="prisijungtiButton" Content="Pateikti" HorizontalAlignment="Left" Margin="187,219,0,0" VerticalAlignment="Top" Width="75" Click="CreateButton" RenderTransformOrigin="0.413,0.45"/>
-        <TextBlock x:Name="fourDigitError" Margin="37,171,0,0" Foreground="Red" Visibility="Visible" RenderTransformOrigin="0.49,0.464" TextAlignment="Center" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="189"><Run Text=""/></TextBlock>
-        <TextBlock x:Name="sixDigitError" Margin="231,171,0,0" Foreground="Red" Visibility="Visible" RenderTransformOrigin="0.5,0.5" TextAlignment="Center" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="180"><Run Text=""/></TextBlock>
+        <PasswordBox x:Name="sixDigitTextBox" HorizontalAlignment="Left" Height="23" Margin="481,287,0,0" VerticalAlignment="Top" Width="220" MaxLength="6" LostFocus="SixDigitValidation" Foreground="#FF4BC4AA" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Style="{StaticResource customPassBox}" FontSize="22"/>
+        <PasswordBox x:Name="fourDigitTextBox_2" HorizontalAlignment="Left" Height="23" Margin="143,412,0,0" VerticalAlignment="Top" Width="217" MaxLength="4" LostFocus="FourDigitValidation" Foreground="#FF4BC4AA" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Style="{StaticResource customPassBox}" FontSize="22"/>
+        <PasswordBox x:Name="fourDigitTextBox" HorizontalAlignment="Left" Height="23" Margin="143,287,0,0" VerticalAlignment="Top" Width="217" MaxLength="4" LostFocus="FourDigitValidation" Foreground="#FF4BC4AA" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Style="{StaticResource customPassBox}" FontSize="22"/>
+        <PasswordBox x:Name="sixDigitTextBox_2" HorizontalAlignment="Left" Height="23" Margin="481,413,0,0" VerticalAlignment="Top" Width="220" MaxLength="6" LostFocus="SixDigitValidation" Foreground="#FF4BC4AA" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Style="{StaticResource customPassBox}" FontSize="22"/>
+        <TextBlock x:Name="fourDigitError" Margin="155,487,0,0" Foreground="Red" Visibility="Visible" RenderTransformOrigin="0.49,0.464" TextAlignment="Center" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="189"><Run Text=""/></TextBlock>
+        <TextBlock x:Name="sixDigitError" Margin="498,493,0,0" Foreground="Red" Visibility="Visible" RenderTransformOrigin="0.5,0.5" TextAlignment="Center" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="189"><Run Text=""/></TextBlock>
+        <Image HorizontalAlignment="Left" Height="851" Margin="804,-17,-109,-27" VerticalAlignment="Top" Width="464" Source="Images/sidePanel.png" Panel.ZIndex="2"/>
+        <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="106" Margin="936,390,0,0" Source="Images/logoBaltas.png" Panel.ZIndex="3"/>
+        <Image HorizontalAlignment="Left" Height="834" Margin="804,0,-85,-27" VerticalAlignment="Top" Width="440" Source="Images/sidePanelBackground.png" Panel.ZIndex="1"/>
+        <Label x:Name="Title" Content="Apsaugos kodai" HorizontalAlignment="Left" Margin="286,104,0,0" VerticalAlignment="Top" FontSize="36" FontFamily="/FinewareWPF;component/Fonts/#Roboto" FontWeight="Bold" Foreground="#FF4BC4AA" />
+        <Label x:Name="Description" Content="Apsaugos kodai skirti jūsų paskyros saugumo užtvirtinimui" HorizontalAlignment="Left" Margin="155,158,0,0" VerticalAlignment="Top" FontSize="20" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FFA8A8A8"/>
+        <Label Content="4-ių skaičių kodas" HorizontalAlignment="Left" Margin="143,253,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
+        <Label Content="Pakartokite 4-ių skaičių kodą" HorizontalAlignment="Left" Margin="140,378,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
+        <Label Content="6-ių skaičių kodas" HorizontalAlignment="Left" Margin="481,253,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
+        <Label Content="Pakartokite 6-ių skaičių kodą" HorizontalAlignment="Left" Margin="481,379,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
+        <Button x:Name="pateiktiButton" Content="" HorizontalAlignment="Left" Margin="202,567,0,183" VerticalAlignment="Center" Width="436" Click="CreateButton" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Height="57" FontSize="20" Background="Transparent" BorderBrush="{x:Null}" Foreground="White" MouseEnter="PateiktiButton_MouseEnter" MouseLeave="PateiktiButton_MouseLeave"  Style="{StaticResource buttonWithoutHighlight}" RenderTransformOrigin="0.499,0.509" Panel.ZIndex="1"/>
+        <Image x:Name="pateiktiBackround" HorizontalAlignment="Left" Height="102" Margin="180,546,0,0" VerticalAlignment="Top" Width="484" Source="Images/Rectangle.png" Panel.ZIndex="-1"/>
+        <Label x:Name="pateiktiLabel" Content="Pateikti" HorizontalAlignment="Left" Margin="387,578,0,0" VerticalAlignment="Top" Height="46" FontSize="20" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Width="208" Foreground="White" Panel.ZIndex="0"/>
+        <Image HorizontalAlignment="Left" Height="52" Margin="143,435,0,0" VerticalAlignment="Top" Width="217" Source="Images/Line.png" Panel.ZIndex="5"/>
+        <Image HorizontalAlignment="Left" Height="52" Margin="481,441,0,0" VerticalAlignment="Top" Width="220" Source="Images/Line.png" Panel.ZIndex="5"/>
+        <Image HorizontalAlignment="Left" Height="52" Margin="143,310,0,0" VerticalAlignment="Top" Width="217" Source="Images/Line.png" Panel.ZIndex="5"/>
+        <Image HorizontalAlignment="Left" Height="52" Margin="481,311,0,0" VerticalAlignment="Top" Width="220" Source="Images/Line.png" Panel.ZIndex="5"/>
+        <Label x:Name="Copyright" Content="© 2021 Fineware" HorizontalAlignment="Left" Margin="348,751,0,0" VerticalAlignment="Top" FontSize="18" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FFD6CECE" Background="{x:Null}"/>
 
 
     </Grid>

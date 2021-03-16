@@ -39,6 +39,7 @@ namespace FinewareWPF
 
         private async void CreateButton(object sender, RoutedEventArgs e)
         {
+            pateiktiButton.IsEnabled = false;
             // tikrina ar įvesti kodai atitinka reikalavimus
             FourDigitValidation(sender, e);
             SixDigitValidation(sender, e);
@@ -53,6 +54,7 @@ namespace FinewareWPF
                 Close();
                 MessageBox.Show("Prisijungta");
             }
+            else pateiktiButton.IsEnabled = true;
         }
 
         private void FourDigitValidation(object sender, RoutedEventArgs e)
@@ -101,5 +103,16 @@ namespace FinewareWPF
             }
         }
 
+        private void PateiktiButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            pateiktiLabel.Opacity = 0.5;
+            pateiktiBackround.Opacity = 0.8;
+        }
+
+        private void PateiktiButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            pateiktiLabel.Opacity = 1;
+            pateiktiBackround.Opacity = 1;
+        }
     }
 }

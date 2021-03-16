@@ -95,7 +95,7 @@ namespace FinewareWPF
                         EmailCode.Show();
                         Close();
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         ePastoError.Visibility = Visibility.Visible;
                         ePastoError.Content = "Toks paštas neegzistuoja!";
@@ -115,6 +115,19 @@ namespace FinewareWPF
             }
         }
 
+        bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         // perjungiame i prisijungimo langą
         private void LoginButton(object sender, RoutedEventArgs e)
         {
@@ -122,6 +135,7 @@ namespace FinewareWPF
             loginForm.Show();
             Close();
         }
+
 
         private void PasswordValidation_1(object sender, RoutedEventArgs e)
         {
@@ -277,7 +291,6 @@ namespace FinewareWPF
         {
             registruotisLabel.Opacity = 0.5;
             registruotisBackround.Opacity = 0.8;
-
         }
 
         private void RegistruotisButton_MouseLeave(object sender, MouseEventArgs e)
