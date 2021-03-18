@@ -43,8 +43,9 @@ namespace FinewareWPF
             patvirtintiButton.IsEnabled = false;
             if (randomCode == EmailBox.Text)
             {
+                List<Saskaita> listas = new List<Saskaita>();
                 //sukuriamas vartotojas
-                Vartotojas vartotojas = new Vartotojas(Registracija.vardas, Registracija.pavarde, Registracija.epastas, Registracija.slaptazodis);
+                Vartotojas vartotojas = new Vartotojas(Registracija.vardas, Registracija.pavarde, Registracija.epastas, Registracija.slaptazodis, listas);
                 //vartotojas ikeliamas į duomenų bazę
                 PushResponse response = await client.PushAsync("Paskyros/", vartotojas);
                 //perjungiame į prisijungimo langą

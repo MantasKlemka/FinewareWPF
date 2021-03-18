@@ -90,6 +90,7 @@
     <Compile Include="Prisijungimas.xaml.cs">
       <DependentUpon>Prisijungimas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Saskaita.cs" />
     <Compile Include="Security.cs" />
     <Compile Include="SiustiLaiska.cs" />
     <Compile Include="Vartotojas.cs" />
