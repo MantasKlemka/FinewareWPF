@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using catpcha;
 using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
@@ -63,20 +64,28 @@ namespace FinewareWPF
                 // jei tinka slaptažodis
                 if (Security.PasswordMatch(slaptazodzioTextBox.Password, paskyra.Slaptazodis))
                 {
-                    // prisijungus prie paskyros kuri neturi apsaugos
-                    if(paskyra.ShortSecurityCode == 0 | paskyra.LongSecurityCode == 0)
+                    var captcha = new Captcha();
+                    captcha.Show();
+                    Close();
+                    
+                    //captcha.Close();
+                    if (captcha.IsActive)
                     {
-                        var securityForm = new ApsaugosKodas();
-                        securityForm.paskyra = paskyra;
-                        securityForm.key = key;
-                        securityForm.Show();
-                        Close();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Prisijungta");
-                        generalEventText.Visibility = Visibility.Hidden;
-                        prisijungtiButton.IsEnabled = true;
+                        // prisijungus prie paskyros kuri neturi apsaugos
+                        if (paskyra.ShortSecurityCode == 0 | paskyra.LongSecurityCode == 0)
+                        {
+                            var securityForm = new ApsaugosKodas();
+                            securityForm.paskyra = paskyra;
+                            securityForm.key = key;
+                            securityForm.Show();
+                            Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Prisijungta");
+                            generalEventText.Visibility = Visibility.Hidden;
+                            prisijungtiButton.IsEnabled = true;
+                        }
                     }
                 }
                 else
