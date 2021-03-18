@@ -66,22 +66,25 @@ namespace FinewareWPF
             {
                 // jei tinka slaptažodis
                 if (Security.PasswordMatch(slaptazodzioTextBox.Password, paskyra.Slaptazodis))
-                {                   
-                        // prisijungus prie paskyros kuri neturi apsaugos
-                        if (paskyra.ShortSecurityCode == 0 | paskyra.LongSecurityCode == 0)
-                        {
-                            var securityForm = new ApsaugosKodas();
-                            securityForm.paskyra = paskyra;
-                            securityForm.key = key;
-                            securityForm.Show();
-                            Close();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Prisijungta");
-                            generalEventText.Visibility = Visibility.Hidden;
-                            prisijungtiButton.IsEnabled = true;
-                        }
+                {
+                    // prisijungus prie paskyros kuri neturi apsaugos
+                    if (paskyra.ShortSecurityCode == 0 | paskyra.LongSecurityCode == 0)
+                    {
+                        var securityForm = new ApsaugosKodas();
+                        securityForm.paskyra = paskyra;
+                        securityForm.key = key;
+                        securityForm.Show();
+                        Close();
+                    }
+                    else
+                    {
+                        var apzvalga = new Apzvalga(paskyra);
+                        generalEventText.Visibility = Visibility.Hidden;
+                        prisijungtiButton.IsEnabled = true;
+                        apzvalga.key = key;
+                        apzvalga.Show();
+                        Close();
+                    }
                 }
                 else
                 {

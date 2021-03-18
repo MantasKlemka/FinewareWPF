@@ -43,9 +43,11 @@ namespace FinewareWPF
             patvirtintiButton.IsEnabled = false;
             if (randomCode == EmailBox.Text)
             {
-                List<Saskaita> listas = new List<Saskaita>();
                 //sukuriamas vartotojas
-                Vartotojas vartotojas = new Vartotojas(Registracija.vardas, Registracija.pavarde, Registracija.epastas, Registracija.slaptazodis, listas);
+                List<Saskaita> saskaitos = new List<Saskaita>();
+                Saskaita saskaita = new Saskaita(CreateIban(), 0);
+                saskaitos.Add(saskaita);
+                Vartotojas vartotojas = new Vartotojas(Registracija.vardas, Registracija.pavarde, Registracija.epastas, Registracija.slaptazodis, saskaitos);
                 //vartotojas ikeliamas į duomenų bazę
                 PushResponse response = await client.PushAsync("Paskyros/", vartotojas);
                 //perjungiame į prisijungimo langą
@@ -64,6 +66,17 @@ namespace FinewareWPF
                 patvirtintiButton.IsEnabled = true;
             }
         }
+
+        public string CreateIban()
+        {
+            Random random = new Random();
+            DateTime centuryBegin = new DateTime(1918, 1, 1);
+            string iban = "LT";
+            iban += DateTime.Now.Ticks - centuryBegin.Ticks;
+            iban += random.Next(0, 9);
+            return iban;
+        }
+
         private void PatvirtintiButton_MouseEnter(object sender, MouseEventArgs e)
         {
             patvirtintiLabel.Opacity = 0.5;
