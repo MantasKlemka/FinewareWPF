@@ -16,6 +16,7 @@ using System.Net;
 using System.IO;
 using FinewareWPF;
 
+
 namespace catpcha
 {
     /// <summary>
@@ -24,6 +25,7 @@ namespace catpcha
     public partial class Captcha : Window
     {
         public bool cap = false;
+        public Prisijungimas prisijungimas;
         public Captcha()
         {
             InitializeComponent();
@@ -66,6 +68,9 @@ namespace catpcha
         {
             if(AnswBox.Text == TextBox1.Text)
             {
+                prisijungimas.ePastoTextBox.IsReadOnly = false;
+                prisijungimas.slaptazodzioTextBox.IsEnabled = true;
+                prisijungimas.prisijungtiButton.IsEnabled = true;
                 MessageBox.Show("Welcome!");
                 cap = true;
                 Close();

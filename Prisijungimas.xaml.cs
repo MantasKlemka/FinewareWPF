@@ -24,6 +24,8 @@ namespace FinewareWPF
     /// </summary>
     public partial class Prisijungimas : Window
     {
+        public int counter = 0;
+            
         IFirebaseClient client;
         IFirebaseConfig config = new FirebaseConfig
         {
@@ -58,19 +60,13 @@ namespace FinewareWPF
                 generalEventText.Foreground = Brushes.Red;
                 generalEventText.Visibility = Visibility.Visible;
                 prisijungtiButton.IsEnabled = true;
+                counter++;
             }
             else
             {
                 // jei tinka slaptažodis
                 if (Security.PasswordMatch(slaptazodzioTextBox.Password, paskyra.Slaptazodis))
-                {
-                    var captcha = new Captcha();
-                    captcha.Show();
-                    Close();
-                    
-                    //captcha.Close();
-                    if (captcha.IsActive)
-                    {
+                {                   
                         // prisijungus prie paskyros kuri neturi apsaugos
                         if (paskyra.ShortSecurityCode == 0 | paskyra.LongSecurityCode == 0)
                         {
@@ -86,7 +82,6 @@ namespace FinewareWPF
                             generalEventText.Visibility = Visibility.Hidden;
                             prisijungtiButton.IsEnabled = true;
                         }
-                    }
                 }
                 else
                 {
@@ -94,8 +89,21 @@ namespace FinewareWPF
                     generalEventText.Foreground = Brushes.Red;
                     generalEventText.Visibility = Visibility.Visible;
                     prisijungtiButton.IsEnabled = true;
+                    counter++;
                 }
             }
+
+            if(counter >= 5)
+            {
+                var captcha = new Captcha();
+                captcha.prisijungimas = this;
+                ePastoTextBox.IsReadOnly = true;
+                slaptazodzioTextBox.IsEnabled = false;
+                prisijungtiButton.IsEnabled = false;
+                captcha.Show();
+              
+            }
+            
         }
 
         private void RegisterButton(object sender, RoutedEventArgs e)
