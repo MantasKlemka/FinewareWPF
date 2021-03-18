@@ -81,6 +81,9 @@
     <Compile Include="ApsaugosKodas.xaml.cs">
       <DependentUpon>ApsaugosKodas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Captcha.xaml.cs">
+      <DependentUpon>Captcha.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EmailPatikrinimas.xaml.cs">
       <DependentUpon>EmailPatikrinimas.xaml</DependentUpon>
     </Compile>
@@ -96,6 +99,10 @@
     <Page Include="ApsaugosKodas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Captcha.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="EmailPatikrinimas.xaml">
       <SubType>Designer</SubType>
