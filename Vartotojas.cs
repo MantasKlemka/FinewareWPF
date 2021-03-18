@@ -15,12 +15,13 @@ namespace FinewareWPF
         public bool IsStaff { get; set; }
         public int ShortSecurityCode { get; set; }
         public int LongSecurityCode { get; set; }
+        public List<Saskaita> Saskaitos = new List<Saskaita>();
 
         public Vartotojas()
         {
 
         }
-        public Vartotojas(string vardas, string pavarde, string epastas, string slaptazodis)
+        public Vartotojas(string vardas, string pavarde, string epastas, string slaptazodis, List<Saskaita> saskaitos)
         {
             Vardas = vardas;
             Pavarde = pavarde;
@@ -29,6 +30,7 @@ namespace FinewareWPF
             IsStaff = false;
             ShortSecurityCode = 0;
             LongSecurityCode = 0;
+            Saskaitos = saskaitos;
         }
     }
 }
