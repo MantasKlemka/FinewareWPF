@@ -78,10 +78,9 @@ namespace FinewareWPF
                     }
                     else
                     {
-                        var apzvalga = new Apzvalga(paskyra);
+                        var apzvalga = new Apzvalga(paskyra, key);
                         generalEventText.Visibility = Visibility.Hidden;
                         prisijungtiButton.IsEnabled = true;
-                        apzvalga.key = key;
                         apzvalga.Show();
                         Close();
                     }

@@ -22,8 +22,8 @@ namespace FinewareWPF
     /// </summary>
     public partial class Apzvalga : Window
     {
-        Vartotojas vartotojas;
-        public string key;
+        Vartotojas vartotojasSaved;
+        string keySaved;
         public int pagrindinesSaskNr { get; set; } = 0;
         IFirebaseClient client;
         IFirebaseConfig config = new FirebaseConfig
@@ -32,23 +32,24 @@ namespace FinewareWPF
             BasePath = "https://fineware-759f7-default-rtdb.firebaseio.com/"
     };
 
-        public Apzvalga(Vartotojas vartotojas)
+        public Apzvalga(Vartotojas vartotojas, string key)
         {
             client = new FireSharp.FirebaseClient(config);
+            keySaved = key;
             InitializeComponent();
-            this.vartotojas = vartotojas;
+            vartotojasSaved = vartotojas;
             pagrindinesSaskNr = 0;
-            SaskaitosDrop.ItemsSource = IbanArray(vartotojas.Saskaitos);
-            LikutisText.Text = vartotojas.Saskaitos[pagrindinesSaskNr].Likutis + " €";
-            vardoPavardesText.Text = vartotojas.Vardas + " " + vartotojas.Pavarde;
-            emailText.Text = vartotojas.Epastas;
+            SaskaitosDrop.ItemsSource = IbanArray(vartotojasSaved.Saskaitos);
+            LikutisText.Text = vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis + " €";
+            vardoPavardesText.Text = vartotojasSaved.Vardas + " " + vartotojasSaved.Pavarde;
+            emailText.Text = vartotojasSaved.Epastas;
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            var response = await client.GetAsync("Paskyros/" + key);
+            var response = await client.GetAsync("Paskyros/" + keySaved);
             Vartotojas vartotojas = response.ResultAs<Vartotojas>();
-
+            vartotojasSaved = vartotojas;
             if(vartotojas.Saskaitos.Count > 0)
             {
                 DoubleAnimation animation = new DoubleAnimation();
@@ -83,7 +84,7 @@ namespace FinewareWPF
 
         private async void SaskaitosDrop_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var response = await client.GetAsync("Paskyros/" + key);
+            var response = await client.GetAsync("Paskyros/" + keySaved);
             Vartotojas vartotojas = response.ResultAs<Vartotojas>();
             IbanText.Content = e.AddedItems[0].ToString();
             if (vartotojas.Saskaitos.Count > 0)
@@ -91,6 +92,65 @@ namespace FinewareWPF
                 pagrindinesSaskNr = FindIbanNr(vartotojas.Saskaitos, e.AddedItems[0].ToString());
                 LikutisText.Text = vartotojas.Saskaitos[pagrindinesSaskNr].Likutis.ToString() + " €";
             }
+
+            vartotojasSaved = vartotojas;
+
+        }
+
+        private void Button_MouseEnter(object sender, MouseEventArgs e)
+        {
+            var button = (Button)sender;
+            button.Opacity = 0.8;
+        }
+
+        private void Button_MouseLeave(object sender, MouseEventArgs e)
+        {
+            var button = (Button)sender;
+            button.Opacity = 1;
+        }
+
+        private void IsrasasButton(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        async private void PavedimasButton(object sender, RoutedEventArgs e)
+        {
+            var response = await client.GetAsync("Paskyros/" + keySaved);
+            Vartotojas vartotojas = response.ResultAs<Vartotojas>();
+            vartotojasSaved = vartotojas;
+            var pavedimas = new Pervedimas(vartotojasSaved, keySaved);
+            pavedimas.Show();
+            Close();
+        }
+
+        private void ValiutosButton(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PagalbaButton(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ManoButton(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void GautiButton(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NustatymaiButton(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AtsijungtiButton(object sender, RoutedEventArgs e)
+        {
 
         }
     }
