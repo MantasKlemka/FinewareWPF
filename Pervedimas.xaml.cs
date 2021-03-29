@@ -123,7 +123,9 @@ namespace FinewareWPF
 
         private void ManoButton(object sender, RoutedEventArgs e)
         {
-
+            var manoSaskaitos = new ManoSaskaitos(vartotojasSaved, keySaved);
+            manoSaskaitos.Show();
+            Close();
         }
 
         private void GautiButton(object sender, RoutedEventArgs e)

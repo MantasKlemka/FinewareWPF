@@ -45,7 +45,7 @@ namespace FinewareWPF
             {
                 //sukuriamas vartotojas
                 List<Saskaita> saskaitos = new List<Saskaita>();
-                Saskaita saskaita = new Saskaita(CreateIban(), 0);
+                Saskaita saskaita = new Saskaita("Pagrindinė sąskaita", CreateIban(), 0, DateTime.Now.Date);
                 saskaitos.Add(saskaita);
                 Vartotojas vartotojas = new Vartotojas(Registracija.vardas, Registracija.pavarde, Registracija.epastas, Registracija.slaptazodis, saskaitos);
                 //vartotojas ikeliamas į duomenų bazę
