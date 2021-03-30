@@ -41,6 +41,7 @@ namespace FinewareWPF
             pagrindinesSaskNr = 0;
             vardoPavardesText.Text = vartotojasSaved.Vardas + " " + vartotojasSaved.Pavarde;
             emailText.Text = vartotojasSaved.Epastas;
+            PrintAllBills();
         }
 
         public string CreateIban()
@@ -51,6 +52,15 @@ namespace FinewareWPF
             iban += DateTime.Now.Ticks - centuryBegin.Ticks;
             iban += random.Next(0, 9);
             return iban;
+        }
+
+        void PrintAllBills()
+        {
+            CreateBillBanner();
+            for (int i = 0; i < vartotojasSaved.Saskaitos.Count; i++)
+            {
+                CreateBillLine(vartotojasSaved, i);
+            }
         }
 
         private void Button_MouseEnter(object sender, MouseEventArgs e)
@@ -142,18 +152,27 @@ namespace FinewareWPF
 
         private async void PateiktiButton(object sender, RoutedEventArgs e)
         {
-            if(kodoTextBox.Password != vartotojasSaved.ShortSecurityCode.ToString())
+
+            if (vartotojasSaved.Saskaitos.Count == 9)
             {
+                generalEventText.Content = "Jūs turite maksimalų skaičių sąskaitų!";
+                return;
+            }
+            if (kodoTextBox.Password != vartotojasSaved.ShortSecurityCode.ToString())
+            {
+                generalEventText.Content = "Neteisingas 4-ių skaičių kodas!";
                 return;
             }
             if(pavadinimoTextBox.Text == "")
             {
+                generalEventText.Content = "Pavadinimas negali likti tuščias!";
                 return;
             }
 
             Saskaita naujaSaskaita = new Saskaita(pavadinimoTextBox.Text, CreateIban(), 0, DateTime.Now.Date);
             vartotojasSaved.Saskaitos.Add(naujaSaskaita);
             await client.UpdateAsync("Paskyros/" + keySaved, vartotojasSaved);
+            CreateBillLine(vartotojasSaved, vartotojasSaved.Saskaitos.Count-1);
             closeBackground.Visibility = Visibility.Collapsed;
             closeButton.Visibility = Visibility.Collapsed;
             patvirtintiBackround.Visibility = Visibility.Collapsed;
@@ -168,7 +187,9 @@ namespace FinewareWPF
             pavadinimoTextBox.Visibility = Visibility.Collapsed;
             underLine_1.Visibility = Visibility.Collapsed;
             underLine_2.Visibility = Visibility.Collapsed;
+            generalEventText.Visibility = Visibility.Collapsed;
             kodoTextBox.Clear();
+            generalEventText.Content = "";
             pavadinimoTextBox.Clear();
         }
 
@@ -188,9 +209,10 @@ namespace FinewareWPF
             pavadinimoTextBox.Visibility = Visibility.Collapsed;
             underLine_1.Visibility = Visibility.Collapsed;
             underLine_2.Visibility = Visibility.Collapsed;
+            generalEventText.Visibility = Visibility.Collapsed;
             kodoTextBox.Clear();
             pavadinimoTextBox.Clear();
-
+            generalEventText.Content = "";
         }
 
         private void SukurtiNaujaButton(object sender, RoutedEventArgs e)
@@ -209,6 +231,73 @@ namespace FinewareWPF
             pavadinimoTextBox.Visibility = Visibility.Visible;
             underLine_1.Visibility = Visibility.Visible;
             underLine_2.Visibility = Visibility.Visible;
+            generalEventText.Visibility = Visibility.Visible;
+        }
+
+        public void CreateBillLine(Vartotojas vartotojas, int saskaitosNr)
+        {
+            int moveBackCof = (saskaitosNr + 1) * 100;
+            int moveCof = (saskaitosNr + 1) * 50;
+            var bc = new BrushConverter();
+            Image background = new Image();
+            background.Source = new BitmapImage(new Uri("Images/Rectangle 28.png", UriKind.Relative));
+            background.Margin = new Thickness(0, -500 + moveBackCof, 0, 0);
+            saskaituGrid.Children.Add(background);
+            Label pavadinimas = new Label();
+            pavadinimas.Content = vartotojas.Saskaitos[saskaitosNr].Pavadinimas;
+            pavadinimas.Margin = new Thickness(30, -23 + moveCof, 0, 0);
+            saskaituGrid.Children.Add(pavadinimas);
+            Label kodas = new Label();
+            kodas.Foreground = (Brush)bc.ConvertFrom("#FF4BC4AA");
+            kodas.Content = vartotojas.Saskaitos[saskaitosNr].Kodas;
+            kodas.Margin = new Thickness(250, -23 + moveCof, 0, 0);
+            saskaituGrid.Children.Add(kodas);
+            Label data = new Label();
+            data.Content = vartotojas.Saskaitos[saskaitosNr].SukurimoData.ToShortDateString();
+            data.Margin = new Thickness(450, -23 + moveCof, 0, 0);
+            saskaituGrid.Children.Add(data);
+            Label likutis = new Label();
+            likutis.Foreground = (Brush)bc.ConvertFrom("#FF4BC4AA");
+            likutis.Content = Math.Round(vartotojas.Saskaitos[saskaitosNr].Likutis, 2) + " €";
+            likutis.Margin = new Thickness(650, -23 + moveCof, 0, 0);
+            saskaituGrid.Children.Add(likutis);
+            Label veiksmai = new Label();
+            veiksmai.Content = "X";
+            veiksmai.Margin = new Thickness(820, -23 + moveCof, 0, 0);
+            saskaituGrid.Children.Add(veiksmai);
+        }
+
+        public void CreateBillBanner()
+        {
+            Image background = new Image();
+            background.Source = new BitmapImage(new Uri("Images/Rectangle 28.png", UriKind.Relative));
+            background.Margin = new Thickness(0, -500, 0, 0);
+            saskaituGrid.Children.Add(background);
+            Label pavadinimas = new Label();
+            pavadinimas.FontWeight = FontWeights.Bold;
+            pavadinimas.Content = "Sąskaitos pavadinimas";
+            pavadinimas.Margin = new Thickness(30, -23, 0, 0);
+            saskaituGrid.Children.Add(pavadinimas);
+            Label kodas = new Label();
+            kodas.FontWeight = FontWeights.Bold;
+            kodas.Content = "IBAN";
+            kodas.Margin = new Thickness(250, -23, 0, 0);
+            saskaituGrid.Children.Add(kodas);
+            Label data = new Label();
+            data.FontWeight = FontWeights.Bold;
+            data.Content = "Sukūrimo data";
+            data.Margin = new Thickness(450, -23, 0, 0);
+            saskaituGrid.Children.Add(data);
+            Label likutis = new Label();
+            likutis.FontWeight = FontWeights.Bold;
+            likutis.Content = "Likutis";
+            likutis.Margin = new Thickness(650, -23, 0, 0);
+            saskaituGrid.Children.Add(likutis);
+            Label veiksmai = new Label();
+            veiksmai.FontWeight = FontWeights.Bold;
+            veiksmai.Content = "Veiksmai";
+            veiksmai.Margin = new Thickness(820, -23, 0, 0);
+            saskaituGrid.Children.Add(veiksmai);
         }
     }
 }
