@@ -109,6 +109,7 @@ namespace FinewareWPF
 
         private void ApzvalgaButton(object sender, RoutedEventArgs e)
         {
+            IsEnabled = false;
             var apzvalga = new Apzvalga(vartotojasSaved, keySaved);
             apzvalga.Show();
             Close();
@@ -126,6 +127,7 @@ namespace FinewareWPF
 
         private void ManoButton(object sender, RoutedEventArgs e)
         {
+            IsEnabled = false;
             var manoSaskaitos = new ManoSaskaitos(vartotojasSaved, keySaved);
             manoSaskaitos.Show();
             Close();
@@ -193,6 +195,7 @@ namespace FinewareWPF
                     }
                     if (gavejoSaskaitosNr != -1)
                     {
+                        IsEnabled = false;
                         if (siuntejas.Epastas == gavejas.Epastas)
                         {
                             siuntejas.Saskaitos[pagrindinesSaskNr].Likutis -= double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture);

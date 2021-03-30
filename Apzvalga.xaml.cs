@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using FireSharp.Config;
 using FireSharp.Interfaces;
 using System.Windows.Media.Animation;
-
+using System.Windows.Media.Media3D;
 namespace FinewareWPF
 {
     /// <summary>
@@ -40,6 +40,7 @@ namespace FinewareWPF
             vartotojasSaved = vartotojas;
             pagrindinesSaskNr = 0;
             SaskaitosDrop.ItemsSource = IbanArray(vartotojasSaved.Saskaitos);
+            IbanText.Content = vartotojasSaved.Saskaitos[pagrindinesSaskNr].Kodas;
             LikutisText.Text = vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis + " €";
             vardoPavardesText.Text = vartotojasSaved.Vardas + " " + vartotojasSaved.Pavarde;
             saskaitosPavadinimas.Content = vartotojas.Saskaitos[pagrindinesSaskNr].Pavadinimas;
@@ -118,6 +119,7 @@ namespace FinewareWPF
 
         async private void PavedimasButton(object sender, RoutedEventArgs e)
         {
+            IsEnabled = false;
             var response = await client.GetAsync("Paskyros/" + keySaved);
             Vartotojas vartotojas = response.ResultAs<Vartotojas>();
             vartotojasSaved = vartotojas;
@@ -138,6 +140,7 @@ namespace FinewareWPF
 
         private void ManoButton(object sender, RoutedEventArgs e)
         {
+            IsEnabled = false;
             var manoSaskaitos = new ManoSaskaitos(vartotojasSaved, keySaved);
             manoSaskaitos.Show();
             Close();

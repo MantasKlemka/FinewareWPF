@@ -112,6 +112,7 @@ namespace FinewareWPF
 
         private void ApzvalgaButton(object sender, RoutedEventArgs e)
         {
+            IsEnabled = false;
             var apzvalga = new Apzvalga(vartotojasSaved, keySaved);
             apzvalga.Show();
             Close();
@@ -129,6 +130,7 @@ namespace FinewareWPF
 
         private void PavedimasButton(object sender, RoutedEventArgs e)
         {
+            IsEnabled = false;
             var pervedimas = new Pervedimas(vartotojasSaved, keySaved);
             pervedimas.Show();
             Close();
@@ -169,10 +171,10 @@ namespace FinewareWPF
                 return;
             }
 
+            IsEnabled = false;
             Saskaita naujaSaskaita = new Saskaita(pavadinimoTextBox.Text, CreateIban(), 0, DateTime.Now.Date);
             vartotojasSaved.Saskaitos.Add(naujaSaskaita);
             await client.UpdateAsync("Paskyros/" + keySaved, vartotojasSaved);
-            CreateBillLine(vartotojasSaved, vartotojasSaved.Saskaitos.Count-1);
             closeBackground.Visibility = Visibility.Collapsed;
             closeButton.Visibility = Visibility.Collapsed;
             patvirtintiBackround.Visibility = Visibility.Collapsed;
@@ -191,6 +193,9 @@ namespace FinewareWPF
             kodoTextBox.Clear();
             generalEventText.Content = "";
             pavadinimoTextBox.Clear();
+            var manoSaskaitos = new ManoSaskaitos(vartotojasSaved, keySaved);
+            manoSaskaitos.Show();
+            Close();
         }
 
         private void CloseButton(object sender, RoutedEventArgs e)
@@ -261,10 +266,40 @@ namespace FinewareWPF
             likutis.Content = Math.Round(vartotojas.Saskaitos[saskaitosNr].Likutis, 2) + " €";
             likutis.Margin = new Thickness(650, -23 + moveCof, 0, 0);
             saskaituGrid.Children.Add(likutis);
-            Label veiksmai = new Label();
-            veiksmai.Content = "X";
-            veiksmai.Margin = new Thickness(820, -23 + moveCof, 0, 0);
-            saskaituGrid.Children.Add(veiksmai);
+            if(saskaitosNr != 0)
+            {
+                Button veiksmai = new Button();
+                veiksmai.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("Images/delete.png", UriKind.Relative)),
+                };
+                veiksmai.Height = 15;
+                veiksmai.Width = 15;
+                veiksmai.Style = (Style)FindResource("buttonWithoutHighlight");
+                veiksmai.BorderBrush = Brushes.Transparent;
+                veiksmai.Background = Brushes.Transparent;
+                veiksmai.MouseEnter += Button_MouseEnter;
+                veiksmai.MouseLeave += Button_MouseLeave;
+                veiksmai.VerticalAlignment = VerticalAlignment.Top;
+                veiksmai.HorizontalAlignment = HorizontalAlignment.Left;
+                veiksmai.Margin = new Thickness(820, -23 + moveCof, 0, 0);
+                veiksmai.Name = "DeleteButton_" + saskaitosNr.ToString();
+                veiksmai.Click += DeleteButton;
+                saskaituGrid.Children.Add(veiksmai);
+            }
+        }
+
+        private async void DeleteButton(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            IsEnabled = false;
+            int nr = int.Parse(button.Name[13].ToString());
+            vartotojasSaved.Saskaitos[0].Likutis += vartotojasSaved.Saskaitos[nr].Likutis;
+            vartotojasSaved.Saskaitos.RemoveAt(nr);
+            await client.UpdateAsync("Paskyros/" + keySaved, vartotojasSaved);
+            var manoSaskaitos = new ManoSaskaitos(vartotojasSaved, keySaved);
+            manoSaskaitos.Show();
+            Close();
         }
 
         public void CreateBillBanner()

@@ -66,6 +66,37 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="rotateButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="12" />
+            <Setter Property="RenderTransformOrigin" Value="0.5 0.5" />
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <RotateTransform />
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Button.Click">
+                    <BeginStoryboard>
+                        <Storyboard TargetProperty="RenderTransform.Angle">
+                            <DoubleAnimation   
+                        From="0" To="360" Duration="0:0:1.05"    
+                        FillBehavior="Stop" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid>
         <Image HorizontalAlignment="Left" Height="76" Margin="365,235,0,0" VerticalAlignment="Top" Width="979" Source="Images/Rectangle 9.png"/>
@@ -75,7 +106,11 @@
         <Label Content="Apžvalga" HorizontalAlignment="Left" Margin="374,49,0,0" VerticalAlignment="Top" FontSize="24" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
         <Label x:Name="Description" Content="Išrinkome tai ką jums svarbu žinoti apie gautus ir atliktus mokėjimus" HorizontalAlignment="Left" Margin="374,93,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FFA8A8A8"/>
         <ComboBox x:Name="SaskaitosDrop" HorizontalAlignment="Left" Margin="432,200,0,0" VerticalAlignment="Top" Width="160" SelectionChanged="SaskaitosDrop_SelectionChanged" SelectedIndex="0"/>
-        <Button Content="Atnaujinti" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="1236,212,0,0" Click="Button_Click"/>
+        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="40" Margin="1275,200,0,0" Click="Button_Click" Style="{StaticResource rotateButton}" BorderBrush="{x:Null}" Background="{x:Null}" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Foreground="Black">
+            <StackPanel>
+                <Image x:Name="refreshButton" Source="Images/refresh.png"/>
+            </StackPanel>
+        </Button>
         <Label Content="Pasirinkta sąskaita" HorizontalAlignment="Left" Margin="438,141,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
         <Image HorizontalAlignment="Left" Height="371" VerticalAlignment="Top" Width="325" Margin="349,107,0,0" Source="Images/Rectangle 13.png" Panel.ZIndex="-1"/>
         <Image HorizontalAlignment="Left" Height="167" VerticalAlignment="Top" Width="106" Margin="58,49,0,0" Source="Images/man.png"/>
