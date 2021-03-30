@@ -42,6 +42,7 @@ namespace FinewareWPF
             SaskaitosDrop.ItemsSource = IbanArray(vartotojasSaved.Saskaitos);
             LikutisText.Text = vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis + " €";
             vardoPavardesText.Text = vartotojasSaved.Vardas + " " + vartotojasSaved.Pavarde;
+            saskaitosPavadinimas.Content = vartotojas.Saskaitos[pagrindinesSaskNr].Pavadinimas;
             emailText.Text = vartotojasSaved.Epastas;
         }
 
@@ -91,6 +92,7 @@ namespace FinewareWPF
             {
                 pagrindinesSaskNr = FindIbanNr(vartotojas.Saskaitos, e.AddedItems[0].ToString());
                 LikutisText.Text = vartotojas.Saskaitos[pagrindinesSaskNr].Likutis.ToString() + " €";
+                saskaitosPavadinimas.Content = vartotojas.Saskaitos[pagrindinesSaskNr].Pavadinimas;
             }
 
             vartotojasSaved = vartotojas;

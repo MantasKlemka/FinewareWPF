@@ -69,15 +69,15 @@
     </Window.Resources>
     <Grid>
         <Image HorizontalAlignment="Left" Height="76" Margin="365,235,0,0" VerticalAlignment="Top" Width="979" Source="Images/Rectangle 9.png"/>
-        <TextBlock x:Name="LikutisText" Text="12.45 e" VerticalAlignment="Top" Margin="870,261,0,0" Foreground="White" Background="{x:Null}" FontSize="20" Height="55" TextAlignment="Right" HorizontalAlignment="Left" Width="416"/>
+        <TextBlock x:Name="LikutisText" VerticalAlignment="Top" Margin="870,261,0,0" Foreground="White" Background="{x:Null}" FontSize="20" Height="55" TextAlignment="Right" HorizontalAlignment="Left" Width="416"/>
         <Label x:Name="LikutisLabel" Content="Saskaitos Likutis" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="720,256,0,0" Foreground="White" Width="182" Background="{x:Null}" FontSize="20" Height="34"/>
-        <Label x:Name="IbanText" Content="LT123456789012345678" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="389,258,0,0" Foreground="White" Width="290" Background="{x:Null}" FontSize="18" Height="34" FontWeight="Bold"/>
+        <Label x:Name="IbanText" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="389,258,0,0" Foreground="White" Width="290" Background="{x:Null}" FontSize="18" Height="34" FontWeight="Bold"/>
         <Label Content="Apžvalga" HorizontalAlignment="Left" Margin="374,49,0,0" VerticalAlignment="Top" FontSize="24" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
         <Label x:Name="Description" Content="Išrinkome tai ką jums svarbu žinoti apie gautus ir atliktus mokėjimus" HorizontalAlignment="Left" Margin="374,93,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FFA8A8A8"/>
-        <ComboBox x:Name="SaskaitosDrop" HorizontalAlignment="Left" Margin="398,185,0,0" VerticalAlignment="Top" Width="159" SelectionChanged="SaskaitosDrop_SelectionChanged" SelectedIndex="0"/>
+        <ComboBox x:Name="SaskaitosDrop" HorizontalAlignment="Left" Margin="432,200,0,0" VerticalAlignment="Top" Width="160" SelectionChanged="SaskaitosDrop_SelectionChanged" SelectedIndex="0"/>
         <Button Content="Atnaujinti" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="1236,212,0,0" Click="Button_Click"/>
-        <Label Content="Pasirinkta sąskaita" HorizontalAlignment="Left" Margin="398,151,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
-        <Image HorizontalAlignment="Left" Height="298" VerticalAlignment="Top" Width="242" Margin="356,127,0,0" Source="Images/Rectangle 13.png" Panel.ZIndex="-1"/>
+        <Label Content="Pasirinkta sąskaita" HorizontalAlignment="Left" Margin="438,141,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
+        <Image HorizontalAlignment="Left" Height="371" VerticalAlignment="Top" Width="325" Margin="349,107,0,0" Source="Images/Rectangle 13.png" Panel.ZIndex="-1"/>
         <Image HorizontalAlignment="Left" Height="167" VerticalAlignment="Top" Width="106" Margin="58,49,0,0" Source="Images/man.png"/>
         <Image HorizontalAlignment="Left" Height="834" VerticalAlignment="Top" Width="854" Margin="0,-27,0,0" Source="Images/Rectangle 1.png" Panel.ZIndex="-1"/>
         <TextBlock x:Name="emailText" Text="email@gmail.com" VerticalAlignment="Top" Margin="14,205,0,0" Foreground="#FF686868" Background="{x:Null}" Height="25" TextAlignment="Center" HorizontalAlignment="Left" Width="194"/>
@@ -93,5 +93,7 @@
         <Button Content="Nustatymai" HorizontalAlignment="Left" Margin="58,607,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="NustatymaiButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" FontWeight="Bold" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="#FFBBBBBB"/>
         <Button Content="Pagalba" HorizontalAlignment="Left" Margin="58,657,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="PagalbaButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" FontWeight="Bold" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="#FFBBBBBB"/>
         <Button Content="Atsijungti" HorizontalAlignment="Left" Margin="58,707,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="AtsijungtiButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" FontWeight="Bold" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="#FFBBBBBB"/>
+        <Label x:Name="saskaitosPavadinimas" Content="Sąskaitos pavadinimas" HorizontalAlignment="Left" Margin="428,175,0,0" VerticalAlignment="Top" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
+        <TextBlock VerticalAlignment="Top" Margin="389,162,0,0" Foreground="#FFCDCDCD" Background="{x:Null}" Height="25" TextAlignment="Center" HorizontalAlignment="Left" Width="248" FontSize="14"><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="—"/><Run Text="——————"/><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="—————"/><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="————"/></TextBlock>
     </Grid>
 </Window>

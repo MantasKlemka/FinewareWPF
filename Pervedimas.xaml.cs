@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 using FireSharp.Config;
 using FireSharp.Interfaces;
+using System.Globalization;
 
 namespace FinewareWPF
 {
@@ -42,7 +43,8 @@ namespace FinewareWPF
             SaskaitosDrop.ItemsSource = IbanArray(vartotojasSaved.Saskaitos);
             vardoPavardesText.Text = vartotojasSaved.Vardas + " " + vartotojasSaved.Pavarde;
             emailText.Text = vartotojasSaved.Epastas;
-            LikutisText.Content = "Sąskaitos likutis: " + vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis;
+            LikutisText.Content = "Sąskaitos likutis: " + vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis + " €";
+            saskaitosPavadinimas.Content = vartotojas.Saskaitos[pagrindinesSaskNr].Pavadinimas;
         }
 
         public string[] IbanArray(List<Saskaita> saskaitos)
@@ -73,7 +75,8 @@ namespace FinewareWPF
             {
                 pagrindinesSaskNr = FindIbanNr(vartotojas.Saskaitos, e.AddedItems[0].ToString());
             }
-            LikutisText.Content = "Sąskaitos likutis: " + vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis;
+            LikutisText.Content = "Sąskaitos likutis: " + vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis + " €";
+            saskaitosPavadinimas.Content = vartotojas.Saskaitos[pagrindinesSaskNr].Pavadinimas;
             vartotojasSaved = vartotojas;
         }
 
@@ -155,10 +158,10 @@ namespace FinewareWPF
             {
                 if (!IsDigitsOnly(sumaTextBox.Text))
                 {
-                    generalEventText.Content = "Sumą turi sudaryti tik skaičiai, kurie gali būti atskirti kableliu!";
+                    generalEventText.Content = "Sumą turi sudaryti tik skaičiai, kurie gali būti atskirti tašku!";
                     return;
                 }
-                if (double.Parse(sumaTextBox.Text) <= vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis)
+                if (double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture) <= vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis)
                 {
                     // nuskaitom paskyras is duomenu bazes
                     var response = await client.GetAsync("Paskyros/");
@@ -192,9 +195,9 @@ namespace FinewareWPF
                     {
                         if (siuntejas.Epastas == gavejas.Epastas)
                         {
-                            siuntejas.Saskaitos[pagrindinesSaskNr].Likutis -= double.Parse(sumaTextBox.Text);
+                            siuntejas.Saskaitos[pagrindinesSaskNr].Likutis -= double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture);
                             siuntejas.Saskaitos[pagrindinesSaskNr].Likutis = Math.Round(siuntejas.Saskaitos[pagrindinesSaskNr].Likutis, 2);
-                            siuntejas.Saskaitos[gavejoSaskaitosNr].Likutis += double.Parse(sumaTextBox.Text);
+                            siuntejas.Saskaitos[gavejoSaskaitosNr].Likutis += double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture);
                             siuntejas.Saskaitos[pagrindinesSaskNr].Likutis = Math.Round(siuntejas.Saskaitos[pagrindinesSaskNr].Likutis, 2);
                             await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
                             vartotojasSaved = siuntejas;
@@ -204,9 +207,9 @@ namespace FinewareWPF
                         }
                         else
                         {
-                            siuntejas.Saskaitos[pagrindinesSaskNr].Likutis -= double.Parse(sumaTextBox.Text);
+                            siuntejas.Saskaitos[pagrindinesSaskNr].Likutis -= double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture);
                             siuntejas.Saskaitos[pagrindinesSaskNr].Likutis = Math.Round(siuntejas.Saskaitos[pagrindinesSaskNr].Likutis, 2);
-                            gavejas.Saskaitos[gavejoSaskaitosNr].Likutis += double.Parse(sumaTextBox.Text);
+                            gavejas.Saskaitos[gavejoSaskaitosNr].Likutis += double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture);
                             siuntejas.Saskaitos[pagrindinesSaskNr].Likutis = Math.Round(siuntejas.Saskaitos[pagrindinesSaskNr].Likutis, 2);
                             await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
                             await client.UpdateAsync("Paskyros/" + gavejoKey, gavejas);
@@ -268,22 +271,22 @@ namespace FinewareWPF
 
         bool IsDigitsOnly(string suma)
         {
-            int commaCount = 0;
+            int dotCount = 0;
             foreach (char c in suma)
             {
                 if (!char.IsDigit(c))
                 {
-                    if (!c.Equals(','))
+                    if (!c.Equals('.'))
                     {
                         return false;
                     }
                     else
                     {
-                        if (commaCount == 1)
+                        if (dotCount == 1)
                         {
                             return false;
                         }
-                        commaCount++;
+                        dotCount++;
                     }
                 }
             }
