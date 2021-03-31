@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
 using System.Security.Cryptography;
+using System.Windows.Media.Animation;
 
 namespace FinewareWPF
 {
@@ -41,6 +42,7 @@ namespace FinewareWPF
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             patvirtintiButton.IsEnabled = false;
+            Loading();
             if (randomCode == EmailBox.Text)
             {
                 //sukuriamas vartotojas
@@ -60,6 +62,7 @@ namespace FinewareWPF
             }
             else
             {
+                Unloading();
                 generalEventText.Content = "Neteisingas kodas!";
                 generalEventText.Foreground = Brushes.Red;
                 generalEventText.Visibility = Visibility.Visible;
@@ -88,6 +91,23 @@ namespace FinewareWPF
         {
             patvirtintiLabel.Opacity = 1;
             patvirtintiBackround.Opacity = 1;
+        }
+        void Unloading()
+        {
+            dotProgress1.Visibility = Visibility.Hidden;
+            dotProgress2.Visibility = Visibility.Hidden;
+            dotProgress3.Visibility = Visibility.Hidden;
+            greyedOut.Visibility = Visibility.Hidden;
+        }
+
+        void Loading()
+        {
+            dotProgress1.Visibility = Visibility.Visible;
+            dotProgress2.Visibility = Visibility.Visible;
+            dotProgress3.Visibility = Visibility.Visible;
+            greyedOut.Visibility = Visibility.Visible;
+            Storyboard loading = (Storyboard)TryFindResource("loading");
+            loading.Begin();
         }
     }
 }

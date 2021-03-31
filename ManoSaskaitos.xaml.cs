@@ -112,6 +112,7 @@ namespace FinewareWPF
 
         private void ApzvalgaButton(object sender, RoutedEventArgs e)
         {
+            Loading();
             IsEnabled = false;
             var apzvalga = new Apzvalga(vartotojasSaved, keySaved);
             apzvalga.Show();
@@ -130,6 +131,7 @@ namespace FinewareWPF
 
         private void PavedimasButton(object sender, RoutedEventArgs e)
         {
+            Loading();
             IsEnabled = false;
             var pervedimas = new Pervedimas(vartotojasSaved, keySaved);
             pervedimas.Show();
@@ -172,6 +174,8 @@ namespace FinewareWPF
             }
 
             IsEnabled = false;
+            Loading();
+            Panel.SetZIndex(greyedOut, 9);
             Saskaita naujaSaskaita = new Saskaita(pavadinimoTextBox.Text, CreateIban(), 0, DateTime.Now.Date);
             vartotojasSaved.Saskaitos.Add(naujaSaskaita);
             await client.UpdateAsync("Paskyros/" + keySaved, vartotojasSaved);
@@ -293,6 +297,7 @@ namespace FinewareWPF
         {
             Button button = sender as Button;
             IsEnabled = false;
+            Loading();
             int nr = int.Parse(button.Name[13].ToString());
             vartotojasSaved.Saskaitos[0].Likutis += vartotojasSaved.Saskaitos[nr].Likutis;
             vartotojasSaved.Saskaitos.RemoveAt(nr);
@@ -333,6 +338,16 @@ namespace FinewareWPF
             veiksmai.Content = "Veiksmai";
             veiksmai.Margin = new Thickness(820, -23, 0, 0);
             saskaituGrid.Children.Add(veiksmai);
+        }
+
+        void Loading()
+        {
+            dotProgress1.Visibility = Visibility.Visible;
+            dotProgress2.Visibility = Visibility.Visible;
+            dotProgress3.Visibility = Visibility.Visible;
+            greyedOut.Visibility = Visibility.Visible;
+            Storyboard loading = (Storyboard)TryFindResource("loading");
+            loading.Begin();
         }
     }
 }

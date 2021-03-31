@@ -18,6 +18,7 @@ using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
 using Newtonsoft.Json;
+using System.Windows.Media.Animation;
 
 namespace FinewareWPF
 {
@@ -63,7 +64,8 @@ namespace FinewareWPF
             pavarde = pavardesTextBox.Text;
             epastas = ePastoTextBox.Text;
             slaptazodis = slaptazodzioTextBox_1.Password;
-           
+
+            Loading();
             // tikriname ar neegzistuoja paskyra su šiuo email
             var response = await client.GetAsync("Paskyros/");
             Dictionary<string, Vartotojas> list = response.ResultAs<Dictionary<string, Vartotojas>>();
@@ -97,6 +99,7 @@ namespace FinewareWPF
                     }
                     catch
                     {
+                        Unloading();
                         ePastoError.Visibility = Visibility.Visible;
                         ePastoError.Content = "Toks paštas neegzistuoja!";
                         registruotisButton.IsEnabled = true;
@@ -104,11 +107,13 @@ namespace FinewareWPF
                 }
                 else
                 {
+                    Unloading();
                     registruotisButton.IsEnabled = true;
                 }
             }
             else
             {
+                Unloading();
                 ePastoError.Content = "Toks paštas užimtas";
                 ePastoError.Visibility = Visibility.Visible;
                 registruotisButton.IsEnabled = true;
@@ -131,6 +136,8 @@ namespace FinewareWPF
         // perjungiame i prisijungimo langą
         private void LoginButton(object sender, RoutedEventArgs e)
         {
+            Loading();
+            IsEnabled = false;
             var loginForm = new Prisijungimas();
             loginForm.Show();
             Close();
@@ -297,6 +304,24 @@ namespace FinewareWPF
         {
             registruotisLabel.Opacity = 1;
             registruotisBackround.Opacity = 1;
+        }
+
+        void Unloading()
+        {
+            dotProgress1.Visibility = Visibility.Hidden;
+            dotProgress2.Visibility = Visibility.Hidden;
+            dotProgress3.Visibility = Visibility.Hidden;
+            greyedOut.Visibility = Visibility.Hidden;
+        }
+
+        void Loading()
+        {
+            dotProgress1.Visibility = Visibility.Visible;
+            dotProgress2.Visibility = Visibility.Visible;
+            dotProgress3.Visibility = Visibility.Visible;
+            greyedOut.Visibility = Visibility.Visible;
+            Storyboard loading = (Storyboard)TryFindResource("loading");
+            loading.Begin();
         }
     }
 }

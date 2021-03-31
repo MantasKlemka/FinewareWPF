@@ -45,7 +45,14 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
+        <Storyboard RepeatBehavior="Forever" x:Key="loading" >
+            <DoubleAnimation Storyboard.TargetName="dotProgress1" BeginTime="0:0:0.1" Storyboard.TargetProperty="Opacity" From="0" To="1"/>
+            <DoubleAnimation Storyboard.TargetName="dotProgress2" BeginTime="0:0:0.2" Storyboard.TargetProperty="Opacity" From="0" To="1"/>
+            <DoubleAnimation Storyboard.TargetName="dotProgress3" BeginTime="0:0:0.3" Storyboard.TargetProperty="Opacity" From="0" To="1"/>
+            <DoubleAnimation Storyboard.TargetName="dotProgress1" BeginTime="0:0:0.4" Storyboard.TargetProperty="Opacity" From="1" To="0"/>
+            <DoubleAnimation Storyboard.TargetName="dotProgress2" BeginTime="0:0:0.4" Storyboard.TargetProperty="Opacity" From="1" To="0"/>
+            <DoubleAnimation Storyboard.TargetName="dotProgress3" BeginTime="0:0:0.4" Storyboard.TargetProperty="Opacity" From="1" To="0"/>
+        </Storyboard>
     </Window.Resources>
     <Grid>
         <TextBox x:Name="EmailBox" Height="172" Margin="118,275,433,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" SelectionBrush="{x:Null}" Style="{StaticResource customTextBox}" FontSize="162" Foreground="#FF4BC4AA" Panel.ZIndex="5" FontFamily="ISOCTEUR" MaxLength="5" CaretBrush="Transparent"/>
@@ -66,6 +73,9 @@
         <Image HorizontalAlignment="Left" Height="140" Margin="254,309,0,0" VerticalAlignment="Top" Width="85" Source="Images/Rectangle 8.png"/>
         <Label Content="Įveskite kodą:" HorizontalAlignment="Left" Margin="334,250,0,0" VerticalAlignment="Top" FontSize="22" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
         <Label x:Name="Copyright" Content="© 2021 Fineware" HorizontalAlignment="Left" Margin="348,751,0,0" VerticalAlignment="Top" FontSize="18" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FFD6CECE" Background="{x:Null}"/>
-
+        <Image Name="dotProgress1" Source="Images/dot.png" Margin="593,382,536,400" Panel.ZIndex="10" Visibility="Hidden"/>
+        <Image Name="dotProgress2" Source="Images/dot.png" Margin="578,408,551,374" Panel.ZIndex="10" Visibility="Hidden"/>
+        <Image Name="dotProgress3" Source="Images/dot.png" Margin="561,382,568,400" Panel.ZIndex="10" Visibility="Hidden"/>
+        <Image x:Name="greyedOut" HorizontalAlignment="Left" Height="1222" Margin="-38,-27,-92,-388" VerticalAlignment="Top" Width="1524" Source="Images/Path 340.png" Panel.ZIndex="5" Visibility="Hidden"/>
     </Grid>
 </Window>

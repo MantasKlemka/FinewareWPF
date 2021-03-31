@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
+using System.Windows.Media.Animation;
 
 namespace FinewareWPF
 {
@@ -40,6 +41,7 @@ namespace FinewareWPF
         private async void CreateButton(object sender, RoutedEventArgs e)
         {
             pateiktiButton.IsEnabled = false;
+            Loading();
             // tikrina ar įvesti kodai atitinka reikalavimus
             FourDigitValidation(sender, e);
             SixDigitValidation(sender, e);
@@ -55,7 +57,11 @@ namespace FinewareWPF
                 apzvalga.Show();
                 Close();
             }
-            else pateiktiButton.IsEnabled = true;
+            else
+            {
+                Unloading();
+                pateiktiButton.IsEnabled = true;
+            }
         }
 
         private void FourDigitValidation(object sender, RoutedEventArgs e)
@@ -114,6 +120,23 @@ namespace FinewareWPF
         {
             pateiktiLabel.Opacity = 1;
             pateiktiBackround.Opacity = 1;
+        }
+        void Unloading()
+        {
+            dotProgress1.Visibility = Visibility.Hidden;
+            dotProgress2.Visibility = Visibility.Hidden;
+            dotProgress3.Visibility = Visibility.Hidden;
+            greyedOut.Visibility = Visibility.Hidden;
+        }
+
+        void Loading()
+        {
+            dotProgress1.Visibility = Visibility.Visible;
+            dotProgress2.Visibility = Visibility.Visible;
+            dotProgress3.Visibility = Visibility.Visible;
+            greyedOut.Visibility = Visibility.Visible;
+            Storyboard loading = (Storyboard)TryFindResource("loading");
+            loading.Begin();
         }
     }
 }

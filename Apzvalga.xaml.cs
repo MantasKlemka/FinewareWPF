@@ -15,6 +15,8 @@ using FireSharp.Config;
 using FireSharp.Interfaces;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
+
+
 namespace FinewareWPF
 {
     /// <summary>
@@ -119,6 +121,7 @@ namespace FinewareWPF
 
         async private void PavedimasButton(object sender, RoutedEventArgs e)
         {
+            Loading();
             IsEnabled = false;
             var response = await client.GetAsync("Paskyros/" + keySaved);
             Vartotojas vartotojas = response.ResultAs<Vartotojas>();
@@ -140,8 +143,9 @@ namespace FinewareWPF
 
         private void ManoButton(object sender, RoutedEventArgs e)
         {
+            Loading();
             IsEnabled = false;
-            var manoSaskaitos = new ManoSaskaitos(vartotojasSaved, keySaved);
+            ManoSaskaitos manoSaskaitos = new ManoSaskaitos(vartotojasSaved, keySaved);
             manoSaskaitos.Show();
             Close();
         }
@@ -159,6 +163,16 @@ namespace FinewareWPF
         private void AtsijungtiButton(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        void Loading()
+        {
+            dotProgress1.Visibility = Visibility.Visible;
+            dotProgress2.Visibility = Visibility.Visible;
+            dotProgress3.Visibility = Visibility.Visible;
+            greyedOut.Visibility = Visibility.Visible;
+            Storyboard loading = (Storyboard)TryFindResource("loading");
+            loading.Begin();
         }
     }
 }

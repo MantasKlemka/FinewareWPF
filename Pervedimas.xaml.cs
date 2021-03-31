@@ -109,6 +109,7 @@ namespace FinewareWPF
 
         private void ApzvalgaButton(object sender, RoutedEventArgs e)
         {
+            Loading();
             IsEnabled = false;
             var apzvalga = new Apzvalga(vartotojasSaved, keySaved);
             apzvalga.Show();
@@ -127,10 +128,29 @@ namespace FinewareWPF
 
         private void ManoButton(object sender, RoutedEventArgs e)
         {
+            Loading();
             IsEnabled = false;
             var manoSaskaitos = new ManoSaskaitos(vartotojasSaved, keySaved);
             manoSaskaitos.Show();
             Close();
+        }
+
+        void Loading()
+        {
+            dotProgress1.Visibility = Visibility.Visible;
+            dotProgress2.Visibility = Visibility.Visible;
+            dotProgress3.Visibility = Visibility.Visible;
+            greyedOut.Visibility = Visibility.Visible;
+            Storyboard loading = (Storyboard)TryFindResource("loading");
+            loading.Begin();
+        }
+
+        void Unloading()
+        {
+            dotProgress1.Visibility = Visibility.Hidden;
+            dotProgress2.Visibility = Visibility.Hidden;
+            dotProgress3.Visibility = Visibility.Hidden;
+            greyedOut.Visibility = Visibility.Hidden;
         }
 
         private void GautiButton(object sender, RoutedEventArgs e)
@@ -165,6 +185,7 @@ namespace FinewareWPF
                 }
                 if (double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture) <= vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis)
                 {
+                    Loading();
                     // nuskaitom paskyras is duomenu bazes
                     var response = await client.GetAsync("Paskyros/");
                     Dictionary<string, Vartotojas> list = response.ResultAs<Dictionary<string, Vartotojas>>();
@@ -180,22 +201,25 @@ namespace FinewareWPF
                     }
                     else
                     {
+                        Unloading();
                         generalEventText.Content = "Nėra tokio gavėjo!";
                         return;
                     }
                     if (gavejas != null)
                     {
+                        Unloading();
                         gavejoSaskaitosNr = GetBillNumber(gavejas);
-
                     }
                     else
                     {
+                        Unloading();
                         generalEventText.Content = "Nėra tokio gavėjo!";
                         return;
                     }
                     if (gavejoSaskaitosNr != -1)
                     {
                         IsEnabled = false;
+                        Loading();
                         if (siuntejas.Epastas == gavejas.Epastas)
                         {
                             siuntejas.Saskaitos[pagrindinesSaskNr].Likutis -= double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture);

@@ -66,6 +66,14 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Storyboard RepeatBehavior="Forever" x:Key="loading" >
+            <DoubleAnimation Storyboard.TargetName="dotProgress1" BeginTime="0:0:0.1" Storyboard.TargetProperty="Opacity" From="0" To="1"/>
+            <DoubleAnimation Storyboard.TargetName="dotProgress2" BeginTime="0:0:0.2" Storyboard.TargetProperty="Opacity" From="0" To="1"/>
+            <DoubleAnimation Storyboard.TargetName="dotProgress3" BeginTime="0:0:0.3" Storyboard.TargetProperty="Opacity" From="0" To="1"/>
+            <DoubleAnimation Storyboard.TargetName="dotProgress1" BeginTime="0:0:0.4" Storyboard.TargetProperty="Opacity" From="1" To="0"/>
+            <DoubleAnimation Storyboard.TargetName="dotProgress2" BeginTime="0:0:0.4" Storyboard.TargetProperty="Opacity" From="1" To="0"/>
+            <DoubleAnimation Storyboard.TargetName="dotProgress3" BeginTime="0:0:0.4" Storyboard.TargetProperty="Opacity" From="1" To="0"/>
+        </Storyboard>
     </Window.Resources>
     <Grid>
         <Label Content="Mano sąskaitos" HorizontalAlignment="Left" Margin="374,49,0,0" VerticalAlignment="Top" FontSize="24" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
@@ -103,6 +111,9 @@
         <Image x:Name="underLine_2" HorizontalAlignment="Left" Height="52" Margin="572,414,0,0" VerticalAlignment="Top" Width="190" Source="Images/Line.png" Panel.ZIndex="6" Visibility="Collapsed"/>
         <Grid x:Name="saskaituGrid" HorizontalAlignment="Left" Height="480" Margin="374,172,0,0" VerticalAlignment="Top" Width="924"/>
         <Label x:Name="generalEventText" Content="" HorizontalAlignment="Left" Margin="605,327,0,0" VerticalAlignment="Top" Height="28" Foreground="Red" Visibility="Collapsed" Width="309" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Panel.ZIndex="6"/>
+        <Image Name="dotProgress1" Source="Images/dot.png" Stretch="Fill" Height="25" Width="30" Margin="776,377,568,385" Panel.ZIndex="10" Visibility="Hidden"/>
+        <Image Name="dotProgress2" Source="Images/dot.png" Stretch="Fill" Height="25" Width="30" Margin="751,419,593,343" Panel.ZIndex="10" Visibility="Hidden"/>
+        <Image Name="dotProgress3" Source="Images/dot.png" Stretch="Fill" Height="25" Width="30" Margin="726,377,618,385" Panel.ZIndex="10" Visibility="Hidden"/>
     </Grid>
 </Window>
 

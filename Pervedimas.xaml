@@ -66,6 +66,14 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Storyboard RepeatBehavior="Forever" x:Key="loading" >
+            <DoubleAnimation Storyboard.TargetName="dotProgress1" BeginTime="0:0:0.1" Storyboard.TargetProperty="Opacity" From="0" To="1"/>
+            <DoubleAnimation Storyboard.TargetName="dotProgress2" BeginTime="0:0:0.2" Storyboard.TargetProperty="Opacity" From="0" To="1"/>
+            <DoubleAnimation Storyboard.TargetName="dotProgress3" BeginTime="0:0:0.3" Storyboard.TargetProperty="Opacity" From="0" To="1"/>
+            <DoubleAnimation Storyboard.TargetName="dotProgress1" BeginTime="0:0:0.4" Storyboard.TargetProperty="Opacity" From="1" To="0"/>
+            <DoubleAnimation Storyboard.TargetName="dotProgress2" BeginTime="0:0:0.4" Storyboard.TargetProperty="Opacity" From="1" To="0"/>
+            <DoubleAnimation Storyboard.TargetName="dotProgress3" BeginTime="0:0:0.4" Storyboard.TargetProperty="Opacity" From="1" To="0"/>
+        </Storyboard>
     </Window.Resources>
     <Grid>
         <Label Content="Naujas pavedimas" HorizontalAlignment="Left" Margin="374,49,0,0" VerticalAlignment="Top" FontSize="24" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
@@ -110,6 +118,10 @@
         <Label x:Name="generalEventText" Content="" HorizontalAlignment="Left" Margin="618,327,0,0" VerticalAlignment="Top" Height="28" Foreground="Red" Visibility="Visible" Width="541" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="/FinewareWPF;component/Fonts/#Roboto"/>
         <Label x:Name="saskaitosPavadinimas" Content="Sąskaitos pavadinimas" HorizontalAlignment="Left" Margin="420,177,0,0" VerticalAlignment="Top" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
         <TextBlock VerticalAlignment="Top" Margin="402,156,0,0" Foreground="#FFCDCDCD" Background="{x:Null}" Height="25" TextAlignment="Center" HorizontalAlignment="Left" Width="248" FontSize="14"><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="—"/><Run Text="——————"/><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="—————"/><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="————"/></TextBlock>
+        <Image Name="dotProgress1" Source="Images/dot.png" Stretch="Fill" Height="25" Width="30" Margin="776,377,568,385" Panel.ZIndex="6" Visibility="Hidden"/>
+        <Image Name="dotProgress2" Source="Images/dot.png" Stretch="Fill" Height="25" Width="30" Margin="751,419,593,343" Panel.ZIndex="6" Visibility="Hidden"/>
+        <Image Name="dotProgress3" Source="Images/dot.png" Stretch="Fill" Height="25" Width="30" Margin="726,377,618,385" Panel.ZIndex="6" Visibility="Hidden"/>
+        <Image x:Name="greyedOut" HorizontalAlignment="Left" Height="1222" Margin="-38,-27,-92,-388" VerticalAlignment="Top" Width="1524" Source="Images/Path 340.png" Panel.ZIndex="5" Visibility="Hidden"/>
     </Grid>
 </Window>
 
