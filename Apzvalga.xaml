@@ -117,7 +117,7 @@
         <Label Content="Apžvalga" HorizontalAlignment="Left" Margin="374,49,0,0" VerticalAlignment="Top" FontSize="24" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold" Height="39" Width="109"/>
         <Label x:Name="Description" Content="Išrinkome tai ką jums svarbu žinoti apie gautus ir atliktus mokėjimus" HorizontalAlignment="Left" Margin="374,93,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FFA8A8A8" Height="29" Width="495"/>
         <ComboBox x:Name="SaskaitosDrop" HorizontalAlignment="Left" Margin="432,200,0,0" VerticalAlignment="Top" Width="160" SelectionChanged="SaskaitosDrop_SelectionChanged" SelectedIndex="0" Height="20"/>
-        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="40" Margin="1444,200,-90,0" Click="Button_Click" Style="{StaticResource rotateButton}" BorderBrush="{x:Null}" Background="{x:Null}" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Foreground="Black" Height="34">
+        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="40" Margin="1280,200,-90,0" Click="Button_Click" Style="{StaticResource rotateButton}" BorderBrush="{x:Null}" Background="{x:Null}" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Foreground="Black" Height="34">
             <StackPanel>
                 <Image x:Name="refreshButton" Source="Images/refresh.png"/>
             </StackPanel>
