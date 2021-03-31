@@ -147,7 +147,11 @@ namespace FinewareWPF
 
         private void IsrasasButton(object sender, RoutedEventArgs e)
         {
-
+            Loading();
+            IsEnabled = false;
+            var israsas = new Israsai(vartotojasSaved, keySaved);
+            israsas.Show();
+            Close();
         }
 
         async private void PavedimasButton(object sender, RoutedEventArgs e)

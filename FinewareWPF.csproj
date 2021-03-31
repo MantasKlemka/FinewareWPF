@@ -93,6 +93,9 @@
     <Compile Include="EmailPriminimas.xaml.cs">
       <DependentUpon>EmailPriminimas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Israsai.xaml.cs">
+      <DependentUpon>Israsai.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Israsas.cs" />
     <Compile Include="ManoSaskaitos.xaml.cs">
       <DependentUpon>ManoSaskaitos.xaml</DependentUpon>
@@ -124,6 +127,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EmailPriminimas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Israsai.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -107,7 +107,11 @@ namespace FinewareWPF
 
         private void IsrasasButton(object sender, RoutedEventArgs e)
         {
-
+            Loading();
+            IsEnabled = false;
+            var israsas = new Israsai(vartotojasSaved, keySaved);
+            israsas.Show();
+            Close();
         }
 
         private void ApzvalgaButton(object sender, RoutedEventArgs e)
