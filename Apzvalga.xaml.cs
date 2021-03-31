@@ -47,6 +47,21 @@ namespace FinewareWPF
             vardoPavardesText.Text = vartotojasSaved.Vardas + " " + vartotojasSaved.Pavarde;
             saskaitosPavadinimas.Content = vartotojas.Saskaitos[pagrindinesSaskNr].Pavadinimas;
             emailText.Text = vartotojasSaved.Epastas;
+            Israsas paskutinisSiustas = LastSent(vartotojasSaved, pagrindinesSaskNr);
+            Israsas paskutinisGautas = LastRecieved(vartotojasSaved, pagrindinesSaskNr);
+            if (paskutinisSiustas != null)
+            {
+                issiustaKodas.Content = paskutinisSiustas.Kodas;
+                issiustaPavadinimas.Content = paskutinisSiustas.Pavadinimas;
+                issiustaSuma.Text = paskutinisSiustas.Suma.ToString() + " €";
+            }
+            if (paskutinisGautas != null)
+            {
+                gautaKodas.Content = paskutinisGautas.Kodas;
+                gautaPavadinimas.Content = paskutinisGautas.Pavadinimas;
+                gautaSuma.Text = paskutinisGautas.Suma.ToString() + " €";
+            }
+
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -88,6 +103,8 @@ namespace FinewareWPF
 
         private async void SaskaitosDrop_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Loading();
+            ClearGetSentInfo();
             var response = await client.GetAsync("Paskyros/" + keySaved);
             Vartotojas vartotojas = response.ResultAs<Vartotojas>();
             IbanText.Content = e.AddedItems[0].ToString();
@@ -96,8 +113,22 @@ namespace FinewareWPF
                 pagrindinesSaskNr = FindIbanNr(vartotojas.Saskaitos, e.AddedItems[0].ToString());
                 LikutisText.Text = vartotojas.Saskaitos[pagrindinesSaskNr].Likutis.ToString() + " €";
                 saskaitosPavadinimas.Content = vartotojas.Saskaitos[pagrindinesSaskNr].Pavadinimas;
+                Israsas paskutinisSiustas = LastSent(vartotojasSaved, pagrindinesSaskNr);
+                Israsas paskutinisGautas = LastRecieved(vartotojasSaved, pagrindinesSaskNr);
+                if (paskutinisSiustas != null)
+                {
+                    issiustaKodas.Content = paskutinisSiustas.Kodas;
+                    issiustaPavadinimas.Content = paskutinisSiustas.Pavadinimas;
+                    issiustaSuma.Text = paskutinisSiustas.Suma.ToString() + " €";
+                }
+                if (paskutinisGautas != null)
+                {
+                    gautaKodas.Content = paskutinisGautas.Kodas;
+                    gautaPavadinimas.Content = paskutinisGautas.Pavadinimas;
+                    gautaSuma.Text = paskutinisGautas.Suma.ToString() + " €";
+                }
             }
-
+            Unloading();
             vartotojasSaved = vartotojas;
 
         }
@@ -173,6 +204,52 @@ namespace FinewareWPF
             greyedOut.Visibility = Visibility.Visible;
             Storyboard loading = (Storyboard)TryFindResource("loading");
             loading.Begin();
+        }
+
+        void Unloading()
+        {
+            dotProgress1.Visibility = Visibility.Hidden;
+            dotProgress2.Visibility = Visibility.Hidden;
+            dotProgress3.Visibility = Visibility.Hidden;
+            greyedOut.Visibility = Visibility.Hidden;
+        }
+        Israsas LastSent(Vartotojas vartotojas, int saskaitosNr)
+        {
+            Israsas paskutinisIssiustas = null;
+            if (vartotojas.Saskaitos[saskaitosNr].Israsai == null) return paskutinisIssiustas;
+            for(int i = vartotojas.Saskaitos[saskaitosNr].Israsai.Count - 1; i >= 0; i--)
+            {
+                if(vartotojas.Saskaitos[saskaitosNr].Israsai[i].Tipas == "Siuncia")
+                {
+                    paskutinisIssiustas = vartotojas.Saskaitos[saskaitosNr].Israsai[i];
+                    return paskutinisIssiustas;
+                }
+            }
+            return paskutinisIssiustas;
+        }
+
+        Israsas LastRecieved(Vartotojas vartotojas, int saskaitosNr)
+        {
+            Israsas paskutinisGautas = null;
+            if (vartotojas.Saskaitos[saskaitosNr].Israsai == null) return paskutinisGautas;
+            for (int i = vartotojas.Saskaitos[saskaitosNr].Israsai.Count - 1; i >= 0; i--)
+            {
+                if (vartotojas.Saskaitos[saskaitosNr].Israsai[i].Tipas == "Gauna")
+                {
+                    paskutinisGautas = vartotojas.Saskaitos[saskaitosNr].Israsai[i];
+                    return paskutinisGautas;
+                }
+            }
+            return paskutinisGautas;
+        }
+        void ClearGetSentInfo()
+        {
+            issiustaKodas.Content = "";
+            issiustaPavadinimas.Content = "";
+            issiustaSuma.Text = "";
+            gautaKodas.Content = "";
+            gautaPavadinimas.Content = "";
+            gautaSuma.Text = "";
         }
     }
 }

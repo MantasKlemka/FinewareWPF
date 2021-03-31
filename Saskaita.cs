@@ -12,6 +12,7 @@ namespace FinewareWPF
         public string Kodas { get; set; }
         public double Likutis { get; set; }
         public DateTime SukurimoData { get; set; }
+        public List<Israsas> Israsai = new List<Israsas>();
 
         public Saskaita()
         {

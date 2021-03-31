@@ -93,6 +93,7 @@
     <Compile Include="EmailPriminimas.xaml.cs">
       <DependentUpon>EmailPriminimas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Israsas.cs" />
     <Compile Include="ManoSaskaitos.xaml.cs">
       <DependentUpon>ManoSaskaitos.xaml</DependentUpon>
     </Compile>
