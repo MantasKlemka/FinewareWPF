@@ -231,7 +231,7 @@ namespace FinewareWPF
                             siuntejas.Saskaitos[gavejoSaskaitosNr].Likutis += double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture);
                             siuntejas.Saskaitos[pagrindinesSaskNr].Likutis = Math.Round(siuntejas.Saskaitos[pagrindinesSaskNr].Likutis, 2);
                             Israsas gavejo = new Israsas(siuntejas.Vardas + " " + siuntejas.Pavarde, double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), paskirtisText.Text, DateTime.Now, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, siuntejas.Saskaitos[pagrindinesSaskNr].Pavadinimas, "Gauna");
-                            Israsas siuntejo = new Israsas(siuntejas.Vardas + " " + siuntejas.Pavarde, double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), paskirtisText.Text, DateTime.Now, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, siuntejas.Saskaitos[pagrindinesSaskNr].Pavadinimas, "Siuncia");
+                            Israsas siuntejo = new Israsas(siuntejas.Vardas + " " + siuntejas.Pavarde, double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), paskirtisText.Text, DateTime.Now, siuntejas.Saskaitos[gavejoSaskaitosNr].Kodas, siuntejas.Saskaitos[gavejoSaskaitosNr].Pavadinimas, "Siuncia");
                             siuntejas.Saskaitos[pagrindinesSaskNr].Israsai.Add(siuntejo);
                             siuntejas.Saskaitos[gavejoSaskaitosNr].Israsai.Add(gavejo);
                             await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
