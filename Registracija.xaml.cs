@@ -67,70 +67,86 @@ namespace FinewareWPF
 
             Loading();
             // tikriname ar neegzistuoja paskyra su šiuo email
-            var response = await client.GetAsync("Paskyros/");
-            Dictionary<string, Vartotojas> list = response.ResultAs<Dictionary<string, Vartotojas>>();
+            string email = String.Join("", Encoding.ASCII.GetBytes(ValidEmail(ePastoTextBox.Text)));
+            var response = await client.GetAsync("Paskyros/" + email);
+            Vartotojas vartotojas = response.ResultAs<Vartotojas>();
             // ieškome ar egzistuoja tokia paskyra duomenų bazėje
-            Vartotojas paskyra = new Vartotojas();
-            string key = "";
-            paskyra = CorrectEmail(list, out key);
             // jei neegzistuoja
-            if(key == "")
+            
+            if (ePastoTextBox.Text != "")
             {
-                // tikrinama ar nėra klaidų susijusių su langeliais
-                if (!slaptazodzioError_1.IsVisible & !slaptazodzioError_2.IsVisible & !vardoError.IsVisible & !pavardesError.IsVisible & !ePastoError.IsVisible)
+                if (vartotojas == null)
                 {
-                    slaptazodis = Security.HashingPassword(slaptazodis);
-
-                    Random rand = new Random();
-                    randomCode = (rand.Next(10000, 99999)).ToString();
-                    try
+                    // tikrinama ar nėra klaidų susijusių su langeliais
+                    if (!slaptazodzioError_1.IsVisible & !slaptazodzioError_2.IsVisible & !vardoError.IsVisible & !pavardesError.IsVisible & !ePastoError.IsVisible)
                     {
-                        string messageBody = "Jūsu patvirtinimo kodas yra: " + randomCode;
-                        string messageSubject = "Registracijos patvirtinimo kodas";
-                        MailMessage message = SiustiLaiska.CreateMessage(epastas, projektoEpastas, messageBody, messageSubject);
-                        SiustiLaiska.SendMessage(projektoEpastas, projektoSlaptazodis, message);
-                        var EmailCode = new EmailPatikrinimas();
-                        EmailCode.generalEventText.Content = "Išsiunteme jums kodą į El. paštą!";
-                        EmailCode.generalEventText.Foreground = Brushes.Green;
-                        EmailCode.generalEventText.Visibility = Visibility.Visible;
-                        EmailCode.randomCode = randomCode;
-                        EmailCode.Show();
-                        Close();
+                        slaptazodis = Security.HashingPassword(slaptazodis);
+
+                        Random rand = new Random();
+                        randomCode = (rand.Next(10000, 99999)).ToString();
+                        try
+                        {
+                            string messageBody = "Jūsu patvirtinimo kodas yra: " + randomCode;
+                            string messageSubject = "Registracijos patvirtinimo kodas";
+                            MailMessage message = SiustiLaiska.CreateMessage(epastas, projektoEpastas, messageBody, messageSubject);
+                            SiustiLaiska.SendMessage(projektoEpastas, projektoSlaptazodis, message);
+                            var EmailCode = new EmailPatikrinimas();
+                            EmailCode.generalEventText.Content = "Išsiunteme jums kodą į El. paštą!";
+                            EmailCode.generalEventText.Foreground = Brushes.Green;
+                            EmailCode.generalEventText.Visibility = Visibility.Visible;
+                            EmailCode.randomCode = randomCode;
+                            EmailCode.Show();
+                            Close();
+                        }
+                        catch
+                        {
+                            Unloading();
+                            ePastoError.Visibility = Visibility.Visible;
+                            ePastoError.Content = "Toks paštas neegzistuoja!";
+                            registruotisButton.IsEnabled = true;
+                        }
                     }
-                    catch
+                    else
                     {
                         Unloading();
-                        ePastoError.Visibility = Visibility.Visible;
-                        ePastoError.Content = "Toks paštas neegzistuoja!";
                         registruotisButton.IsEnabled = true;
                     }
                 }
                 else
                 {
                     Unloading();
+                    ePastoError.Content = "Toks paštas užimtas";
+                    ePastoError.Visibility = Visibility.Visible;
                     registruotisButton.IsEnabled = true;
                 }
             }
             else
             {
                 Unloading();
-                ePastoError.Content = "Toks paštas užimtas";
-                ePastoError.Visibility = Visibility.Visible;
                 registruotisButton.IsEnabled = true;
+                ePastoError.Visibility = Visibility.Visible;
+                ePastoError.Content = "Prašome užpildyti langelį!";
             }
+
         }
 
-        bool IsValidEmail(string email)
+        public static string ValidEmail(string email)
         {
-            try
+            string emailName = "";
+            for (int i = 0; i < email.Length; i++)
             {
-                var addr = new MailAddress(email);
-                return addr.Address == email;
+                if (!email[i].Equals('@'))
+                {
+                    emailName += email[i];
+                }
+                else
+                {
+                    emailName = emailName.Replace(".", "");
+                    emailName += email.Substring(i, email.Length - i);
+                    i = email.Length;
+                }
             }
-            catch
-            {
-                return false;
-            }
+            return emailName;
         }
 
         // perjungiame i prisijungimo langą
@@ -238,14 +254,15 @@ namespace FinewareWPF
 
         private void EmailValidation(object sender, RoutedEventArgs e)
         {
-            if (ePastoTextBox.Text != "")
+
+            if (ePastoTextBox.Text.Contains(' '))
             {
-                ePastoError.Visibility = Visibility.Hidden;
+                ePastoError.Visibility = Visibility.Visible;
+                ePastoError.Content = "Paštas negali turėti tarpų!";
             }
             else
             {
-                ePastoError.Visibility = Visibility.Visible;
-                ePastoError.Content = "Prašome užpildyti langelį";
+                ePastoError.Visibility = Visibility.Hidden;
             }
         }
 

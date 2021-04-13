@@ -50,16 +50,10 @@ namespace FinewareWPF
             Random rand = new Random();
             randomCode = (rand.Next(10000, 99999)).ToString();
             Loading();
-            Vartotojas paskyra = null;
-            string key = "";
-            // nuskaitom paskyras is duomenu bazes
-            var response = await client.GetAsync("Paskyros/");
-            Dictionary<string, Vartotojas> list = response.ResultAs<Dictionary<string, Vartotojas>>();
-            // ieškome ar egzistuoja tokia paskyra duomenų bazėje
-            if (list != null)
-            {
-                paskyra = CorrectEmail(list, out key);
-            }
+            string key = String.Join("", Encoding.ASCII.GetBytes(ValidEmail(Emailtextbox.Text)));
+            // nuskaitom paskyra is duomenu bazes
+            var response = await client.GetAsync("Paskyros/" + key);
+            Vartotojas paskyra = response.ResultAs<Vartotojas>();
 
             // jei paskyra egzistuoja
             if (paskyra != null)
@@ -93,11 +87,11 @@ namespace FinewareWPF
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Loading();
-            // nuskaitom paskyras is duomenu bazes
-            var response = await client.GetAsync("Paskyros/");
-            Dictionary<string, Vartotojas> list = response.ResultAs<Dictionary<string, Vartotojas>>();
+            // nuskaitom paskyra is duomenu bazes
+            string key = String.Join("", Encoding.ASCII.GetBytes(ValidEmail(Emailtextbox.Text)));
+            var response = await client.GetAsync("Paskyros/" + key);
+            Vartotojas paskyra = response.ResultAs<Vartotojas>();
             // ieškome ar egzistuoja tokia paskyra duomenų bazėje
-            Vartotojas paskyra = CorrectEmail(list, out key);
             if(randomCode == codetextbox.Text)
             {
                 string newPass = Security.RandomPassword();
@@ -122,22 +116,23 @@ namespace FinewareWPF
             }
         }
 
-        public Vartotojas CorrectEmail(Dictionary<string, Vartotojas> list, out string key)
+        public static string ValidEmail(string email)
         {
-            Vartotojas paskyra = null;
-            // ieskome reikiamos paskyros
-            foreach (var entry in list)
+            string emailName = "";
+            for (int i = 0; i < email.Length; i++)
             {
-                Vartotojas vartotojas = entry.Value;
-                if (Emailtextbox.Text == vartotojas.Epastas)
+                if (!email[i].Equals('@'))
                 {
-                    paskyra = vartotojas;
-                    key = entry.Key;
-                    return paskyra;
+                    emailName += email[i];
+                }
+                else
+                {
+                    emailName = emailName.Replace(".", "");
+                    emailName += email.Substring(i, email.Length - i);
+                    i = email.Length;
                 }
             }
-            key = "";
-            return paskyra;
+            return emailName;
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)

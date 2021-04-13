@@ -44,16 +44,10 @@ namespace FinewareWPF
         {
             Loading();
             prisijungtiButton.IsEnabled = false;
-            Vartotojas paskyra = null;
-            string key = "";
-            // nuskaitom paskyras is duomenu bazes
-            var response = await client.GetAsync("Paskyros/");
-            Dictionary<string, Vartotojas> list = response.ResultAs<Dictionary<string, Vartotojas>>();
-            // ieškome ar egzistuoja tokia paskyra duomenų bazėje
-            if(list != null)
-            {
-                paskyra = CorrectEmail(list, out key);
-            }
+            string key = String.Join("", Encoding.ASCII.GetBytes(ePastoTextBox.Text));
+            // nuskaitom paskyra is duomenu bazes
+            var response = await client.GetAsync("Paskyros/" + key);
+            Vartotojas paskyra = response.ResultAs<Vartotojas>();
 
             // jei paskyra neegzistuoja
             if (paskyra == null)

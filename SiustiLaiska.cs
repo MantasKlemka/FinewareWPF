@@ -14,6 +14,7 @@ namespace FinewareWPF
         {
             //pranesimo kurimas
             MailMessage message = new MailMessage();
+            message.BodyEncoding = System.Text.Encoding.UTF8;
             message.To.Add(to);
             message.From = new MailAddress(from);
             message.Body = messageBody;

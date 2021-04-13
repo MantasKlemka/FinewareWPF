@@ -191,24 +191,14 @@ namespace FinewareWPF
                 {
                     Loading();
                     // nuskaitom paskyras is duomenu bazes
-                    var response = await client.GetAsync("Paskyros/");
-                    Dictionary<string, Vartotojas> list = response.ResultAs<Dictionary<string, Vartotojas>>();
+                    string gavejoKey = String.Join("", Encoding.ASCII.GetBytes(gavejoTextBox.Text));
                     var responseSiuntejas = await client.GetAsync("Paskyros/" + keySaved);
                     Vartotojas siuntejas = responseSiuntejas.ResultAs<Vartotojas>();
-                    Vartotojas gavejas = null;
-                    string gavejoKey = "";
+                    var responseGavejas = await client.GetAsync("Paskyros/" + gavejoKey);
+                    Vartotojas gavejas = responseGavejas.ResultAs<Vartotojas>();
+
                     int gavejoSaskaitosNr = -1;
                     // ieškome ar egzistuoja tokia paskyra duomenų bazėje
-                    if (list != null)
-                    {
-                        gavejas = GetUser(list, out gavejoKey);
-                    }
-                    else
-                    {
-                        Unloading();
-                        generalEventText.Content = "Nėra tokio gavėjo!";
-                        return;
-                    }
                     if (gavejas != null)
                     {
                         Unloading();
@@ -275,26 +265,7 @@ namespace FinewareWPF
                 generalEventText.Content = "Neteisingas 4-ių skaičių kodas!";
                 return;
             }
-        }
-
-        // tikrina ir gražina Vartotoją jei ji yra duomenų bazėje
-        public Vartotojas GetUser(Dictionary<string, Vartotojas> list, out string key)
-        {
-            Vartotojas paskyra = null;
-            // ieskome reikiamos paskyros
-            foreach (var entry in list)
-            {
-                Vartotojas vartotojas = entry.Value;
-                if (gavejoTextBox.Text == vartotojas.Epastas)
-                {
-                    paskyra = vartotojas;
-                    key = entry.Key;
-                    return paskyra;
-                }
-            }
-            key = "";
-            return paskyra;
-        }
+        }      
 
         public int GetBillNumber(Vartotojas gavejas)
         {

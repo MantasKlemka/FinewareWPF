@@ -47,11 +47,12 @@ namespace FinewareWPF
             {
                 //sukuriamas vartotojas
                 List<Saskaita> saskaitos = new List<Saskaita>();
+                string email = String.Join("", Encoding.ASCII.GetBytes(Registracija.epastas));
                 Saskaita saskaita = new Saskaita("Pagrindinė sąskaita", CreateIban(), 0, DateTime.Now.Date);
                 saskaitos.Add(saskaita);
                 Vartotojas vartotojas = new Vartotojas(Registracija.vardas, Registracija.pavarde, Registracija.epastas, Registracija.slaptazodis, saskaitos);
                 //vartotojas ikeliamas į duomenų bazę
-                PushResponse response = await client.PushAsync("Paskyros/", vartotojas);
+                SetResponse response = await client.SetAsync("Paskyros/" + email, vartotojas);
                 //perjungiame į prisijungimo langą
                 var loginForm = new Prisijungimas();
                 loginForm.generalEventText.Content = "Paskyra sukurta, galite prisijungti!";

@@ -52,7 +52,7 @@ namespace FinewareWPF
                 paskyra.ShortSecurityCode = Int32.Parse(fourDigitTextBox.Password);
                 paskyra.LongSecurityCode = Int32.Parse(sixDigitTextBox.Password);
                 // paskyra atnaujinama duomenų bazėje
-                FirebaseResponse response = await client.UpdateAsync("Paskyros/" + key.ToString(), paskyra);
+                FirebaseResponse response = await client.UpdateAsync("Paskyros/" + key, paskyra);
                 var apzvalga = new Apzvalga(paskyra, key);
                 apzvalga.Show();
                 Close();
