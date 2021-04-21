@@ -200,6 +200,11 @@ namespace FinewareWPF
 
         }
 
+        private void PranesimaiButton(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         void Loading()
         {
             dotProgress1.Visibility = Visibility.Visible;
@@ -254,6 +259,13 @@ namespace FinewareWPF
             gautaKodas.Content = "";
             gautaPavadinimas.Content = "";
             gautaSuma.Text = "";
+        }
+
+        private void Pranesimas_Button(object sender, RoutedEventArgs e)
+        {
+            Pranesimai pranesimai = new Pranesimai(vartotojasSaved, keySaved);
+            pranesimai.Show();
+            Close();
         }
     }
 }

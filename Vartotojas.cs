@@ -16,6 +16,8 @@ namespace FinewareWPF
         public int ShortSecurityCode { get; set; }
         public int LongSecurityCode { get; set; }
         public List<Saskaita> Saskaitos = new List<Saskaita>();
+        public List<Pranesimas> Pranesimai = new List<Pranesimas>();
+
 
         public Vartotojas()
         {
@@ -31,6 +33,7 @@ namespace FinewareWPF
             ShortSecurityCode = 0;
             LongSecurityCode = 0;
             Saskaitos = saskaitos;
+            Pranesimai = new List<Pranesimas>();
         }
     }
 }

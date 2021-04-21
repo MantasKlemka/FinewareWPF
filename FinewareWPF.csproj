@@ -97,12 +97,16 @@
       <DependentUpon>Israsai.xaml</DependentUpon>
     </Compile>
     <Compile Include="Israsas.cs" />
+    <Compile Include="Pranesimai.xaml.cs">
+      <DependentUpon>Pranesimai.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ManoSaskaitos.xaml.cs">
       <DependentUpon>ManoSaskaitos.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pervedimas.xaml.cs">
       <DependentUpon>Pervedimas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pranesimas.cs" />
     <Compile Include="Prisijungimas.xaml.cs">
       <DependentUpon>Prisijungimas.xaml</DependentUpon>
     </Compile>
@@ -133,6 +137,10 @@
     <Page Include="Israsai.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pranesimai.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="ManoSaskaitos.xaml">
       <SubType>Designer</SubType>
@@ -261,6 +269,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\dot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Group 196.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\pranesimaiButton.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

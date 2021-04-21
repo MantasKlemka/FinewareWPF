@@ -119,7 +119,7 @@
         <ComboBox x:Name="SaskaitosDrop" HorizontalAlignment="Left" Margin="432,200,0,0" VerticalAlignment="Top" Width="160" SelectionChanged="SaskaitosDrop_SelectionChanged" SelectedIndex="0" Height="20"/>
         <Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="40" Margin="1280,200,-90,0" Click="Button_Click" Style="{StaticResource rotateButton}" BorderBrush="{x:Null}" Background="{x:Null}" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Foreground="Black" Height="34">
             <StackPanel>
-                <Image x:Name="refreshButton" Source="Images/refresh.png"/>
+                <Image x:Name="refreshButton" Source="Images/refresh.png" Height="21" Width="27"/>
             </StackPanel>
         </Button>
         <Label Content="Pasirinkta sąskaita" HorizontalAlignment="Left" Margin="438,141,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold" Height="29" Width="147"/>
@@ -158,5 +158,12 @@
         <TextBlock VerticalAlignment="Top" Margin="766,340,0,0" Foreground="#FFCDCDCD" Background="{x:Null}" Height="26" TextAlignment="Center" HorizontalAlignment="Left" Width="248" FontSize="14"><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="—"/><Run Text="——————"/><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="—————"/><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="————"/></TextBlock>
         <Label x:Name="gautaKodas" Content="" HorizontalAlignment="Left" Margin="778,374,0,0" VerticalAlignment="Top" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FFCDCDCD" FontWeight="Bold" Height="24" Width="152"/>
         <TextBlock x:Name="gautaSuma" HorizontalAlignment="Left" Margin="937,374,0,0" VerticalAlignment="Top" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="Black" FontWeight="Bold" Height="24" Width="77" TextAlignment="Right" FontSize="14"/>
+        <Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="40" Margin="1280,90,0,0" Click="Button_Click" Style="{StaticResource rotateButton}" BorderBrush="{x:Null}" Background="{x:Null}" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Foreground="Black" Height="34">
+            <StackPanel>
+                <Image x:Name="PranesimaiButtonas" Source="Images/pranesimaiButton.png" Height="33" Width="39"/>
+            </StackPanel>
+        </Button>
+        <Button Content="PRANESIMAI" HorizontalAlignment="Left" Margin="1033,49,0,0" VerticalAlignment="Top" Width="75" Click="Pranesimas_Button"/>
+
     </Grid>
 </Window>
