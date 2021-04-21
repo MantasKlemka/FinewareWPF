@@ -1,11 +1,11 @@
-﻿<Window x:Class="FinewareWPF.Israsai"
+﻿<Window x:Class="FinewareWPF.Pranesimai"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinewareWPF"
         mc:Ignorable="d"
-        Title="Išrasas" Height="836" Width="1400" Icon="Images/logo.ico"
+        Title="Mano sąskaitos" Height="836" Width="1400" Icon="Images/logo.ico"
         Background="#FFF5F5F5"
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen" FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold">
@@ -76,13 +76,14 @@
         </Storyboard>
     </Window.Resources>
     <Grid>
-        <Label Content="Išrašas" HorizontalAlignment="Left" Margin="374,49,0,0" VerticalAlignment="Top" FontSize="24" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
-        <Label x:Name="Description" Content="Čia galite pamatyti visus atliktus mokėjimus per nurodytą laikotarpį" HorizontalAlignment="Left" Margin="374,93,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FFA8A8A8"/>
+        <Label Content="Pranešimai" HorizontalAlignment="Left" Margin="374,49,0,0" VerticalAlignment="Top" FontSize="24" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
+        <Label x:Name="Description" Content="Visi jūsų pranešimai" HorizontalAlignment="Left" Margin="374,93,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FFA8A8A8"/>
         <Image HorizontalAlignment="Left" Height="167" VerticalAlignment="Top" Width="106" Margin="58,49,0,0" Source="Images/man.png"/>
         <Image HorizontalAlignment="Left" Height="834" VerticalAlignment="Top" Width="854" Margin="0,-27,0,0" Source="Images/Rectangle 1.png" Panel.ZIndex="-1"/>
         <TextBlock x:Name="emailText" Text="email@gmail.com" VerticalAlignment="Top" Margin="14,205,0,0" Foreground="#FF686868" Background="{x:Null}" Height="25" TextAlignment="Center" HorizontalAlignment="Left" Width="194"/>
         <TextBlock x:Name="vardoPavardesText" Text="Vardenis Pavardenis" VerticalAlignment="Top" Margin="14,179,0,0" Foreground="Black" Background="{x:Null}" Height="25" TextAlignment="Center" HorizontalAlignment="Left" Width="194" FontSize="18"/>
         <TextBlock Text="MENU ————————" VerticalAlignment="Top" Margin="14,247,0,0" Foreground="#FFCDCDCD" Background="{x:Null}" Height="25" TextAlignment="Center" HorizontalAlignment="Left" Width="194" FontSize="14"/>
+        <Button Content="Išrašas" HorizontalAlignment="Left" Margin="58,327,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="IsrasasButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" FontWeight="Bold" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="#FFBBBBBB"/>
         <Button Content="Gauti pavėdimą" HorizontalAlignment="Left" Margin="58,427,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="GautiButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" FontWeight="Bold" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="#FFBBBBBB"/>
         <Button Content="Valiutų skaičiuoklė" HorizontalAlignment="Left" Margin="58,477,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="ValiutosButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" FontWeight="Bold" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="#FFBBBBBB"/>
         <Button Content="Naujas pavedimas" HorizontalAlignment="Left" Margin="57,377,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="PavedimasButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" FontWeight="Bold" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="#FFBBBBBB"/>
@@ -91,17 +92,30 @@
         <Button Content="Pagalba" HorizontalAlignment="Left" Margin="58,657,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="PagalbaButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" FontWeight="Bold" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="#FFBBBBBB"/>
         <Button Content="Atsijungti" HorizontalAlignment="Left" Margin="58,707,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="AtsijungtiButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" FontWeight="Bold" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="#FFBBBBBB"/>
         <Button Content="Apžvalga" HorizontalAlignment="Left" Margin="58,282,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="ApzvalgaButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" FontWeight="Bold" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="#FFBBBBBB"/>
+        <Button Content="Mano sąskaitos" HorizontalAlignment="Left" Margin="58,527,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="ManoButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" FontWeight="Bold" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="#FFBBBBBB" Height="17" Width="99"/>
+        <Image x:Name="sukurtiWindow" HorizontalAlignment="Left" Height="419" Margin="474,183,0,0" VerticalAlignment="Top" Width="684" Source="Images/Rectangle 31.png" Panel.ZIndex="6" Visibility="Collapsed"/>
+        <Label x:Name="SukurtiLabel" Content="Naujos sąskaitos kūrimas" HorizontalAlignment="Left" Margin="663,251,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="Black" Panel.ZIndex="7" Visibility="Collapsed"/>
+        <Label x:Name="SukurimasDescription" Content="Įrašykite naujos sąskaitos pavadinimą" HorizontalAlignment="Left" Margin="620,298,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FFA8A8A8" Panel.ZIndex="7" Visibility="Collapsed"/>
+        <Button x:Name="patvirtintiButton" Content="" HorizontalAlignment="Left" Margin="688,472,0,276" VerticalAlignment="Center" Width="153" Click="PateiktiButton" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Height="59" FontSize="20" Background="Transparent" BorderBrush="{x:Null}" Foreground="White" MouseEnter="PatvirtintiButton_MouseEnter" MouseLeave="PatvirtintiButton_MouseLeave"  Style="{StaticResource buttonWithoutHighlight}" RenderTransformOrigin="0.499,0.509" Panel.ZIndex="8" Visibility="Collapsed"/>
+        <Image x:Name="patvirtintiBackround" HorizontalAlignment="Left" Height="102" Margin="663,447,0,0" VerticalAlignment="Top" Width="484" Source="Images/Patvirtinti.png" Panel.ZIndex="7" Visibility="Collapsed"/>
+        <Button x:Name="closeButton" Content="" HorizontalAlignment="Left" Margin="976,231,0,549" VerticalAlignment="Center" Width="29" Click="CloseButton" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Height="27" FontSize="20" Background="Transparent" BorderBrush="{x:Null}" Foreground="White" MouseEnter="CloseButton_MouseEnter" MouseLeave="CloseButton_MouseLeave"  Style="{StaticResource buttonWithoutHighlight}" RenderTransformOrigin="0.499,0.509" Panel.ZIndex="8" Visibility="Collapsed"/>
+        <Image x:Name="closeBackground" HorizontalAlignment="Left" Height="6" Margin="988,242,0,0" VerticalAlignment="Top" Width="7" Source="Images/close.png" Panel.ZIndex="7" Visibility="Collapsed"/>
         <Image x:Name="greyedOut" HorizontalAlignment="Left" Height="1222" Margin="-38,-27,-92,-388" VerticalAlignment="Top" Width="1524" Source="Images/Path 340.png" Panel.ZIndex="5" Visibility="Collapsed"/>
-        <Grid x:Name="saskaituGrid" HorizontalAlignment="Left" Height="447" Margin="374,227,0,0" VerticalAlignment="Top" Width="924"/>
+        <PasswordBox x:Name="kodoTextBox" HorizontalAlignment="Left" Height="26" Margin="768,391,0,0" VerticalAlignment="Top" Width="190" FontSize="16" Foreground="#FF4BC4AA" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Style="{StaticResource customPassBox}" MaxLength="4" Panel.ZIndex="6" Visibility="Hidden"/>
+        <Label x:Name="kodoDescription" Content="4-ių skaičių kodas" HorizontalAlignment="Left" Margin="770,356,0,0" VerticalAlignment="Top" Height="30" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Width="146" Foreground="#FF77C9AE" FontWeight="Bold" Panel.ZIndex="6" Visibility="Collapsed"/>
+        <Image x:Name="pavadinimoDescription" HorizontalAlignment="Left" Height="52" Margin="768,414,0,0" VerticalAlignment="Top" Width="190" Source="Images/Line.png" Panel.ZIndex="6" Visibility="Collapsed"/>
+        <TextBox x:Name="pavadinimoTextBox" HorizontalAlignment="Left" Height="26" Margin="572,391,0,0" VerticalAlignment="Top" Width="190" FontSize="16" Foreground="#FF4BC4AA" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Style="{StaticResource customTextBox}" Panel.ZIndex="6" Visibility="Collapsed"/>
+        <Label x:Name="underLine_1" Content="Sąskaitos pavadinimas" HorizontalAlignment="Left" Margin="574,356,0,0" VerticalAlignment="Top" Height="30" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Width="188" Foreground="#FF77C9AE" FontWeight="Bold" Panel.ZIndex="6" Visibility="Collapsed"/>
+        <Image x:Name="underLine_2" HorizontalAlignment="Left" Height="52" Margin="572,414,0,0" VerticalAlignment="Top" Width="190" Source="Images/Line.png" Panel.ZIndex="6" Visibility="Collapsed"/>
+        <Grid x:Name="saskaituGrid" HorizontalAlignment="Left" Height="480" Margin="374,172,0,0" VerticalAlignment="Top" Width="924"/>
+        <Label x:Name="generalEventText" Content="" HorizontalAlignment="Left" Margin="605,327,0,0" VerticalAlignment="Top" Height="28" Foreground="Red" Visibility="Collapsed" Width="309" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Panel.ZIndex="6"/>
         <Image Name="dotProgress1" Source="Images/dot.png" Stretch="Fill" Height="25" Width="30" Margin="776,377,568,385" Panel.ZIndex="10" Visibility="Hidden"/>
         <Image Name="dotProgress2" Source="Images/dot.png" Stretch="Fill" Height="25" Width="30" Margin="751,419,593,343" Panel.ZIndex="10" Visibility="Hidden"/>
         <Image Name="dotProgress3" Source="Images/dot.png" Stretch="Fill" Height="25" Width="30" Margin="726,377,618,385" Panel.ZIndex="10" Visibility="Hidden"/>
-        <Button Content="Mano sąskaitos" HorizontalAlignment="Left" Margin="58,527,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="ManoButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" FontWeight="Bold" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="#FFBBBBBB"/>
-        <Label Content="Išrašas" HorizontalAlignment="Left" Margin="52,322,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
-        <Button x:Name="pirmasPsl" Content="1 psl" HorizontalAlignment="Left" Margin="374,694,0,0" VerticalAlignment="Top" Width="37" Click="Pirmas_Click"/>
-        <Button x:Name="toliau" Content="Toliau" HorizontalAlignment="Left" Margin="570,694,0,0" VerticalAlignment="Top" Width="75" Click="Toliau_Click"/>
-        <Button x:Name="atgal" Content="Atgal" HorizontalAlignment="Left" Margin="425,694,0,0" VerticalAlignment="Top" Width="75" Click="Atgal_Click"/>
-        <Label x:Name="puslapiuNumeris" Content="1" HorizontalAlignment="Left" Margin="514,691,0,0" VerticalAlignment="Top" Height="30" Width="28" RenderTransformOrigin="0.757,1.167"/>
+        <Button x:Name="AtgalPuslapisButton" Content="Atgal" HorizontalAlignment="Left" Margin="694,694,0,0" VerticalAlignment="Top" Width="75" Click="AtgalPuslapisButton_Click"/>
+        <Button x:Name="KitasPuslapisButton" Content="Kitas" HorizontalAlignment="Left" Margin="870,694,0,0" VerticalAlignment="Top" Width="75" Click="KitasPuslapisButton_Click"/>
+        <Label x:Name="PuslapioNumeris" Content="1
+              " HorizontalAlignment="Left" Margin="807,691,0,0" VerticalAlignment="Top" Height="25" Width="24"/>
     </Grid>
 </Window>
 

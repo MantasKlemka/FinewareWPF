@@ -33,6 +33,7 @@ namespace FinewareWPF
             BasePath = "https://fineware-759f7-default-rtdb.firebaseio.com/"
         };
 
+        public int sk;
         public Pervedimas(Vartotojas vartotojas, string key)
         {
             client = new FireSharp.FirebaseClient(config);
@@ -45,6 +46,23 @@ namespace FinewareWPF
             emailText.Text = vartotojasSaved.Epastas;
             LikutisText.Content = "Sąskaitos likutis: " + vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis + " €";
             saskaitosPavadinimas.Content = vartotojas.Saskaitos[pagrindinesSaskNr].Pavadinimas;
+        }
+
+        public Pervedimas(Vartotojas vartotojas, string key, int nr)
+        {
+            client = new FireSharp.FirebaseClient(config);
+            InitializeComponent();
+            keySaved = key;
+            vartotojasSaved = vartotojas;
+            pagrindinesSaskNr = 0;
+            SaskaitosDrop.ItemsSource = IbanArray(vartotojasSaved.Saskaitos);
+            vardoPavardesText.Text = vartotojasSaved.Vardas + " " + vartotojasSaved.Pavarde;
+            emailText.Text = vartotojasSaved.Epastas;
+            LikutisText.Content = "Sąskaitos likutis: " + vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis + " €";
+            saskaitosPavadinimas.Content = vartotojas.Saskaitos[pagrindinesSaskNr].Pavadinimas;
+
+            sk = nr;
+            
         }
 
         public string[] IbanArray(List<Saskaita> saskaitos)
@@ -159,7 +177,11 @@ namespace FinewareWPF
 
         private void GautiButton(object sender, RoutedEventArgs e)
         {
-
+            Loading();
+            IsEnabled = false;
+            GautiPavedima gautiPavedima = new GautiPavedima(vartotojasSaved, keySaved);
+            gautiPavedima.Show();
+            Close();
         }
 
         private void NustatymaiButton(object sender, RoutedEventArgs e)
@@ -222,9 +244,20 @@ namespace FinewareWPF
                             siuntejas.Saskaitos[pagrindinesSaskNr].Likutis = Math.Round(siuntejas.Saskaitos[pagrindinesSaskNr].Likutis, 2);
                             Israsas gavejo = new Israsas(siuntejas.Vardas + " " + siuntejas.Pavarde, double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), paskirtisText.Text, DateTime.Now, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, siuntejas.Saskaitos[pagrindinesSaskNr].Pavadinimas, "Gauna");
                             Israsas siuntejo = new Israsas(siuntejas.Vardas + " " + siuntejas.Pavarde, double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), paskirtisText.Text, DateTime.Now, siuntejas.Saskaitos[gavejoSaskaitosNr].Kodas, siuntejas.Saskaitos[gavejoSaskaitosNr].Pavadinimas, "Siuncia");
+
                             siuntejas.Saskaitos[pagrindinesSaskNr].Israsai.Add(siuntejo);
                             siuntejas.Saskaitos[gavejoSaskaitosNr].Israsai.Add(gavejo);
+
+                            //await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
+
+                            Pranesimas pranesimas_siuntejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Gauta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now);
+                            Pranesimas pranesimas_gavejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Išsiūsta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now);
+
+                            siuntejas.Pranesimai.Insert(0,pranesimas_siuntejui);
+                            siuntejas.Pranesimai.Insert(0,pranesimas_gavejui);
+
                             await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
+
                             vartotojasSaved = siuntejas;
                             var apzvalga = new Apzvalga(vartotojasSaved, keySaved);
                             apzvalga.Show();
@@ -240,8 +273,16 @@ namespace FinewareWPF
                             Israsas siuntejo = new Israsas(gavejas.Vardas + " " + gavejas.Pavarde, double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), paskirtisText.Text, DateTime.Now, gavejas.Saskaitos[gavejoSaskaitosNr].Kodas, gavejas.Saskaitos[gavejoSaskaitosNr].Pavadinimas, "Siuncia");
                             siuntejas.Saskaitos[pagrindinesSaskNr].Israsai.Add(siuntejo);
                             gavejas.Saskaitos[gavejoSaskaitosNr].Israsai.Add(gavejo);
+
+                            Pranesimas pranesimas_siuntejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, gavejas.Vardas + " " + gavejas.Pavarde, "Gauta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now);
+                            Pranesimas pranesimas_gavejui = new Pranesimas(gavejas.Vardas + " " + gavejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Išsiūsta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now);
+
+                            siuntejas.Pranesimai.Insert(0,pranesimas_siuntejui);
+                            gavejas.Pranesimai.Insert(0,pranesimas_gavejui);
+
                             await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
                             await client.UpdateAsync("Paskyros/" + gavejoKey, gavejas);
+
                             vartotojasSaved = siuntejas;
                             var apzvalga = new Apzvalga(vartotojasSaved, keySaved);
                             apzvalga.Show();

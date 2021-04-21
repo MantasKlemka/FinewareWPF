@@ -414,7 +414,11 @@ namespace FinewareWPF
 
         private void GautiButton(object sender, RoutedEventArgs e)
         {
-
+            Loading();
+            IsEnabled = false;
+            GautiPavedima gautiPavedima = new GautiPavedima(vartotojasSaved, keySaved);
+            gautiPavedima.Show();
+            Close();
         }
 
         private void NustatymaiButton(object sender, RoutedEventArgs e)
@@ -423,6 +427,11 @@ namespace FinewareWPF
         }
 
         private void AtsijungtiButton(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PranesimaiButton(object sender, RoutedEventArgs e)
         {
 
         }
@@ -482,6 +491,15 @@ namespace FinewareWPF
             gautaKodas.Content = "";
             gautaPavadinimas.Content = "";
             gautaSuma.Text = "";
+        }
+
+        private void Pranesimas_Button(object sender, RoutedEventArgs e)
+        {
+            Loading();
+            IsEnabled = false;
+            Pranesimai pranesimai = new Pranesimai(vartotojasSaved, keySaved);
+            pranesimai.Show();
+            Close();
         }
     }
 }
