@@ -22,6 +22,7 @@ namespace FinewareWPF
     /// </summary>
     public partial class Israsai : Window
     {
+        public int index = 0;
         Vartotojas vartotojasSaved;
         string keySaved;
         public int pagrindinesSaskNr { get; set; } = 0;
@@ -41,16 +42,47 @@ namespace FinewareWPF
             pagrindinesSaskNr = 0;
             vardoPavardesText.Text = vartotojasSaved.Vardas + " " + vartotojasSaved.Pavarde;
             emailText.Text = vartotojasSaved.Epastas;
-            PrintAllChecks();
+            //int index = 0;
+            PrintAllChecks(index);
+            puslapiuNumeris.Content ="1";
+            if (puslapiuNumeris.Content == "1")
+            {
+                pirmasPsl.IsEnabled = false;
+                atgal.IsEnabled = false;
+            }
+
+            //vartotojas.Saskaitos[pagrindinesSaskNr].Israsai.Sort();
         }
 
-        void PrintAllChecks()
+        public int PuslapiuSkaicius(Vartotojas vartotojas)
         {
+            int skaicius = 0;
+            if(vartotojas.Saskaitos[pagrindinesSaskNr].Israsai.Count % 7 == 0)
+            {
+                skaicius = vartotojas.Saskaitos[pagrindinesSaskNr].Israsai.Count / 7;
+            }
+            else
+            {
+                skaicius = vartotojas.Saskaitos[pagrindinesSaskNr].Israsai.Count / 7 + 1;
+            }
+            return skaicius;
+        }
+
+        void PrintAllChecks(int index)
+        {
+            int sk = 0;
+            int pslKiekis = PuslapiuSkaicius(vartotojasSaved); // israsu puslapiu kiekis
+            int count = 0;
             CreateCheckBanner();
-            //for (int i = 0; i < vartotojasSaved.Saskaitos.Count; i++)
-            //{
-            //    CreateBillLine(vartotojasSaved, i);
-            //}
+            for (int i = index; i < vartotojasSaved.Saskaitos[pagrindinesSaskNr].Israsai.Count; i++)
+            {
+                if (count < 7)
+                {
+                    CreateCheckLine(vartotojasSaved, i,sk);
+                    sk++;
+                }
+                count++;
+            }
         }
 
         private void Button_MouseEnter(object sender, MouseEventArgs e)
@@ -118,56 +150,55 @@ namespace FinewareWPF
 
         }
 
-        public void CreateCheckLine(Vartotojas vartotojas, int israsoNr)
+        public void CreateCheckLine(Vartotojas vartotojas, int israsoNr, int sk)
         {
-            // pataisyt, kad spausdintu israsus kaip spausdina mano saskaitas
-            // kodas iš mano saskaitu spausdinimo
-            //int moveBackCof = (israsoNr + 1) * 100;
-            //int moveCof = (israsoNr + 1) * 50;
-            //var bc = new BrushConverter();
-            //Image background = new Image();
-            //background.Source = new BitmapImage(new Uri("Images/Rectangle 28.png", UriKind.Relative));
-            //background.Margin = new Thickness(0, -350 + moveBackCof, 0, 0);
-            //saskaituGrid.Children.Add(background);
-            //Label pavadinimas = new Label();
-            //pavadinimas.Content = vartotojas.Saskaitos[saskaitosNr].Pavadinimas;
-            //pavadinimas.Margin = new Thickness(30, -23 + moveCof, 0, 0);
-            //saskaituGrid.Children.Add(pavadinimas);
-            //Label kodas = new Label();
-            //kodas.Foreground = (Brush)bc.ConvertFrom("#FF4BC4AA");
-            //kodas.Content = vartotojas.Saskaitos[saskaitosNr].Kodas;
-            //kodas.Margin = new Thickness(250, -23 + moveCof, 0, 0);
-            //saskaituGrid.Children.Add(kodas);
-            //Label data = new Label();
-            //data.Content = vartotojas.Saskaitos[saskaitosNr].SukurimoData.ToShortDateString();
-            //data.Margin = new Thickness(450, -23 + moveCof, 0, 0);
-            //saskaituGrid.Children.Add(data);
-            //Label likutis = new Label();
-            //likutis.Foreground = (Brush)bc.ConvertFrom("#FF4BC4AA");
-            //likutis.Content = Math.Round(vartotojas.Saskaitos[saskaitosNr].Likutis, 2) + " €";
-            //likutis.Margin = new Thickness(650, -23 + moveCof, 0, 0);
-            //saskaituGrid.Children.Add(likutis);
-            //if (saskaitosNr != 0)
-            //{
-            //    Button veiksmai = new Button();
-            //    veiksmai.Content = new Image
-            //    {
-            //        Source = new BitmapImage(new Uri("Images/delete.png", UriKind.Relative)),
-            //    };
-            //    veiksmai.Height = 15;
-            //    veiksmai.Width = 15;
-            //    veiksmai.Style = (Style)FindResource("buttonWithoutHighlight");
-            //    veiksmai.BorderBrush = Brushes.Transparent;
-            //    veiksmai.Background = Brushes.Transparent;
-            //    veiksmai.MouseEnter += Button_MouseEnter;
-            //    veiksmai.MouseLeave += Button_MouseLeave;
-            //    veiksmai.VerticalAlignment = VerticalAlignment.Top;
-            //    veiksmai.HorizontalAlignment = HorizontalAlignment.Left;
-            //    veiksmai.Margin = new Thickness(820, -23 + moveCof, 0, 0);
-            //    veiksmai.Name = "DeleteButton_" + saskaitosNr.ToString();
-            //    veiksmai.Click += DeleteButton;
-            //    saskaituGrid.Children.Add(veiksmai);
-            //}
+            int moveBackCof;
+            int moveCof;
+
+            moveBackCof = (sk + 1) * 100;
+            moveCof = (sk + 1) * 50;
+
+            var bc = new BrushConverter();
+            Image background = new Image();
+            background.Source = new BitmapImage(new Uri("Images/Rectangle 28.png", UriKind.Relative));
+            background.Margin = new Thickness(0, -350 + moveBackCof, 0, 0);
+            saskaituGrid.Children.Add(background);
+            Label pavadinimas = new Label();
+            pavadinimas.Content = vartotojas.Saskaitos[pagrindinesSaskNr].Israsai[israsoNr].Data.ToShortDateString();
+            pavadinimas.Margin = new Thickness(10, 35 + moveCof, 0, 0);
+            saskaituGrid.Children.Add(pavadinimas);
+            Label kodas = new Label();
+            kodas.Foreground = (Brush)bc.ConvertFrom("#FF4BC4AA");
+            kodas.Content = vartotojas.Saskaitos[pagrindinesSaskNr].Israsai[israsoNr].Data.ToShortTimeString();
+            kodas.Margin = new Thickness(116, 35 + moveCof, 0, 0);
+            saskaituGrid.Children.Add(kodas);
+            Label data = new Label();
+            data.Content = vartotojas.Saskaitos[pagrindinesSaskNr].Israsai[israsoNr].Asmuo;
+            data.Margin = new Thickness(250, 35 + moveCof, 0, 0);
+            saskaituGrid.Children.Add(data);
+            Label likutis = new Label();
+            likutis.Foreground = (Brush)bc.ConvertFrom("#FF4BC4AA");
+            likutis.Content = vartotojas.Saskaitos[pagrindinesSaskNr].Israsai[israsoNr].Paskirtis;
+            likutis.Margin = new Thickness(450, 35 + moveCof, 200, 0);
+            saskaituGrid.Children.Add(likutis);
+            Label paskirtis = new Label();
+            if(vartotojas.Saskaitos[pagrindinesSaskNr].Israsai[israsoNr].Tipas == "Siuncia")
+            {
+                paskirtis.Foreground = (Brush)bc.ConvertFrom("#FFFF0000");
+                paskirtis.Content = "-" +vartotojas.Saskaitos[pagrindinesSaskNr].Israsai[israsoNr].Suma + " €";
+            }
+            else if (vartotojas.Saskaitos[pagrindinesSaskNr].Israsai[israsoNr].Tipas == "Gauna")
+            {
+                paskirtis.Foreground = (Brush)bc.ConvertFrom("#008000");
+                paskirtis.Content = "+" + vartotojas.Saskaitos[pagrindinesSaskNr].Israsai[israsoNr].Suma + " €";
+            }
+            paskirtis.Margin = new Thickness(750, 35 + moveCof, 0, 0);
+            saskaituGrid.Children.Add(paskirtis);
+            Label veiksmai = new Label();
+            veiksmai.Foreground = (Brush)bc.ConvertFrom("#FF4BC4AA");
+            veiksmai.Content = vartotojas.Saskaitos[pagrindinesSaskNr].Israsai[israsoNr].Tipas;
+            veiksmai.Margin = new Thickness(850, 35 + moveCof, 0, 0);
+            saskaituGrid.Children.Add(veiksmai);
         }
 
         public void CreateCheckBanner()
@@ -216,6 +247,62 @@ namespace FinewareWPF
             greyedOut.Visibility = Visibility.Visible;
             Storyboard loading = (Storyboard)TryFindResource("loading");
             loading.Begin();
+        }
+
+        private void Toliau_Click(object sender, RoutedEventArgs e)
+        {
+            pirmasPsl.IsEnabled = true;
+            puslapiuNumeris.Content = (Convert.ToInt32(puslapiuNumeris.Content) + 1).ToString();
+            int pslKiekis = PuslapiuSkaicius(vartotojasSaved);
+            if(pslKiekis.ToString() == puslapiuNumeris.Content.ToString())
+            {
+                toliau.IsEnabled = false;
+                atgal.IsEnabled = true;
+                pirmasPsl.IsEnabled = true;
+
+            }
+            else
+            {
+                toliau.IsEnabled = true;
+                atgal.IsEnabled = true;
+                pirmasPsl.IsEnabled = true;
+            }
+
+            index = index + 7;
+            saskaituGrid.Children.Clear();
+            PrintAllChecks(index);
+        }
+
+        private void Pirmas_Click(object sender, RoutedEventArgs e)
+        {
+            pirmasPsl.IsEnabled = false;
+            atgal.IsEnabled = false;
+            toliau.IsEnabled = true;
+            puslapiuNumeris.Content = "1";
+            index = 0;
+            saskaituGrid.Children.Clear();
+            PrintAllChecks(index);
+        }
+
+        private void Atgal_Click(object sender, RoutedEventArgs e)
+        {
+            puslapiuNumeris.Content = (Convert.ToInt32(puslapiuNumeris.Content) - 1).ToString();
+            if (puslapiuNumeris.Content.ToString() == "1")
+            {
+                atgal.IsEnabled = false;
+                pirmasPsl.IsEnabled = false;
+                toliau.IsEnabled = true;
+            }
+            else
+            {
+                pirmasPsl.IsEnabled = true;
+                atgal.IsEnabled = true;
+                toliau.IsEnabled = true;
+            }
+            
+            index = index - 7;
+            saskaituGrid.Children.Clear();
+            PrintAllChecks(index);
         }
     }
 }
