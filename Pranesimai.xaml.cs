@@ -24,9 +24,11 @@ namespace FinewareWPF
     {
         Vartotojas vartotojasSaved;
         string keySaved;
+        int puslapiuSk;
         public int pagrindinesSaskNr { get; set; } = 0;
         IFirebaseClient client;
         IFirebaseConfig config = new FirebaseConfig
+
         {
             AuthSecret = "TBJejG2mnXINGAfpm9YPA3Ke51uWlxrf9UNTt64H",
             BasePath = "https://fineware-759f7-default-rtdb.firebaseio.com/"
@@ -41,7 +43,30 @@ namespace FinewareWPF
             pagrindinesSaskNr = 0;
             vardoPavardesText.Text = vartotojasSaved.Vardas + " " + vartotojasSaved.Pavarde;
             emailText.Text = vartotojasSaved.Epastas;
-            PrintAllBills();
+
+            int puslapiuSkaicius = PuslapiuSkaicius(vartotojasSaved);
+            puslapiuSk = puslapiuSkaicius;
+            int currentPage = int.Parse((string)PuslapioNumeris.Content);
+            PrintAllNotifications(currentPage);
+            AtgalPuslapisButton.IsEnabled = false;
+
+            // CIA REIK PANAUDOTI PUSLAPIU PRINTINIMA
+        }
+
+
+
+        public int PuslapiuSkaicius(Vartotojas vartotojas)
+        {
+            int skaicius = 0;
+            if(vartotojas.Pranesimai.Count % 9 == 0)
+            {
+                skaicius = vartotojas.Pranesimai.Count / 9;
+            }
+            else
+            {
+                skaicius = vartotojas.Pranesimai.Count / 9 + 1;
+            }
+            return skaicius;
         }
 
         public string CreateIban()
@@ -54,13 +79,41 @@ namespace FinewareWPF
             return iban;
         }
 
-        void PrintAllBills()
+        void PrintAllNotifications(int dabartinisPuslapis)
         {
             CreateBillBanner();
-            for (int i = 0; i < vartotojasSaved.Saskaitos.Count; i++)
+
+            int nr = 0;
+            int pirmasPranesim = (dabartinisPuslapis - 1) * 9;
+
+            // PAGE 1:
+            // pirmas pranesimas = 0
+            // max = 9
+
+            // PAGE 2:
+            // pirmas pranesimas = 9
+            // max = 13
+
+            int sk = 9;
+            if (puslapiuSk == dabartinisPuslapis)
             {
-                CreateBillLine(vartotojasSaved, i);
+                sk = (vartotojasSaved.Pranesimai.Count) % 9;
             }
+
+            for (int i = pirmasPranesim; i < pirmasPranesim + sk; i++)
+            {
+                CreateBillLine(vartotojasSaved, i, nr);
+                nr++;
+            }
+
+
+
+            //int pirmasPranesimas = (dabartinisPuslapis-1) * 9;
+            //int sk = 9;
+            //for (int i = pirmasPranesimas; i < pirmasPranesimas+sk; i++)
+            //{
+            //    CreateBillLine(vartotojasSaved, i);
+            //}
         }
 
         private void Button_MouseEnter(object sender, MouseEventArgs e)
@@ -73,16 +126,6 @@ namespace FinewareWPF
         {
             var button = (Button)sender;
             button.Opacity = 1;
-        }
-
-        private void SukurtiButton_MouseEnter(object sender, MouseEventArgs e)
-        {
-            sukurtiBackround.Opacity = 0.8;
-        }
-
-        private void SukurtiButton_MouseLeave(object sender, MouseEventArgs e)
-        {
-            sukurtiBackround.Opacity = 1;
         }
 
         private void CloseButton_MouseEnter(object sender, MouseEventArgs e)
@@ -256,54 +299,100 @@ namespace FinewareWPF
             generalEventText.Visibility = Visibility.Visible;
         }
 
-        public void CreateBillLine(Vartotojas vartotojas, int saskaitosNr)
+        public void CreateBillLine(Vartotojas vartotojas, int id, int nr)
         {
-            int moveBackCof = (saskaitosNr + 1) * 100;
-            int moveCof = (saskaitosNr + 1) * 50;
+            int moveBackCof = (nr + 1) * 100;
+            int moveCof = (nr + 1) * 50;
             var bc = new BrushConverter();
             Image background = new Image();
             background.Source = new BitmapImage(new Uri("Images/Rectangle 28.png", UriKind.Relative));
             background.Margin = new Thickness(0, -500 + moveBackCof, 0, 0);
             saskaituGrid.Children.Add(background);
-            Label pavadinimas = new Label();
-            pavadinimas.Content = vartotojas.Saskaitos[saskaitosNr].Pavadinimas;
-            pavadinimas.Margin = new Thickness(30, -23 + moveCof, 0, 0);
-            saskaituGrid.Children.Add(pavadinimas);
-            Label kodas = new Label();
-            kodas.Foreground = (Brush)bc.ConvertFrom("#FF4BC4AA");
-            kodas.Content = vartotojas.Saskaitos[saskaitosNr].Kodas;
-            kodas.Margin = new Thickness(250, -23 + moveCof, 0, 0);
-            saskaituGrid.Children.Add(kodas);
+
+            Label siuntejas = new Label();
+            siuntejas.Content = vartotojas.Pranesimai[id].siuntejas;
+            siuntejas.Margin = new Thickness(30, -23 + moveCof, 0, 0);
+            saskaituGrid.Children.Add(siuntejas);
+
+            Label gavejas = new Label();
+            gavejas.Content = vartotojas.Pranesimai[id].gavejas;
+            gavejas.Margin = new Thickness(200, -23 + moveCof, 0, 0);
+            saskaituGrid.Children.Add(gavejas);
+
+            Label pavedimoTipas = new Label();
+            pavedimoTipas.Content = vartotojas.Pranesimai[id].pavedimo_tipas;
+            pavedimoTipas.Margin = new Thickness(375, -23 + moveCof, 0, 0);
+            saskaituGrid.Children.Add(pavedimoTipas);
+
+            Label suma = new Label();
+            suma.Foreground = (Brush)bc.ConvertFrom(SumosSpalva(vartotojas,id));
+            suma.Content = SumosZenklas(vartotojas, id);
+            suma.Margin = new Thickness(525, -23 + moveCof, 0, 0);
+            saskaituGrid.Children.Add(suma);
+
             Label data = new Label();
-            data.Content = vartotojas.Saskaitos[saskaitosNr].SukurimoData.ToShortDateString();
-            data.Margin = new Thickness(450, -23 + moveCof, 0, 0);
+            data.Content = vartotojas.Pranesimai[id].data;
+            data.Margin = new Thickness(650, -23 + moveCof, 0, 0);
             saskaituGrid.Children.Add(data);
-            Label likutis = new Label();
-            likutis.Foreground = (Brush)bc.ConvertFrom("#FF4BC4AA");
-            likutis.Content = Math.Round(vartotojas.Saskaitos[saskaitosNr].Likutis, 2) + " €";
-            likutis.Margin = new Thickness(650, -23 + moveCof, 0, 0);
-            saskaituGrid.Children.Add(likutis);
-            if(saskaitosNr != 0)
+
+            Button veiksmai = new Button();
+            veiksmai.Content = new Image
             {
-                Button veiksmai = new Button();
-                veiksmai.Content = new Image
-                {
-                    Source = new BitmapImage(new Uri("Images/delete.png", UriKind.Relative)),
-                };
-                veiksmai.Height = 15;
-                veiksmai.Width = 15;
-                veiksmai.Style = (Style)FindResource("buttonWithoutHighlight");
-                veiksmai.BorderBrush = Brushes.Transparent;
-                veiksmai.Background = Brushes.Transparent;
-                veiksmai.MouseEnter += Button_MouseEnter;
-                veiksmai.MouseLeave += Button_MouseLeave;
-                veiksmai.VerticalAlignment = VerticalAlignment.Top;
-                veiksmai.HorizontalAlignment = HorizontalAlignment.Left;
-                veiksmai.Margin = new Thickness(820, -23 + moveCof, 0, 0);
-                veiksmai.Name = "DeleteButton_" + saskaitosNr.ToString();
-                veiksmai.Click += DeleteButton;
-                saskaituGrid.Children.Add(veiksmai);
+                Source = new BitmapImage(new Uri("Images/delete.png", UriKind.Relative)),
+            };
+            veiksmai.Height = 15;
+            veiksmai.Width = 15;
+            veiksmai.Style = (Style)FindResource("buttonWithoutHighlight");
+            veiksmai.BorderBrush = Brushes.Transparent;
+            veiksmai.Background = Brushes.Transparent;
+            veiksmai.MouseEnter += Button_MouseEnter;
+            veiksmai.MouseLeave += Button_MouseLeave;
+            veiksmai.VerticalAlignment = VerticalAlignment.Top;
+            veiksmai.HorizontalAlignment = HorizontalAlignment.Left;
+            veiksmai.Margin = new Thickness(820, -18 + moveCof, 0, 0);
+            veiksmai.Name = "DeleteButton_" + id.ToString();
+            veiksmai.Click += DeleteButton;
+            saskaituGrid.Children.Add(veiksmai);
+        }
+
+        public string SumosSpalva(Vartotojas vartotojas, int index)
+        {
+            string spalvosKodas = "";
+
+            if(vartotojas.Pranesimai[index].pavedimo_tipas == "Gauta")
+            {
+                spalvosKodas = "#22B29D";
             }
+            else if (vartotojas.Pranesimai[index].pavedimo_tipas == "Išsiūsta")
+            {
+                spalvosKodas = "#FFFF0000";
+            }
+            else
+            {
+                spalvosKodas = "#565656";
+            }
+
+            return spalvosKodas;
+        }
+
+        public string SumosZenklas(Vartotojas vartotojas, int index)
+        {
+            string eilute = "";
+
+            if (vartotojas.Pranesimai[index].pavedimo_tipas == "Gauta")
+            {
+                eilute = "+" + Math.Round(vartotojas.Pranesimai[index].suma, 2) + " €";
+            }
+            else if (vartotojas.Pranesimai[index].pavedimo_tipas == "Išsiūsta")
+            {
+                eilute = "-" + Math.Round(vartotojas.Pranesimai[index].suma, 2) + " €";
+            }
+            else
+            {
+                eilute = Math.Round(vartotojas.Pranesimai[index].suma, 2) + " €";
+            }
+
+            return eilute;
         }
 
         private async void DeleteButton(object sender, RoutedEventArgs e)
@@ -312,11 +401,10 @@ namespace FinewareWPF
             IsEnabled = false;
             Loading();
             int nr = int.Parse(button.Name[13].ToString());
-            vartotojasSaved.Saskaitos[0].Likutis += vartotojasSaved.Saskaitos[nr].Likutis;
-            vartotojasSaved.Saskaitos.RemoveAt(nr);
+            vartotojasSaved.Pranesimai.RemoveAt(nr);
             await client.UpdateAsync("Paskyros/" + keySaved, vartotojasSaved);
-            var manoSaskaitos = new ManoSaskaitos(vartotojasSaved, keySaved);
-            manoSaskaitos.Show();
+            var pranesimai = new Pranesimai(vartotojasSaved, keySaved);
+            pranesimai.Show();
             Close();
         }
 
@@ -326,26 +414,37 @@ namespace FinewareWPF
             background.Source = new BitmapImage(new Uri("Images/Rectangle 28.png", UriKind.Relative));
             background.Margin = new Thickness(0, -500, 0, 0);
             saskaituGrid.Children.Add(background);
-            Label pavadinimas = new Label();
-            pavadinimas.FontWeight = FontWeights.Bold;
-            pavadinimas.Content = "Sąskaitos pavadinimas";
-            pavadinimas.Margin = new Thickness(30, -23, 0, 0);
-            saskaituGrid.Children.Add(pavadinimas);
-            Label kodas = new Label();
-            kodas.FontWeight = FontWeights.Bold;
-            kodas.Content = "IBAN";
-            kodas.Margin = new Thickness(250, -23, 0, 0);
-            saskaituGrid.Children.Add(kodas);
+
+            Label siuntejas = new Label();
+            siuntejas.FontWeight = FontWeights.Bold;
+            siuntejas.Content = "Siuntėjas";
+            siuntejas.Margin = new Thickness(30, -23, 0, 0);
+            saskaituGrid.Children.Add(siuntejas);
+
+            Label gavejas = new Label();
+            gavejas.FontWeight = FontWeights.Bold;
+            gavejas.Content = "Gavėjas";
+            gavejas.Margin = new Thickness(200, -23, 0, 0);
+            saskaituGrid.Children.Add(gavejas);
+
+            Label tipas = new Label();
+            tipas.FontWeight = FontWeights.Bold;
+            tipas.Content = "Pavedimo tipas";
+            tipas.Margin = new Thickness(375, -23, 0, 0);
+            saskaituGrid.Children.Add(tipas);
+
+            Label Suma = new Label();
+            Suma.FontWeight = FontWeights.Bold;
+            Suma.Content = "Suma";
+            Suma.Margin = new Thickness(525, -23, 0, 0);
+            saskaituGrid.Children.Add(Suma);
+
             Label data = new Label();
             data.FontWeight = FontWeights.Bold;
-            data.Content = "Sukūrimo data";
-            data.Margin = new Thickness(450, -23, 0, 0);
+            data.Content = "Data";
+            data.Margin = new Thickness(650, -23, 0, 0);
             saskaituGrid.Children.Add(data);
-            Label likutis = new Label();
-            likutis.FontWeight = FontWeights.Bold;
-            likutis.Content = "Likutis";
-            likutis.Margin = new Thickness(650, -23, 0, 0);
-            saskaituGrid.Children.Add(likutis);
+
             Label veiksmai = new Label();
             veiksmai.FontWeight = FontWeights.Bold;
             veiksmai.Content = "Veiksmai";
@@ -361,6 +460,40 @@ namespace FinewareWPF
             greyedOut.Visibility = Visibility.Visible;
             Storyboard loading = (Storyboard)TryFindResource("loading");
             loading.Begin();
+        }
+
+        private void AtgalPuslapisButton_Click(object sender, RoutedEventArgs e)
+        {
+            saskaituGrid.Children.Clear();
+            KitasPuslapisButton.IsEnabled = true;
+            if (int.Parse((string)PuslapioNumeris.Content)-1 == 1)
+            {
+                AtgalPuslapisButton.IsEnabled = false;
+            }
+            else
+            {
+                AtgalPuslapisButton.IsEnabled = true;
+            }
+            string text = (int.Parse((string)PuslapioNumeris.Content) - 1).ToString();
+            PuslapioNumeris.Content = text;
+            PrintAllNotifications(int.Parse(text));
+        }
+
+        private void KitasPuslapisButton_Click(object sender, RoutedEventArgs e)
+        {
+            saskaituGrid.Children.Clear();
+            AtgalPuslapisButton.IsEnabled = true;
+            if (int.Parse((string)PuslapioNumeris.Content)+1 == puslapiuSk)
+            {
+                KitasPuslapisButton.IsEnabled = false;
+            }
+            else
+            {
+                KitasPuslapisButton.IsEnabled = true;
+            }
+            string text = (int.Parse((string)PuslapioNumeris.Content) + 1).ToString();
+            PuslapioNumeris.Content = text;
+            PrintAllNotifications(int.Parse(text));
         }
     }
 }

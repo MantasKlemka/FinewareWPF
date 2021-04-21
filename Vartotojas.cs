@@ -33,7 +33,6 @@ namespace FinewareWPF
             ShortSecurityCode = 0;
             LongSecurityCode = 0;
             Saskaitos = saskaitos;
-            Pranesimai = new List<Pranesimas>();
         }
     }
 }

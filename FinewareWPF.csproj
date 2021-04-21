@@ -97,6 +97,9 @@
       <DependentUpon>Israsai.xaml</DependentUpon>
     </Compile>
     <Compile Include="Israsas.cs" />
+    <Compile Include="GautiPavedima.xaml.cs">
+      <DependentUpon>GautiPavedima.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pranesimai.xaml.cs">
       <DependentUpon>Pranesimai.xaml</DependentUpon>
     </Compile>
@@ -137,6 +140,10 @@
     <Page Include="Israsai.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GautiPavedima.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pranesimai.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -8,13 +8,13 @@ namespace FinewareWPF
 {
     public class Pranesimas
     {
-        public Vartotojas siuntejas { get; set; }
-        public Vartotojas gavejas { get; set; }
+        public string siuntejas { get; set; }
+        public string gavejas { get; set; }
         public string pavedimo_tipas { get; set; }
         public double suma { get; set; }
         public DateTime data { get; set; }
 
-        public Pranesimas(Vartotojas siunt, Vartotojas gavej, string tipas, double sum, DateTime date)
+        public Pranesimas(string siunt, string gavej, string tipas, double sum, DateTime date)
         {
             siuntejas = siunt;
             gavejas = gavej;
