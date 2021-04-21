@@ -26,6 +26,8 @@ namespace FinewareWPF
     {
         Vartotojas vartotojasSaved;
         string keySaved;
+        DateTime kairiojiData = DateTime.Now.AddMonths(-1);
+        DateTime desiniojiData = DateTime.Now;
         public int pagrindinesSaskNr { get; set; } = 0;
         IFirebaseClient client;
         IFirebaseConfig config = new FirebaseConfig
@@ -53,15 +55,38 @@ namespace FinewareWPF
             {
                 issiustaKodas.Content = paskutinisSiustas.Kodas;
                 issiustaPavadinimas.Content = paskutinisSiustas.Pavadinimas;
-                issiustaSuma.Text = paskutinisSiustas.Suma.ToString() + " €";
+                issiustaSuma.Text = "-" + paskutinisSiustas.Suma.ToString() + " €";
             }
             if (paskutinisGautas != null)
             {
                 gautaKodas.Content = paskutinisGautas.Kodas;
                 gautaPavadinimas.Content = paskutinisGautas.Pavadinimas;
-                gautaSuma.Text = paskutinisGautas.Suma.ToString() + " €";
+                gautaSuma.Text = "+" + paskutinisGautas.Suma.ToString() + " €";
             }
+            pradineData.DisplayDate = kairiojiData;
+            pradineData.Text = kairiojiData.ToShortDateString();
+            galineData.DisplayDate = desiniojiData;
+            galineData.Text = desiniojiData.ToShortDateString();
+            canGraph.Children.Clear();
+            DrawGraph();
+        }
 
+        private void galineData_ValueChanged(object sender, SelectionChangedEventArgs e)
+        {
+            desiniojiData = galineData.SelectedDate.Value;
+            BendraGauta(vartotojasSaved);
+            BendraSiusta(vartotojasSaved);
+            canGraph.Children.Clear();
+            DrawGraph();
+        }
+
+        private void pradineData_ValueChanged(object sender, SelectionChangedEventArgs e)
+        {
+            kairiojiData = pradineData.SelectedDate.Value;
+            BendraGauta(vartotojasSaved);
+            BendraSiusta(vartotojasSaved);
+            canGraph.Children.Clear();
+            DrawGraph();
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -78,6 +103,172 @@ namespace FinewareWPF
                 animation.AutoReverse = true;
                 LikutisText.BeginAnimation(OpacityProperty, animation);
                 LikutisText.Text = vartotojas.Saskaitos[pagrindinesSaskNr].Likutis.ToString() + " €";
+            }
+        }
+
+        double MaxIsrasuReiksme()
+        {
+            List<Israsas> israsai = vartotojasSaved.Saskaitos[pagrindinesSaskNr].Israsai;
+            double max = 0;
+            for (int i = 0; i < israsai.Count; i++)
+            {
+                // ar įeina į pasirinktą datą
+                if (israsai[i].Data.Date <= desiniojiData.Date && israsai[i].Data.Date >= kairiojiData.Date)
+                {
+                    if (israsai[i].Suma > max)
+                    {
+                        max = israsai[i].Suma;
+                    }
+                }
+            }
+            return max;
+        }
+
+        void DrawGraph()
+        {
+            const double margin = 10;
+            double xmin = margin;
+            double xmax = canGraph.Width - margin;
+            double ymin = margin;
+            double ymax = canGraph.Height - margin;
+            double step = 0;
+            int maxDays = Convert.ToInt32((desiniojiData - kairiojiData).TotalDays / 31);
+            int aCount = maxDays;
+            if ((desiniojiData - kairiojiData).TotalDays <= 0)
+            {
+                step = xmax;
+            }
+            else
+            {
+                step = xmax / (Convert.ToInt32((desiniojiData - kairiojiData).TotalDays));
+            }
+
+            // Make the X axis.
+            GeometryGroup xaxis_geom = new GeometryGroup();
+            xaxis_geom.Children.Add(new LineGeometry(
+                new Point(0, ymax), new Point(canGraph.Width, ymax)));
+            for (double x = xmin + step;
+                x <= canGraph.Width - step; x += step)
+            {
+                xaxis_geom.Children.Add(new LineGeometry(
+                    new Point(x, ymax - margin / 2),
+                    new Point(x, ymax + margin / 2)));
+            }
+
+            Path xaxis_path = new Path();
+            xaxis_path.StrokeThickness = 1;
+            xaxis_path.Stroke = Brushes.Black;
+            xaxis_path.Data = xaxis_geom;
+
+            canGraph.Children.Add(xaxis_path);
+
+            // Make the Y ayis.
+            GeometryGroup yaxis_geom = new GeometryGroup();
+            yaxis_geom.Children.Add(new LineGeometry(
+                new Point(xmin, 0), new Point(xmin, canGraph.Height)));
+            int maxSkaicius = Convert.ToInt32(MaxIsrasuReiksme() / 10);
+            int stepas = Convert.ToInt32(ymax / 10);
+            int maxas = Convert.ToInt32(ymax) + 30;
+            for(int i = 0 ; i < 11; i++)
+            {
+                TextBlock textBlock = new TextBlock();
+                textBlock.FontSize = 8;
+                textBlock.RenderTransform = new RotateTransform(90);
+                textBlock.Text = ((maxSkaicius) * i).ToString();
+                textBlock.Foreground = Brushes.Black;
+                Canvas.SetLeft(textBlock, 0);
+                Canvas.SetTop(textBlock, maxas-=stepas);
+                canGraph.Children.Add(textBlock);
+            }
+            for (double y = step; y <= canGraph.Height - step; y += step)
+            {
+              
+                yaxis_geom.Children.Add(new LineGeometry(
+                    new Point(xmin - margin / 2, y),
+                    new Point(xmin + margin / 2, y)));
+            }
+
+            Path yaxis_path = new Path();
+            yaxis_path.StrokeThickness = 1;
+            yaxis_path.Stroke = Brushes.Black;
+            yaxis_path.Data = yaxis_geom;
+
+            canGraph.Children.Add(yaxis_path);
+            if ((desiniojiData - kairiojiData).TotalDays < 0) return;
+            // Make some data sets.
+            for (int j = 0; j < 2; j++)
+            {
+                PointCollection points = new PointCollection();
+                DateTime pradine = kairiojiData;
+                double count = 0;
+                aCount = maxDays;
+                string tipas = "Siuncia";
+                Brush brush = Brushes.Red;
+                while (pradine.Date <= desiniojiData.Date)
+                {
+                    if (j == 1)
+                    {
+                        tipas = "Gauna";
+                        brush = Brushes.Green;
+                    }
+
+                    bool rado = false;
+                    for (int i = 0; i < vartotojasSaved.Saskaitos[pagrindinesSaskNr].Israsai.Count; i++)
+                    {
+                        if (vartotojasSaved.Saskaitos[pagrindinesSaskNr].Israsai[i].Data.Date == pradine.Date && vartotojasSaved.Saskaitos[pagrindinesSaskNr].Israsai[i].Tipas == tipas)
+                        {
+                            double aa = (1 - (vartotojasSaved.Saskaitos[pagrindinesSaskNr].Israsai[i].Suma) / MaxIsrasuReiksme()) * ymax;
+                            points.Add(new Point(count, aa));
+                            rado = true;
+                            if (aCount == 0)
+                            {
+                                TextBlock textBlock = new TextBlock();
+                                textBlock.FontSize = 8;
+                                textBlock.RenderTransform = new RotateTransform(90);
+                                textBlock.Text = pradine.Month + "-" + pradine.Day;
+                                textBlock.Foreground = Brushes.Black;
+                                Canvas.SetLeft(textBlock, count);
+                                Canvas.SetTop(textBlock, ymax + 10);
+                                canGraph.Children.Add(textBlock);  
+                                aCount = maxDays;
+                            }
+                            else
+                            {
+                                aCount--;
+                            }
+                        }
+                    }
+                    if (!rado)
+                    {
+                        points.Add(new Point(count, ymax));
+                        if (aCount == 0)
+                        {
+                            TextBlock textBlock = new TextBlock();
+                            textBlock.Text = pradine.Month + "-" + pradine.Day;
+                            textBlock.Foreground = Brushes.Black;
+                            textBlock.FontSize = 8;
+                            textBlock.RenderTransform = new RotateTransform(90);
+                            Canvas.SetLeft(textBlock, count);
+                            Canvas.SetTop(textBlock, ymax + 10);
+                            canGraph.Children.Add(textBlock);
+                            aCount = maxDays;
+
+                        }
+                        else
+                        {
+                            aCount--;
+                        }
+                    }
+                    pradine = pradine.AddDays(1);
+                    count += step;
+                }
+
+                Polyline polyline = new Polyline();
+                polyline.StrokeThickness = 2;
+                polyline.Stroke = brush;
+                polyline.Points = points;
+                canGraph.Children.Add(polyline);
+
             }
         }
 
@@ -119,18 +310,54 @@ namespace FinewareWPF
                 {
                     issiustaKodas.Content = paskutinisSiustas.Kodas;
                     issiustaPavadinimas.Content = paskutinisSiustas.Pavadinimas;
-                    issiustaSuma.Text = paskutinisSiustas.Suma.ToString() + " €";
+                    issiustaSuma.Text = "-" + paskutinisSiustas.Suma.ToString() + " €";
                 }
                 if (paskutinisGautas != null)
                 {
                     gautaKodas.Content = paskutinisGautas.Kodas;
                     gautaPavadinimas.Content = paskutinisGautas.Pavadinimas;
-                    gautaSuma.Text = paskutinisGautas.Suma.ToString() + " €";
+                    gautaSuma.Text = "+" + paskutinisGautas.Suma.ToString() + " €";
                 }
             }
             Unloading();
             vartotojasSaved = vartotojas;
 
+        }
+
+        void BendraGauta(Vartotojas vartotojas)
+        {
+            List<Israsas> israsai = vartotojas.Saskaitos[pagrindinesSaskNr].Israsai;
+            double bendraSuma = 0;
+            for(int i = 0; i < israsai.Count; i++)
+            {   
+                // ar įeina į pasirinktą datą
+                if (israsai[i].Data.Date <= desiniojiData.Date && israsai[i].Data.Date >= kairiojiData.Date)
+                {
+                    if (israsai[i].Tipas == "Gauna")
+                    {
+                        bendraSuma += israsai[i].Suma;
+                    }
+                }
+            }
+            bendraGauta.Text = "+" + bendraSuma.ToString() + " €";
+        }
+
+        void BendraSiusta(Vartotojas vartotojas)
+        {
+            List<Israsas> israsai = vartotojas.Saskaitos[pagrindinesSaskNr].Israsai;
+            double bendraSuma = 0;
+            for (int i = 0; i < israsai.Count; i++)
+            {
+                // ar įeina į pasirinktą datą
+                if(israsai[i].Data.Date <= desiniojiData.Date && israsai[i].Data.Date >= kairiojiData.Date)
+                {
+                    if (israsai[i].Tipas == "Siuncia")
+                    {
+                        bendraSuma += israsai[i].Suma;
+                    }
+                } 
+            }
+            bendraIsleista.Text = "-" + bendraSuma.ToString() + " €";
         }
 
         private void Button_MouseEnter(object sender, MouseEventArgs e)
@@ -246,6 +473,7 @@ namespace FinewareWPF
             }
             return paskutinisGautas;
         }
+       
         void ClearGetSentInfo()
         {
             issiustaKodas.Content = "";
