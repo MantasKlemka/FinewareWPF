@@ -93,6 +93,9 @@
     <Compile Include="EmailPriminimas.xaml.cs">
       <DependentUpon>EmailPriminimas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GautiPavedima.xaml.cs">
+      <DependentUpon>GautiPavedima.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Israsai.xaml.cs">
       <DependentUpon>Israsai.xaml</DependentUpon>
     </Compile>
@@ -103,6 +106,10 @@
     <Compile Include="Pervedimas.xaml.cs">
       <DependentUpon>Pervedimas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pranesimai.xaml.cs">
+      <DependentUpon>Pranesimai.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pranesimas.cs" />
     <Compile Include="Prisijungimas.xaml.cs">
       <DependentUpon>Prisijungimas.xaml</DependentUpon>
     </Compile>
@@ -130,6 +137,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GautiPavedima.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Israsai.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -141,6 +152,10 @@
     <Page Include="Pervedimas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pranesimai.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Prisijungimas.xaml">
       <SubType>Designer</SubType>
@@ -267,6 +282,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\RectanglePailgas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\arrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

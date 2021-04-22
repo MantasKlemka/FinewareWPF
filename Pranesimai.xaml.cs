@@ -353,6 +353,41 @@ namespace FinewareWPF
             veiksmai.Name = "DeleteButton_" + id.ToString();
             veiksmai.Click += DeleteButton;
             saskaituGrid.Children.Add(veiksmai);
+            if (vartotojas.Pranesimai[id].pavedimo_tipas == "Prašymas")
+            {
+                Button veiksmas = new Button();
+                veiksmas.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("Images/arrow.png", UriKind.Relative)),
+                };
+                veiksmas.Height = 15;
+                veiksmas.Width = 15;
+                veiksmas.Style = (Style)FindResource("buttonWithoutHighlight");
+                veiksmas.BorderBrush = Brushes.Transparent;
+                veiksmas.Background = Brushes.Transparent;
+                veiksmas.MouseEnter += Button_MouseEnter;
+                veiksmas.MouseLeave += Button_MouseLeave;
+                veiksmas.VerticalAlignment = VerticalAlignment.Top;
+                veiksmas.HorizontalAlignment = HorizontalAlignment.Left;
+                veiksmas.Margin = new Thickness(840, -18 + moveCof, 0, 0);
+                veiksmas.Name = "p" + id.ToString();
+
+                veiksmas.Click += PerverstiSablonasButton;
+                saskaituGrid.Children.Add(veiksmas);
+            }
+        }
+        private void PerverstiSablonasButton(object sender, RoutedEventArgs e)
+        {
+            IsEnabled = false;
+            int id = Convert.ToInt32((sender as Button).Name.Replace("p", ""));
+            Loading();
+            Pervedimas pervedimas = new Pervedimas(vartotojasSaved, keySaved);
+            pervedimas.gavejoTextBox.Text = vartotojasSaved.Pranesimai[id].siuntejasEmail;
+            pervedimas.saskaitosTextBox.Text = vartotojasSaved.Pranesimai[id].siuntejasSaskaita;
+            pervedimas.sumaTextBox.Text = vartotojasSaved.Pranesimai[id].suma.ToString();
+            pervedimas.paskirtisText.Text = vartotojasSaved.Pranesimai[id].Paskirtis.ToString();
+            pervedimas.Show();
+            Close();
         }
 
         public string SumosSpalva(Vartotojas vartotojas, int index)

@@ -250,8 +250,8 @@ namespace FinewareWPF
 
                             //await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
 
-                            Pranesimas pranesimas_siuntejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Gauta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now);
-                            Pranesimas pranesimas_gavejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Išsiūsta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now);
+                            Pranesimas pranesimas_siuntejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Gauta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
+                            Pranesimas pranesimas_gavejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Išsiūsta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
 
                             siuntejas.Pranesimai.Insert(0,pranesimas_siuntejui);
                             siuntejas.Pranesimai.Insert(0,pranesimas_gavejui);
@@ -274,8 +274,8 @@ namespace FinewareWPF
                             siuntejas.Saskaitos[pagrindinesSaskNr].Israsai.Add(siuntejo);
                             gavejas.Saskaitos[gavejoSaskaitosNr].Israsai.Add(gavejo);
 
-                            Pranesimas pranesimas_siuntejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, gavejas.Vardas + " " + gavejas.Pavarde, "Gauta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now);
-                            Pranesimas pranesimas_gavejui = new Pranesimas(gavejas.Vardas + " " + gavejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Išsiūsta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now);
+                            Pranesimas pranesimas_siuntejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, gavejas.Vardas + " " + gavejas.Pavarde, "Gauta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
+                            Pranesimas pranesimas_gavejui = new Pranesimas(gavejas.Vardas + " " + gavejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Išsiūsta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
 
                             siuntejas.Pranesimai.Insert(0,pranesimas_siuntejui);
                             gavejas.Pranesimai.Insert(0,pranesimas_gavejui);

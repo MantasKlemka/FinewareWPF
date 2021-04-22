@@ -137,7 +137,11 @@ namespace FinewareWPF
 
         private void GautiButton(object sender, RoutedEventArgs e)
         {
-
+            Loading();
+            IsEnabled = false;
+            GautiPavedima gautiPavedima = new GautiPavedima(vartotojasSaved, keySaved);
+            gautiPavedima.Show();
+            Close();
         }
 
         private void NustatymaiButton(object sender, RoutedEventArgs e)

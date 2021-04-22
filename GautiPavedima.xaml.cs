@@ -43,7 +43,7 @@ namespace FinewareWPF
             SaskaitosDrop.ItemsSource = IbanArray(vartotojasSaved.Saskaitos);
             vardoPavardesText.Text = vartotojasSaved.Vardas + " " + vartotojasSaved.Pavarde;
             emailText.Text = vartotojasSaved.Epastas;
-            LikutisText.Content = "Sąskaitos likutis: " + vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis + " €";
+            LikutisText.Content = "Jūsų sąskaitos likutis: " + vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis + " €";
             saskaitosPavadinimas.Content = vartotojas.Saskaitos[pagrindinesSaskNr].Pavadinimas;
         }
 
@@ -75,7 +75,7 @@ namespace FinewareWPF
             {
                 pagrindinesSaskNr = FindIbanNr(vartotojas.Saskaitos, e.AddedItems[0].ToString());
             }
-            LikutisText.Content = "Sąskaitos likutis: " + vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis + " €";
+            LikutisText.Content = "Jūsų sąskaitos likutis: " + vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis + " €";
             saskaitosPavadinimas.Content = vartotojas.Saskaitos[pagrindinesSaskNr].Pavadinimas;
             vartotojasSaved = vartotojas;
         }
@@ -90,6 +90,17 @@ namespace FinewareWPF
         {
             var button = (Button)sender;
             button.Opacity = 1;
+        }
+        async private void PavedimasButton(object sender, RoutedEventArgs e)
+        {
+            Loading();
+            IsEnabled = false;
+            var response = await client.GetAsync("Paskyros/" + keySaved);
+            Vartotojas vartotojas = response.ResultAs<Vartotojas>();
+            vartotojasSaved = vartotojas;
+            var pavedimas = new Pervedimas(vartotojasSaved, keySaved);
+            pavedimas.Show();
+            Close();
         }
 
         private void PervestiButton_MouseEnter(object sender, MouseEventArgs e)
@@ -210,7 +221,7 @@ namespace FinewareWPF
             {
                 //await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
 
-                Pranesimas pranesimas_siuntejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Prašymas", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now);
+                Pranesimas pranesimas_siuntejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Prašymas", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
 
 
                 siuntejas.Pranesimai.Insert(0,pranesimas_siuntejui);
@@ -225,7 +236,7 @@ namespace FinewareWPF
             else
             {
 
-                Pranesimas pranesimas_gavejui = new Pranesimas(gavejas.Vardas + " " + gavejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Prašymas", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now);
+                Pranesimas pranesimas_gavejui = new Pranesimas(gavejas.Vardas + " " + gavejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Prašymas", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
 
                 gavejas.Pranesimai.Insert(0,pranesimas_gavejui);
 
