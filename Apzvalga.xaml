@@ -176,7 +176,23 @@
             <DatePicker x:Name="galineData" HorizontalAlignment="Left" VerticalAlignment="Top" IsTodayHighlighted="True" SelectedDateFormat="Short" Text="" DisplayDate="2021-03-21" SelectedDateChanged="galineData_ValueChanged" BorderBrush="{x:Null}" Foreground="#FF4BC4AA"/>
         </Label>
         <TextBlock VerticalAlignment="Top" Margin="854,191,0,0" Foreground="#FFCDCDCD" Background="{x:Null}" Height="25" TextAlignment="Center" HorizontalAlignment="Left" Width="40" FontSize="14" Text="—" FontWeight="Bold"/>
-        <Canvas x:Name="canGraph" HorizontalAlignment="Left" Height="343" Margin="374,429,0,0" VerticalAlignment="Top" Width="926"/>
-        <Button Content="PRANESIMAI" HorizontalAlignment="Left" Margin="1245,49,0,0" VerticalAlignment="Top" Width="75" Click="Pranesimas_Button"/>
+        <Canvas x:Name="canGraph" HorizontalAlignment="Left" Height="313" Margin="389,436,0,0" VerticalAlignment="Top" Width="913"/>
+        <Button HorizontalAlignment="Left" Margin="1301,27,0,0" VerticalAlignment="Top" Width="19" Click="Pranesimas_Button" Style="{StaticResource rotateButton}" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Height="19">
+            <StackPanel>
+                <Image x:Name="alertButton" Source="Images/bell (2).png" Height="12" Width="16"/>
+            </StackPanel>
+        </Button>
+        <Image HorizontalAlignment="Left" Height="464" VerticalAlignment="Top" Width="936" Margin="378,366,0,-23" Source="Images/rectangleHuge.png" Panel.ZIndex="-1" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="0.75"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+        <Image x:Name="notificationCircle" HorizontalAlignment="Left" Height="13" VerticalAlignment="Top" Width="11" Margin="1296,40,0,0" Source="Images/Ellipse 62.png" Panel.ZIndex="2" Visibility="Collapsed"/>
+        <Image HorizontalAlignment="Left" Height="58" VerticalAlignment="Top" Width="55" Margin="1283,10,0,0" Source="Images/square.png" Panel.ZIndex="-2"/>
     </Grid>
 </Window>

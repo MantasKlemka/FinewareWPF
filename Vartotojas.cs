@@ -13,6 +13,7 @@ namespace FinewareWPF
         public string Epastas { get; set; }
         public string Slaptazodis { get; set; }
         public bool IsStaff { get; set; }
+        public bool NaujiNotification { get; set; } = false;
         public int ShortSecurityCode { get; set; }
         public int LongSecurityCode { get; set; }
         public List<Saskaita> Saskaitos = new List<Saskaita>();

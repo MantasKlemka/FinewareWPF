@@ -49,8 +49,8 @@ namespace FinewareWPF
             int currentPage = int.Parse((string)PuslapioNumeris.Content);
             PrintAllNotifications(currentPage);
             AtgalPuslapisButton.IsEnabled = false;
-
-            // CIA REIK PANAUDOTI PUSLAPIU PRINTINIMA
+            vartotojasSaved.NaujiNotification = false;
+            NotificationUpdate();
         }
 
 
@@ -196,19 +196,35 @@ namespace FinewareWPF
 
         private void GautiButton(object sender, RoutedEventArgs e)
         {
-
+            Loading();
+            IsEnabled = false;
+            var gauti = new GautiPavedima(vartotojasSaved, keySaved);
+            gauti.Show();
+            Close();
         }
 
         private void NustatymaiButton(object sender, RoutedEventArgs e)
         {
-
+            Loading();
+            IsEnabled = false;
+            var nustatymai = new Nustatymai(vartotojasSaved, keySaved);
+            nustatymai.Show();
+            Close();
         }
 
         private void AtsijungtiButton(object sender, RoutedEventArgs e)
         {
-
+            Loading();
+            IsEnabled = false;
+            var prisijungimas = new Prisijungimas();
+            prisijungimas.Show();
+            Close();
         }
 
+        private async void NotificationUpdate()
+        {
+            await client.UpdateAsync("Paskyros/" + keySaved, vartotojasSaved);
+        }
 
         private async void PateiktiButton(object sender, RoutedEventArgs e)
         {

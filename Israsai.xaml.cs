@@ -146,12 +146,20 @@ namespace FinewareWPF
 
         private void NustatymaiButton(object sender, RoutedEventArgs e)
         {
-
+            Loading();
+            IsEnabled = false;
+            var nustatymai = new Nustatymai(vartotojasSaved, keySaved);
+            nustatymai.Show();
+            Close();
         }
 
         private void AtsijungtiButton(object sender, RoutedEventArgs e)
         {
-
+            Loading();
+            IsEnabled = false;
+            var prisijungimas = new Prisijungimas();
+            prisijungimas.Show();
+            Close();
         }
 
         public void CreateCheckLine(Vartotojas vartotojas, int israsoNr, int sk)

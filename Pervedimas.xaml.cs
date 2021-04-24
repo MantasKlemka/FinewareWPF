@@ -186,12 +186,20 @@ namespace FinewareWPF
 
         private void NustatymaiButton(object sender, RoutedEventArgs e)
         {
-
+            Loading();
+            IsEnabled = false;
+            var nustatymai = new Nustatymai(vartotojasSaved, keySaved);
+            nustatymai.Show();
+            Close();
         }
 
         private void AtsijungtiButton(object sender, RoutedEventArgs e)
         {
-
+            Loading();
+            IsEnabled = false;
+            var prisijungimas = new Prisijungimas();
+            prisijungimas.Show();
+            Close();
         }
 
         private async void PervestiButton(object sender, RoutedEventArgs e)
@@ -206,7 +214,7 @@ namespace FinewareWPF
             {
                 if (!IsDigitsOnly(sumaTextBox.Text))
                 {
-                    generalEventText.Content = "Sumą turi sudaryti tik skaičiai, kurie gali būti atskirti tašku!";
+                    generalEventText.Content = "Sumą turi sudaryti tik teigiami skaičiai, kurie gali būti atskirti tašku!";
                     return;
                 }
                 if (double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture) <= vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis)
@@ -232,74 +240,90 @@ namespace FinewareWPF
                         generalEventText.Content = "Nėra tokio gavėjo!";
                         return;
                     }
-                    if (gavejoSaskaitosNr != -1)
+                    if (siuntejas.Saskaitos[pagrindinesSaskNr].Kodas != gavejas.Saskaitos[gavejoSaskaitosNr].Kodas)
                     {
+                        if (gavejoSaskaitosNr != -1)
+                        {
                         IsEnabled = false;
                         Loading();
-                        if (siuntejas.Epastas == gavejas.Epastas)
-                        {
-                            siuntejas.Saskaitos[pagrindinesSaskNr].Likutis -= double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture);
-                            siuntejas.Saskaitos[pagrindinesSaskNr].Likutis = Math.Round(siuntejas.Saskaitos[pagrindinesSaskNr].Likutis, 2);
-                            siuntejas.Saskaitos[gavejoSaskaitosNr].Likutis += double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture);
-                            siuntejas.Saskaitos[pagrindinesSaskNr].Likutis = Math.Round(siuntejas.Saskaitos[pagrindinesSaskNr].Likutis, 2);
-                            Israsas gavejo = new Israsas(siuntejas.Vardas + " " + siuntejas.Pavarde, double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), paskirtisText.Text, DateTime.Now, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, siuntejas.Saskaitos[pagrindinesSaskNr].Pavadinimas, "Gauna");
-                            Israsas siuntejo = new Israsas(siuntejas.Vardas + " " + siuntejas.Pavarde, double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), paskirtisText.Text, DateTime.Now, siuntejas.Saskaitos[gavejoSaskaitosNr].Kodas, siuntejas.Saskaitos[gavejoSaskaitosNr].Pavadinimas, "Siuncia");
+                       
+                            if (siuntejas.Epastas == gavejas.Epastas)
+                            {
+                                siuntejas.Saskaitos[pagrindinesSaskNr].Likutis -= double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture);
+                                siuntejas.Saskaitos[pagrindinesSaskNr].Likutis = Math.Round(siuntejas.Saskaitos[pagrindinesSaskNr].Likutis, 2);
+                                siuntejas.Saskaitos[gavejoSaskaitosNr].Likutis += double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture);
+                                siuntejas.Saskaitos[pagrindinesSaskNr].Likutis = Math.Round(siuntejas.Saskaitos[pagrindinesSaskNr].Likutis, 2);
+                                Israsas gavejo = new Israsas(siuntejas.Vardas + " " + siuntejas.Pavarde, double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), paskirtisText.Text, DateTime.Now, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, siuntejas.Saskaitos[pagrindinesSaskNr].Pavadinimas, "Gauna");
+                                Israsas siuntejo = new Israsas(siuntejas.Vardas + " " + siuntejas.Pavarde, double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), paskirtisText.Text, DateTime.Now, siuntejas.Saskaitos[gavejoSaskaitosNr].Kodas, siuntejas.Saskaitos[gavejoSaskaitosNr].Pavadinimas, "Siuncia");
 
-                            siuntejas.Saskaitos[pagrindinesSaskNr].Israsai.Add(siuntejo);
-                            siuntejas.Saskaitos[gavejoSaskaitosNr].Israsai.Add(gavejo);
+                                siuntejas.Saskaitos[pagrindinesSaskNr].Israsai.Add(siuntejo);
+                                siuntejas.Saskaitos[gavejoSaskaitosNr].Israsai.Add(gavejo);
 
-                            //await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
+                                //await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
 
-                            Pranesimas pranesimas_siuntejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Gauta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
-                            Pranesimas pranesimas_gavejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Išsiūsta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
+                                Pranesimas pranesimas_siuntejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Gauta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
+                                Pranesimas pranesimas_gavejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Išsiūsta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
+                                siuntejas.NaujiNotification = true;
+                                gavejas.NaujiNotification = true;
 
-                            siuntejas.Pranesimai.Insert(0,pranesimas_siuntejui);
-                            siuntejas.Pranesimai.Insert(0,pranesimas_gavejui);
+                                siuntejas.Pranesimai.Insert(0, pranesimas_siuntejui);
+                                siuntejas.Pranesimai.Insert(0, pranesimas_gavejui);
 
-                            await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
+                                await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
 
-                            vartotojasSaved = siuntejas;
-                            var apzvalga = new Apzvalga(vartotojasSaved, keySaved);
-                            apzvalga.Show();
-                            Close();
+                                vartotojasSaved = siuntejas;
+                                var apzvalga = new Apzvalga(vartotojasSaved, keySaved);
+                                apzvalga.Show();
+                                Close();
+                            }
+                            else
+                            {
+                                siuntejas.Saskaitos[pagrindinesSaskNr].Likutis -= double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture);
+                                siuntejas.Saskaitos[pagrindinesSaskNr].Likutis = Math.Round(siuntejas.Saskaitos[pagrindinesSaskNr].Likutis, 2);
+                                gavejas.Saskaitos[gavejoSaskaitosNr].Likutis += double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture);
+                                siuntejas.Saskaitos[pagrindinesSaskNr].Likutis = Math.Round(siuntejas.Saskaitos[pagrindinesSaskNr].Likutis, 2);
+                                Israsas gavejo = new Israsas(siuntejas.Vardas + " " + siuntejas.Pavarde, double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), paskirtisText.Text, DateTime.Now, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, siuntejas.Saskaitos[pagrindinesSaskNr].Pavadinimas, "Gauna");
+                                Israsas siuntejo = new Israsas(gavejas.Vardas + " " + gavejas.Pavarde, double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), paskirtisText.Text, DateTime.Now, gavejas.Saskaitos[gavejoSaskaitosNr].Kodas, gavejas.Saskaitos[gavejoSaskaitosNr].Pavadinimas, "Siuncia");
+                                siuntejas.Saskaitos[pagrindinesSaskNr].Israsai.Add(siuntejo);
+                                gavejas.Saskaitos[gavejoSaskaitosNr].Israsai.Add(gavejo);
+
+                                Pranesimas pranesimas_siuntejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, gavejas.Vardas + " " + gavejas.Pavarde, "Gauta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
+                                Pranesimas pranesimas_gavejui = new Pranesimas(gavejas.Vardas + " " + gavejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Išsiūsta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
+                                siuntejas.NaujiNotification = true;
+                                gavejas.NaujiNotification = true;
+
+                                siuntejas.Pranesimai.Insert(0, pranesimas_siuntejui);
+                                gavejas.Pranesimai.Insert(0, pranesimas_gavejui);
+
+                                await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
+                                await client.UpdateAsync("Paskyros/" + gavejoKey, gavejas);
+
+                                vartotojasSaved = siuntejas;
+                                var apzvalga = new Apzvalga(vartotojasSaved, keySaved);
+                                apzvalga.Show();
+                                Close();
+                            }
                         }
                         else
                         {
-                            siuntejas.Saskaitos[pagrindinesSaskNr].Likutis -= double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture);
-                            siuntejas.Saskaitos[pagrindinesSaskNr].Likutis = Math.Round(siuntejas.Saskaitos[pagrindinesSaskNr].Likutis, 2);
-                            gavejas.Saskaitos[gavejoSaskaitosNr].Likutis += double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture);
-                            siuntejas.Saskaitos[pagrindinesSaskNr].Likutis = Math.Round(siuntejas.Saskaitos[pagrindinesSaskNr].Likutis, 2);
-                            Israsas gavejo = new Israsas(siuntejas.Vardas + " " + siuntejas.Pavarde, double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), paskirtisText.Text, DateTime.Now, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, siuntejas.Saskaitos[pagrindinesSaskNr].Pavadinimas, "Gauna");
-                            Israsas siuntejo = new Israsas(gavejas.Vardas + " " + gavejas.Pavarde, double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), paskirtisText.Text, DateTime.Now, gavejas.Saskaitos[gavejoSaskaitosNr].Kodas, gavejas.Saskaitos[gavejoSaskaitosNr].Pavadinimas, "Siuncia");
-                            siuntejas.Saskaitos[pagrindinesSaskNr].Israsai.Add(siuntejo);
-                            gavejas.Saskaitos[gavejoSaskaitosNr].Israsai.Add(gavejo);
-
-                            Pranesimas pranesimas_siuntejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, gavejas.Vardas + " " + gavejas.Pavarde, "Gauta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
-                            Pranesimas pranesimas_gavejui = new Pranesimas(gavejas.Vardas + " " + gavejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Išsiūsta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
-
-                            siuntejas.Pranesimai.Insert(0,pranesimas_siuntejui);
-                            gavejas.Pranesimai.Insert(0,pranesimas_gavejui);
-
-                            await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
-                            await client.UpdateAsync("Paskyros/" + gavejoKey, gavejas);
-
-                            vartotojasSaved = siuntejas;
-                            var apzvalga = new Apzvalga(vartotojasSaved, keySaved);
-                            apzvalga.Show();
-                            Close();
+                            generalEventText.Content = "Nėra tokio gavėjo sąskaitos!";
+                            return;
                         }
                     }
                     else
                     {
-                        generalEventText.Content = "Nėra tokio gavėjo sąskaitos!";
+                        generalEventText.Content = "Negalite vesti pinigų į tą pačią sąskaitą!";
                         return;
                     }
+                    
                 }
                 else
                 {
                     generalEventText.Content = "Nepakankamas sąskaitos likutis!";
                     return;
                 }
+                
+                
             }
             else
             {

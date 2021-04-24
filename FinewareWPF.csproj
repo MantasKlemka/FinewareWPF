@@ -93,6 +93,9 @@
     <Compile Include="EmailPriminimas.xaml.cs">
       <DependentUpon>EmailPriminimas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Nustatymai.xaml.cs">
+      <DependentUpon>Nustatymai.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GautiPavedima.xaml.cs">
       <DependentUpon>GautiPavedima.xaml</DependentUpon>
     </Compile>
@@ -136,6 +139,10 @@
     <Page Include="EmailPriminimas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Nustatymai.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="GautiPavedima.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -285,6 +292,24 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Path 26.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\bell %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Ellipse 62.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\square.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\bell %282%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Path 444.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

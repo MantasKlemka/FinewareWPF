@@ -168,19 +168,22 @@ namespace FinewareWPF
             greyedOut.Visibility = Visibility.Hidden;
         }
 
-        private void GautiButton(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void NustatymaiButton(object sender, RoutedEventArgs e)
         {
-
+            Loading();
+            IsEnabled = false;
+            var nustatymai = new Nustatymai(vartotojasSaved, keySaved);
+            nustatymai.Show();
+            Close();
         }
 
         private void AtsijungtiButton(object sender, RoutedEventArgs e)
         {
-
+            Loading();
+            IsEnabled = false;
+            var prisijungimas = new Prisijungimas();
+            prisijungimas.Show();
+            Close();
         }
 
         private async void PervestiButton(object sender, RoutedEventArgs e)
@@ -222,6 +225,7 @@ namespace FinewareWPF
                 //await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
 
                 Pranesimas pranesimas_siuntejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Prašymas", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
+                siuntejas.NaujiNotification = true;
 
 
                 siuntejas.Pranesimai.Insert(0,pranesimas_siuntejui);
@@ -237,7 +241,7 @@ namespace FinewareWPF
             {
 
                 Pranesimas pranesimas_gavejui = new Pranesimas(gavejas.Vardas + " " + gavejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Prašymas", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
-
+                gavejas.NaujiNotification = true;
                 gavejas.Pranesimai.Insert(0,pranesimas_gavejui);
 
                 await client.UpdateAsync("Paskyros/" + gavejoKey, gavejas);

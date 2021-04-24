@@ -69,6 +69,10 @@ namespace FinewareWPF
             galineData.Text = desiniojiData.ToShortDateString();
             canGraph.Children.Clear();
             DrawGraph();
+            if (vartotojasSaved.NaujiNotification)
+            {
+                notificationCircle.Visibility = Visibility.Visible;
+            }
         }
 
         private void galineData_ValueChanged(object sender, SelectionChangedEventArgs e)
@@ -127,9 +131,7 @@ namespace FinewareWPF
         void DrawGraph()
         {
             const double margin = 10;
-            double xmin = margin;
             double xmax = canGraph.Width - margin;
-            double ymin = margin;
             double ymax = canGraph.Height - margin;
             double step = 0;
             int maxDays = Convert.ToInt32((desiniojiData - kairiojiData).TotalDays / 31);
@@ -142,67 +144,56 @@ namespace FinewareWPF
             {
                 step = xmax / (Convert.ToInt32((desiniojiData - kairiojiData).TotalDays));
             }
-
-            // Make the X axis.
-            GeometryGroup xaxis_geom = new GeometryGroup();
-            xaxis_geom.Children.Add(new LineGeometry(
-                new Point(0, ymax), new Point(canGraph.Width, ymax)));
-            for (double x = xmin + step;
-                x <= canGraph.Width - step; x += step)
-            {
-                xaxis_geom.Children.Add(new LineGeometry(
-                    new Point(x, ymax - margin / 2),
-                    new Point(x, ymax + margin / 2)));
-            }
-
-            Path xaxis_path = new Path();
-            xaxis_path.StrokeThickness = 1;
-            xaxis_path.Stroke = Brushes.Black;
-            xaxis_path.Data = xaxis_geom;
-
-            canGraph.Children.Add(xaxis_path);
-
-            // Make the Y ayis.
-            GeometryGroup yaxis_geom = new GeometryGroup();
-            yaxis_geom.Children.Add(new LineGeometry(
-                new Point(xmin, 0), new Point(xmin, canGraph.Height)));
             int maxSkaicius = Convert.ToInt32(MaxIsrasuReiksme() / 10);
             int stepas = Convert.ToInt32(ymax / 10);
             int maxas = Convert.ToInt32(ymax) + 30;
             for(int i = 0 ; i < 11; i++)
             {
                 TextBlock textBlock = new TextBlock();
-                textBlock.FontSize = 8;
-                textBlock.RenderTransform = new RotateTransform(90);
+                textBlock.FontSize = 10;
+                textBlock.FontWeight = FontWeights.Bold;
+                textBlock.RenderTransform = new RotateTransform(0);
                 textBlock.Text = ((maxSkaicius) * i).ToString();
-                textBlock.Foreground = Brushes.Black;
+                textBlock.Foreground = Brushes.DarkGray;
                 Canvas.SetLeft(textBlock, 0);
                 Canvas.SetTop(textBlock, maxas-=stepas);
                 canGraph.Children.Add(textBlock);
             }
-            for (double y = step; y <= canGraph.Height - step; y += step)
+
+            DateTime pradineSpausdinimui = kairiojiData;
+            aCount = maxDays;
+            double countA = 0;
+            GeometryGroup xaxis_geom = new GeometryGroup();
+            while (pradineSpausdinimui.Date <= desiniojiData.Date)
             {
-              
-                yaxis_geom.Children.Add(new LineGeometry(
-                    new Point(xmin - margin / 2, y),
-                    new Point(xmin + margin / 2, y)));
+                if (aCount == 0)
+                {
+                    TextBlock textBlock = new TextBlock();
+                    textBlock.FontSize = 10;
+                    textBlock.FontWeight = FontWeights.Bold;
+                    textBlock.RenderTransform = new RotateTransform(45);
+                    textBlock.Text = pradineSpausdinimui.Month + "-" + pradineSpausdinimui.Day;
+                    textBlock.Foreground = Brushes.DarkGray;
+                    Canvas.SetLeft(textBlock, countA);
+                    Canvas.SetTop(textBlock, ymax+2);
+                    canGraph.Children.Add(textBlock);
+                    aCount = maxDays;
+                }
+                else
+                {
+                    aCount--;
+                }
+                countA += step;
+                pradineSpausdinimui = pradineSpausdinimui.AddDays(1);
             }
-
-            Path yaxis_path = new Path();
-            yaxis_path.StrokeThickness = 1;
-            yaxis_path.Stroke = Brushes.Black;
-            yaxis_path.Data = yaxis_geom;
-
-            canGraph.Children.Add(yaxis_path);
             if ((desiniojiData - kairiojiData).TotalDays < 0) return;
             // Make some data sets.
             for (int j = 0; j < 2; j++)
             {
                 PointCollection points = new PointCollection();
                 DateTime pradine = kairiojiData;
-                double count = 0;
-                aCount = maxDays;
                 string tipas = "Siuncia";
+                double count = 0;
                 Brush brush = Brushes.Red;
                 while (pradine.Date <= desiniojiData.Date)
                 {
@@ -220,44 +211,11 @@ namespace FinewareWPF
                             double aa = (1 - (vartotojasSaved.Saskaitos[pagrindinesSaskNr].Israsai[i].Suma) / MaxIsrasuReiksme()) * ymax;
                             points.Add(new Point(count, aa));
                             rado = true;
-                            if (aCount == 0)
-                            {
-                                TextBlock textBlock = new TextBlock();
-                                textBlock.FontSize = 8;
-                                textBlock.RenderTransform = new RotateTransform(90);
-                                textBlock.Text = pradine.Month + "-" + pradine.Day;
-                                textBlock.Foreground = Brushes.Black;
-                                Canvas.SetLeft(textBlock, count);
-                                Canvas.SetTop(textBlock, ymax + 10);
-                                canGraph.Children.Add(textBlock);  
-                                aCount = maxDays;
-                            }
-                            else
-                            {
-                                aCount--;
-                            }
                         }
                     }
                     if (!rado)
                     {
                         points.Add(new Point(count, ymax));
-                        if (aCount == 0)
-                        {
-                            TextBlock textBlock = new TextBlock();
-                            textBlock.Text = pradine.Month + "-" + pradine.Day;
-                            textBlock.Foreground = Brushes.Black;
-                            textBlock.FontSize = 8;
-                            textBlock.RenderTransform = new RotateTransform(90);
-                            Canvas.SetLeft(textBlock, count);
-                            Canvas.SetTop(textBlock, ymax + 10);
-                            canGraph.Children.Add(textBlock);
-                            aCount = maxDays;
-
-                        }
-                        else
-                        {
-                            aCount--;
-                        }
                     }
                     pradine = pradine.AddDays(1);
                     count += step;
@@ -423,12 +381,20 @@ namespace FinewareWPF
 
         private void NustatymaiButton(object sender, RoutedEventArgs e)
         {
-
+            Loading();
+            IsEnabled = false;
+            var nustatymai = new Nustatymai(vartotojasSaved, keySaved);
+            nustatymai.Show();
+            Close();
         }
 
         private void AtsijungtiButton(object sender, RoutedEventArgs e)
         {
-
+            Loading();
+            IsEnabled = false;
+            var prisijungimas = new Prisijungimas();
+            prisijungimas.Show();
+            Close();
         }
 
         private void PranesimaiButton(object sender, RoutedEventArgs e)
