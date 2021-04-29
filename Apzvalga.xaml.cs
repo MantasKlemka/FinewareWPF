@@ -277,6 +277,12 @@ namespace FinewareWPF
                     gautaSuma.Text = "+" + paskutinisGautas.Suma.ToString() + " €";
                 }
             }
+            pradineData.DisplayDate = DateTime.Now.AddMonths(-1);
+            pradineData.Text = (DateTime.Now.AddMonths(-1)).ToShortDateString();
+            galineData.DisplayDate = DateTime.Now;
+            galineData.Text = DateTime.Now.ToShortDateString();
+            galineData_ValueChanged(sender, e);
+            pradineData_ValueChanged(sender, e);
             Unloading();
             vartotojasSaved = vartotojas;
 

@@ -240,10 +240,13 @@ namespace FinewareWPF
                         generalEventText.Content = "Nėra tokio gavėjo!";
                         return;
                     }
+                    if (gavejoSaskaitosNr ==  -1)
+                    {
+                        generalEventText.Content = "Nėra tokio gavėjo sąskaitos!";
+                        return;
+                    }
                     if (siuntejas.Saskaitos[pagrindinesSaskNr].Kodas != gavejas.Saskaitos[gavejoSaskaitosNr].Kodas)
                     {
-                        if (gavejoSaskaitosNr != -1)
-                        {
                         IsEnabled = false;
                         Loading();
                        
@@ -303,12 +306,6 @@ namespace FinewareWPF
                                 apzvalga.Show();
                                 Close();
                             }
-                        }
-                        else
-                        {
-                            generalEventText.Content = "Nėra tokio gavėjo sąskaitos!";
-                            return;
-                        }
                     }
                     else
                     {
