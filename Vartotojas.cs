@@ -16,6 +16,7 @@ namespace FinewareWPF
         public bool NaujiNotification { get; set; } = false;
         public int ShortSecurityCode { get; set; }
         public int LongSecurityCode { get; set; }
+        public int MinSuma { get; set; } //minimali suma, kuria virsijus darant pavedimus, prasoma ivesti 6-iu skaitmenu koda
         public List<Saskaita> Saskaitos = new List<Saskaita>();
         public List<Pranesimas> Pranesimai = new List<Pranesimas>();
 
@@ -34,6 +35,7 @@ namespace FinewareWPF
             ShortSecurityCode = 0;
             LongSecurityCode = 0;
             Saskaitos = saskaitos;
+            MinSuma = 0;
         }
     }
 }

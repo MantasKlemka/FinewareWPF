@@ -142,6 +142,23 @@ namespace FinewareWPF
             generalEventText.Visibility = Visibility.Visible;
         }
 
+        private void MinSumaButton(object sender, RoutedEventArgs e)
+        {
+            closeBackground.Visibility = Visibility.Visible;
+            closeButton2.Visibility = Visibility.Visible;
+            KeistiMinWindow.Visibility = Visibility.Visible;
+            KeistiLabel2.Visibility = Visibility.Visible;
+            KeistiDescription2.Visibility = Visibility.Visible;
+            patvirtintiButton2.Visibility = Visibility.Visible;
+            patvirtintiBackround2.Visibility = Visibility.Visible;
+            LimitText.Visibility = Visibility.Visible;
+            MinTextBox.Visibility = Visibility.Visible;
+            MinTextBox.Text = vartotojasSaved.MinSuma.ToString();
+            generalEventText2.Visibility = Visibility.Visible;
+            greyedOut.Visibility = Visibility.Visible;
+
+        }
+
         private void CloseButton(object sender, RoutedEventArgs e)
         {
             closeBackground.Visibility = Visibility.Collapsed;
@@ -172,6 +189,21 @@ namespace FinewareWPF
             generalEventText.Content = "";
         }
 
+        private void CloseButton2(object sender, RoutedEventArgs e)
+        {
+            closeBackground.Visibility = Visibility.Collapsed;
+            closeButton2.Visibility = Visibility.Collapsed;
+            KeistiMinWindow.Visibility = Visibility.Collapsed;
+            KeistiLabel2.Visibility = Visibility.Collapsed;
+            KeistiDescription2.Visibility = Visibility.Collapsed;
+            patvirtintiButton2.Visibility = Visibility.Collapsed;
+            patvirtintiBackround2.Visibility = Visibility.Collapsed;
+            LimitText.Visibility = Visibility.Collapsed;
+            MinTextBox.Visibility = Visibility.Collapsed;
+            generalEventText2.Content = "";
+            greyedOut.Visibility = Visibility.Collapsed;
+        }
+
         private async void PateiktiButton(object sender, RoutedEventArgs e)
         {
             if (!Security.PasswordMatch(PassTextBox.Password, vartotojasSaved.Slaptazodis))
@@ -197,10 +229,47 @@ namespace FinewareWPF
 
             IsEnabled = false;
             Loading();
-            Panel.SetZIndex(greyedOut, 9);           
+            Panel.SetZIndex(greyedOut, 9);
             vartotojasSaved.Slaptazodis = Security.HashingPassword(NewPasswordTextBox.Password);
             await client.UpdateAsync("Paskyros/" + keySaved, vartotojasSaved);
             CloseButton(sender, e);
+            var nustatymai = new Nustatymai(vartotojasSaved, keySaved);
+            nustatymai.Show();
+            Close();
+        }
+
+        private async void PateiktiButton2(object sender, RoutedEventArgs e)
+        {
+            if (MinTextBox.Text == "")
+            {
+                generalEventText2.Content = "Būtina įvesti limitą! (0 - 1 000 000)";
+                return;
+            }
+
+            if (!IsDigitsOnly(MinTextBox.Text))
+            {
+                generalEventText2.Content = "Būtina pateikti tik skaičius!";
+                return;
+            }
+
+            if (MinTextBox.Text.Length > 6)
+            {
+                generalEventText2.Content = "1 000 000 - yra maximalus limitas!";
+                return;
+            }
+
+            if (MinTextBox.Text.Contains("."))
+            {
+                generalEventText2.Content = "Būtina įvesti sveiką skaičių!";
+                return;
+            }
+
+            IsEnabled = false;
+            Loading();
+            Panel.SetZIndex(greyedOut, 9);
+            vartotojasSaved.MinSuma = Convert.ToInt32(MinTextBox.Text);
+            await client.UpdateAsync("Paskyros/" + keySaved, vartotojasSaved);
+            CloseButton2(sender, e);
             var nustatymai = new Nustatymai(vartotojasSaved, keySaved);
             nustatymai.Show();
             Close();
