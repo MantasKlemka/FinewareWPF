@@ -15,6 +15,8 @@ using System.Windows.Media.Animation;
 using FireSharp.Config;
 using FireSharp.Interfaces;
 using System.Globalization;
+using System.Net;
+using System.Net.Mail;
 
 namespace FinewareWPF
 {
@@ -25,6 +27,8 @@ namespace FinewareWPF
     {
         Vartotojas vartotojasSaved;
         string keySaved;
+        public static string projektoEpastas = "finewareproject@gmail.com";
+        public static string projektoSlaptazodis = "fineware112";
         public int pagrindinesSaskNr { get; set; } = 0;
         IFirebaseClient client;
         IFirebaseConfig config = new FirebaseConfig
@@ -159,6 +163,29 @@ namespace FinewareWPF
 
         }
 
+        private void EmailButton(object sender, RoutedEventArgs e)
+        {
+            closeBackground3.Visibility = Visibility.Visible;
+            closeButton3.Visibility = Visibility.Visible;
+            patvirtintiBackround3.Visibility = Visibility.Visible;
+            patvirtintiButton3.Visibility = Visibility.Visible;
+            KeistiDescription3.Text = "Užpildykite reikiamus laukus kad pakeistumėte El. paštą";
+            KeistiLabel3.Content = "El. pašto keitimas";
+            KeistiDescription3.Visibility = Visibility.Visible;
+            KeistiLabel3.Visibility = Visibility.Visible;
+            KeistiEmailWindow.Visibility = Visibility.Visible;
+            greyedOut.Visibility = Visibility.Visible;
+            kodoTextBox3.Visibility = Visibility.Visible;
+            kodoLabel3.Visibility = Visibility.Visible;
+            passLabel3.Visibility = Visibility.Visible;
+            PassTextBox3.Visibility = Visibility.Visible;
+            newEmailLabel.Visibility = Visibility.Visible;
+            NewEmailTextBox.Visibility = Visibility.Visible;
+            passUnderLine3.Visibility = Visibility.Visible;
+            newEmailUnderline.Visibility = Visibility.Visible;
+            kodoUnderline3.Visibility = Visibility.Visible;
+            generalEventText3.Visibility = Visibility.Visible;
+        }
         private void CloseButton(object sender, RoutedEventArgs e)
         {
             closeBackground.Visibility = Visibility.Collapsed;
@@ -202,6 +229,34 @@ namespace FinewareWPF
             MinTextBox.Visibility = Visibility.Collapsed;
             generalEventText2.Content = "";
             greyedOut.Visibility = Visibility.Collapsed;
+        }
+
+        private void CloseButton3(object sender, RoutedEventArgs e)
+        {
+            closeBackground3.Visibility = Visibility.Collapsed;
+            closeButton3.Visibility = Visibility.Collapsed;
+            patvirtintiBackround3.Visibility = Visibility.Collapsed;
+            patvirtintiButton3.Visibility = Visibility.Collapsed;
+            KeistiDescription3.Visibility = Visibility.Collapsed;
+            KeistiLabel3.Visibility = Visibility.Collapsed;
+            KeistiDescription3.Visibility = Visibility.Collapsed;
+            KeistiLabel3.Visibility = Visibility.Collapsed;
+            KeistiEmailWindow.Visibility = Visibility.Collapsed;
+            greyedOut.Visibility = Visibility.Collapsed;
+            kodoTextBox3.Visibility = Visibility.Collapsed;
+            kodoLabel3.Visibility = Visibility.Collapsed;
+            passLabel3.Visibility = Visibility.Collapsed;
+            PassTextBox3.Visibility = Visibility.Collapsed;
+            newEmailLabel.Visibility = Visibility.Collapsed;
+            NewEmailTextBox.Visibility = Visibility.Collapsed;
+            passUnderLine3.Visibility = Visibility.Collapsed;
+            newEmailUnderline.Visibility = Visibility.Collapsed;
+            kodoUnderline3.Visibility = Visibility.Collapsed;
+            generalEventText3.Visibility = Visibility.Collapsed;
+            kodoTextBox3.Clear();
+            NewEmailTextBox.Clear();
+            PassTextBox3.Clear();
+            generalEventText3.Content = "";
         }
 
         private async void PateiktiButton(object sender, RoutedEventArgs e)
@@ -273,6 +328,49 @@ namespace FinewareWPF
             var nustatymai = new Nustatymai(vartotojasSaved, keySaved);
             nustatymai.Show();
             Close();
+        }
+
+        private async void PateiktiButton3(object sender, RoutedEventArgs e)
+        {
+            if (!Security.PasswordMatch(PassTextBox3.Password, vartotojasSaved.Slaptazodis))
+            {
+                generalEventText3.Content = "Neteisingas slaptažodis!";
+                return;
+            }
+            if (kodoTextBox3.Password != vartotojasSaved.ShortSecurityCode.ToString())
+            {
+                generalEventText3.Content = "Neteisingas 4-ių skaičių kodas!";
+                return;
+            }
+            if (NewEmailTextBox.Text == vartotojasSaved.Epastas)
+            {
+                generalEventText3.Content = "Naujas El. paštas negali sutapti su senuoju!";
+                return;
+            }
+            if (NewEmailTextBox.Text == "")
+            {
+                generalEventText3.Content = "Tusčias el. pašto laukas";
+                return;
+            }
+
+            IsEnabled = false;
+            Loading();
+            Panel.SetZIndex(greyedOut, 9);
+            Random rand = new Random();
+            string randomCode = (rand.Next(10000, 99999)).ToString();
+            string messageBody = "Jūsu el. pašto pakeitimo kodas yra : " + randomCode;
+            string messageSubject = "El. pašto pakeitimo kodas";
+            MailMessage message = SiustiLaiska.CreateMessage(NewEmailTextBox.Text, projektoEpastas, messageBody, messageSubject);
+            SiustiLaiska.SendMessage(projektoEpastas, projektoSlaptazodis, message);
+
+            var EmailCode = new EmailPatikrinimas2(vartotojasSaved, keySaved, NewEmailTextBox.Text);
+            EmailCode.generalEventText.Content = "Išsiunteme jums kodą į El. paštą!";
+            EmailCode.generalEventText.Foreground = Brushes.Green;
+            EmailCode.generalEventText.Visibility = Visibility.Visible;
+            EmailCode.randomCode = randomCode;
+            EmailCode.Show();
+            Close();
+            
         }
 
         private void PatvirtintiButton_MouseEnter(object sender, MouseEventArgs e)
@@ -364,5 +462,7 @@ namespace FinewareWPF
             }
             return true;
         }
+
+
     }
 }
