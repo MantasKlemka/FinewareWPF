@@ -49,6 +49,20 @@ namespace FinewareWPF
             vardoPavardesText.Text = vartotojasSaved.Vardas + " " + vartotojasSaved.Pavarde;
             emailText.Text = vartotojasSaved.Epastas;
             UzkrautiCheckboxPasirinkimus();
+            if(vartotojasSaved.ToDelete == false)
+            {
+                Atsaukti.IsEnabled = false;
+                Istrinti.IsEnabled = true;
+                IstrynimopPranesimas.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                Atsaukti.IsEnabled = true;
+                Istrinti.IsEnabled = false;
+                IstrynimopPranesimas.Content = "Ši paskyra bus ištrinta " + vartotojasSaved.Istrynimo_Data.ToShortDateString();
+                IstrynimopPranesimas.Foreground = Brushes.Red;
+                IstrynimopPranesimas.Visibility = Visibility.Visible;
+            }
 
         }
 
@@ -500,6 +514,68 @@ namespace FinewareWPF
                 }
             }
             return true;
+        }
+        private void IstrintiButton(object sender, RoutedEventArgs e)
+        {
+            closeBackground4.Visibility = Visibility.Visible;
+            closeButton4.Visibility = Visibility.Visible;
+            patvirtintiBackround4.Visibility = Visibility.Visible;
+            patvirtintiButton4.Visibility = Visibility.Visible;
+            TrintiDescription.Text = "Užpildykite reikiamus laukus kad patvirtumente paskyros ištrynimą";
+            TrintiLabel.Content = "Paskyros ištrynimas";
+            TrintiDescription.Visibility = Visibility.Visible;
+            TrintiLabel.Visibility = Visibility.Visible;
+            DeleteWindow.Visibility = Visibility.Visible;
+            greyedOut.Visibility = Visibility.Visible;
+            passLabel4.Visibility = Visibility.Visible;
+            PassTextBox4.Visibility = Visibility.Visible;
+            passUnderLine4.Visibility = Visibility.Visible;
+            generalEventText4.Visibility = Visibility.Visible;
+        }
+
+        private async void PateiktiButton4(object sender, RoutedEventArgs e)
+        {
+            if (!Security.PasswordMatch(PassTextBox4.Password, vartotojasSaved.Slaptazodis))
+            {
+                generalEventText.Content = "Neteisingas slaptažodis!";
+                return;
+            }
+
+            IsEnabled = false;
+            Loading();
+            Panel.SetZIndex(greyedOut, 9);
+
+            vartotojasSaved.ToDelete = true;
+            vartotojasSaved.Istrynimo_Data = DateTime.Now.AddDays(30);
+            await client.UpdateAsync("Paskyros/" + keySaved, vartotojasSaved);
+
+            CloseButton(sender, e);
+            var nustatymai = new Nustatymai(vartotojasSaved, keySaved);
+            nustatymai.Show();
+            Close();
+        }
+        //private async void IstrintiButton(object sender, RoutedEventArgs e)
+        //{
+        //    Atsaukti.IsEnabled = true;
+        //    Istrinti.IsEnabled = false;
+        //    vartotojasSaved.ToDelete = true;
+        //    vartotojasSaved.Istrynimo_Data = DateTime.Now.AddDays(30);
+        //    IstrynimopPranesimas.Content = "Ši paskyra bus ištrinta " + vartotojasSaved.Istrynimo_Data.ToShortDateString();
+        //    IstrynimopPranesimas.Foreground = Brushes.Red;
+        //    IstrynimopPranesimas.Visibility = Visibility.Visible;
+        //    await client.UpdateAsync("Paskyros/" + keySaved, vartotojasSaved);
+        //}
+
+        private async void AtsauktiButton(object sender, RoutedEventArgs e)
+        {
+            Atsaukti.IsEnabled = false;
+            Istrinti.IsEnabled = true;
+            vartotojasSaved.ToDelete = false;
+            vartotojasSaved.Istrynimo_Data = DateTime.Now;
+            IstrynimopPranesimas.Content = "Paskyros ištrynimas atšauktas";
+            IstrynimopPranesimas.Foreground = Brushes.Red;
+            IstrynimopPranesimas.Visibility = Visibility.Visible;
+            await client.UpdateAsync("Paskyros/" + keySaved, vartotojasSaved);
         }
     }
 }

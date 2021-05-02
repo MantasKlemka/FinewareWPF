@@ -22,6 +22,10 @@ namespace FinewareWPF
         public bool Notification_Siuntimas { get; set; }
         public bool Notification_Prasymas { get; set; }
 
+        // Paskyros ištrynimas
+        public bool ToDelete { get; set; }
+        public DateTime Istrynimo_Data { get; set; }
+
 
         public int MinSuma { get; set; } //minimali suma, kuria virsijus darant pavedimus, prasoma ivesti 6-iu skaitmenu koda
         public List<Saskaita> Saskaitos = new List<Saskaita>();
@@ -43,6 +47,7 @@ namespace FinewareWPF
             LongSecurityCode = 0;
             Saskaitos = saskaitos;
             MinSuma = 0;
+            ToDelete = false;
         }
     }
 }

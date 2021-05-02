@@ -61,35 +61,49 @@ namespace FinewareWPF
             }
             else
             {
-                // jei tinka slaptažodis
-                if (Security.PasswordMatch(slaptazodzioTextBox.Password, paskyra.Slaptazodis))
+                //Tikrina ar paskyra neturi buti istrinta
+                if (paskyra.ToDelete == true && DateTime.Now > paskyra.Istrynimo_Data)
                 {
-                    // prisijungus prie paskyros kuri neturi apsaugos
-                    if (paskyra.ShortSecurityCode == 0 | paskyra.LongSecurityCode == 0)
-                    {
-                        var securityForm = new ApsaugosKodas();
-                        securityForm.paskyra = paskyra;
-                        securityForm.key = key;
-                        securityForm.Show();
-                        Close();
-                    }
-                    else
-                    {
-                        var apzvalga = new Apzvalga(paskyra, key);
-                        generalEventText.Visibility = Visibility.Hidden;
-                        prisijungtiButton.IsEnabled = true;
-                        apzvalga.Show();
-                        Close();
-                    }
-                }
-                else
-                {
+                    client.Delete("Paskyros/" + key);
                     Unloading();
-                    generalEventText.Content = "Neteisingas slaptažodis";
+                    generalEventText.Content = "Tokia paskyra neegzistuoja";
                     generalEventText.Foreground = Brushes.Red;
                     generalEventText.Visibility = Visibility.Visible;
                     prisijungtiButton.IsEnabled = true;
                     counter++;
+                }
+                else
+                {
+                    // jei tinka slaptažodis
+                    if (Security.PasswordMatch(slaptazodzioTextBox.Password, paskyra.Slaptazodis))
+                    {
+                        // prisijungus prie paskyros kuri neturi apsaugos
+                        if (paskyra.ShortSecurityCode == 0 | paskyra.LongSecurityCode == 0)
+                        {
+                            var securityForm = new ApsaugosKodas();
+                            securityForm.paskyra = paskyra;
+                            securityForm.key = key;
+                            securityForm.Show();
+                            Close();
+                        }
+                        else
+                        {
+                            var apzvalga = new Apzvalga(paskyra, key);
+                            generalEventText.Visibility = Visibility.Hidden;
+                            prisijungtiButton.IsEnabled = true;
+                            apzvalga.Show();
+                            Close();
+                        }
+                    }
+                    else
+                    {
+                        Unloading();
+                        generalEventText.Content = "Neteisingas slaptažodis";
+                        generalEventText.Foreground = Brushes.Red;
+                        generalEventText.Visibility = Visibility.Visible;
+                        prisijungtiButton.IsEnabled = true;
+                        counter++;
+                    }
                 }
             }
 
