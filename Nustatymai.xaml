@@ -156,5 +156,15 @@
         <Label x:Name="newEmailLabel" Content="Naujas El. paštas" HorizontalAlignment="Left" Margin="574,407,0,0" VerticalAlignment="Top" Height="30" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Width="188" Foreground="#FF77C9AE" FontWeight="Bold" Panel.ZIndex="6" Visibility="Collapsed"/>
         <Image x:Name="newEmailUnderline" HorizontalAlignment="Left" Height="52" Margin="572,465,0,0" VerticalAlignment="Top" Width="190" Source="Images/Line.png" Panel.ZIndex="6" Visibility="Collapsed"/>
         <!-- Email keitimo pop up langas     BAIGTA-->
+
+        <!-- Notification langas-->
+        <Image Height="422" Margin="736,374,0,0" VerticalAlignment="Top" Source="Images/Path 444.png" HorizontalAlignment="Left" Width="333"/>
+        <TextBlock VerticalAlignment="Top" Margin="789,441,0,0" Foreground="#FFCDCDCD" Background="{x:Null}" Height="25" TextAlignment="Center" HorizontalAlignment="Left" Width="248" FontSize="14"><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="—"/><Run Text="——————"/><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="—————"/><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="————"/></TextBlock>
+        <Label Content="Pranešimai" HorizontalAlignment="Left" Margin="796,414,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
+        <CheckBox x:Name="PajamuGavimas" Content="Pajamų gavimas" HorizontalAlignment="Left" Margin="806,484,0,0" VerticalAlignment="Top" Width="152"/>
+        <CheckBox x:Name="PajamuIssiuntimas" Content="Pajamų išsiuntimas" HorizontalAlignment="Left" Margin="806,522,0,0" VerticalAlignment="Top" Width="152"/>
+        <CheckBox x:Name="PrasymuGavimas" Content="Prašymų gavimas" HorizontalAlignment="Left" Margin="806,559,0,0" VerticalAlignment="Top" Width="152"/>
+        <Button x:Name="IssaugotiPranesimus" Content="Išsaugoti" HorizontalAlignment="Left" Margin="806,722,0,0" VerticalAlignment="Top" Width="75" Click="IssaugotiPranesimus_Click"/>
+        <!--NOTIFICATION LANGAS BAIGTA-->
     </Grid>
 </Window>

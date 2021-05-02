@@ -16,6 +16,13 @@ namespace FinewareWPF
         public bool NaujiNotification { get; set; } = false;
         public int ShortSecurityCode { get; set; }
         public int LongSecurityCode { get; set; }
+
+        // Vartotojo pranesimai
+        public bool Notification_Gavimas { get; set; }
+        public bool Notification_Siuntimas { get; set; }
+        public bool Notification_Prasymas { get; set; }
+
+
         public int MinSuma { get; set; } //minimali suma, kuria virsijus darant pavedimus, prasoma ivesti 6-iu skaitmenu koda
         public List<Saskaita> Saskaitos = new List<Saskaita>();
         public List<Pranesimas> Pranesimai = new List<Pranesimas>();

@@ -37,6 +37,8 @@ namespace FinewareWPF
             BasePath = "https://fineware-759f7-default-rtdb.firebaseio.com/"
         };
 
+
+
         public Nustatymai(Vartotojas vartotojas, string key)
         {
             client = new FireSharp.FirebaseClient(config);
@@ -46,6 +48,41 @@ namespace FinewareWPF
             pagrindinesSaskNr = 0;
             vardoPavardesText.Text = vartotojasSaved.Vardas + " " + vartotojasSaved.Pavarde;
             emailText.Text = vartotojasSaved.Epastas;
+            UzkrautiCheckboxPasirinkimus();
+
+        }
+
+        private async void IssaugotiPranesimus_Click(object sender, RoutedEventArgs e)
+        {
+            Loading();
+
+            if (PajamuGavimas.IsChecked == true)
+                vartotojasSaved.Notification_Gavimas = true;
+            else vartotojasSaved.Notification_Gavimas = false;
+
+            if (PajamuIssiuntimas.IsChecked == true)
+                vartotojasSaved.Notification_Siuntimas = true;
+            else vartotojasSaved.Notification_Siuntimas = false;
+
+            if (PrasymuGavimas.IsChecked == true)
+                vartotojasSaved.Notification_Prasymas = true;
+            else vartotojasSaved.Notification_Prasymas = false;
+            await client.UpdateAsync("Paskyros/" + keySaved, vartotojasSaved);
+
+            Unloading();
+        }
+
+        public void UzkrautiCheckboxPasirinkimus()
+        {
+            if (vartotojasSaved.Notification_Gavimas == true)
+                PajamuGavimas.IsChecked = true;
+
+            if (vartotojasSaved.Notification_Prasymas == true)
+                PrasymuGavimas.IsChecked = true;
+
+            if (vartotojasSaved.Notification_Siuntimas == true)
+                PajamuIssiuntimas.IsChecked = true;
+
         }
 
         public string[] IbanArray(List<Saskaita> saskaitos)
@@ -108,6 +145,7 @@ namespace FinewareWPF
             apzvalga.Show();
             Close();
         }
+
 
         private void ValiutosButton(object sender, RoutedEventArgs e)
         {
@@ -463,7 +501,5 @@ namespace FinewareWPF
             }
             return true;
         }
-
-
     }
 }

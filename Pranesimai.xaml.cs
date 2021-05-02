@@ -43,12 +43,19 @@ namespace FinewareWPF
             pagrindinesSaskNr = 0;
             vardoPavardesText.Text = vartotojasSaved.Vardas + " " + vartotojasSaved.Pavarde;
             emailText.Text = vartotojasSaved.Epastas;
-
+            
             int puslapiuSkaicius = PuslapiuSkaicius(vartotojasSaved);
             puslapiuSk = puslapiuSkaicius;
             int currentPage = int.Parse((string)PuslapioNumeris.Content);
             PrintAllNotifications(currentPage);
             AtgalPuslapisButton.IsEnabled = false;
+
+            if (vartotojas.Pranesimai.Count != 0)
+                NeraPranesimu.Visibility = Visibility.Hidden;
+
+            if (vartotojas.Pranesimai.Count <= 9)
+                KitasPuslapisButton.IsEnabled = false;
+
             vartotojasSaved.NaujiNotification = false;
             NotificationUpdate();
         }
@@ -105,15 +112,6 @@ namespace FinewareWPF
                 CreateBillLine(vartotojasSaved, i, nr);
                 nr++;
             }
-
-
-
-            //int pirmasPranesimas = (dabartinisPuslapis-1) * 9;
-            //int sk = 9;
-            //for (int i = pirmasPranesimas; i < pirmasPranesimas+sk; i++)
-            //{
-            //    CreateBillLine(vartotojasSaved, i);
-            //}
         }
 
         private void Button_MouseEnter(object sender, MouseEventArgs e)
@@ -317,6 +315,8 @@ namespace FinewareWPF
 
         public void CreateBillLine(Vartotojas vartotojas, int id, int nr)
         {
+            if(vartotojas.Pranesimai.Count != 0) 
+            {
             int moveBackCof = (nr + 1) * 100;
             int moveCof = (nr + 1) * 50;
             var bc = new BrushConverter();
@@ -390,6 +390,7 @@ namespace FinewareWPF
 
                 veiksmas.Click += PerverstiSablonasButton;
                 saskaituGrid.Children.Add(veiksmas);
+            }
             }
         }
         private void PerverstiSablonasButton(object sender, RoutedEventArgs e)

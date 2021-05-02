@@ -399,13 +399,21 @@ namespace FinewareWPF
 
                             //await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
 
-                            Pranesimas pranesimas_siuntejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Išsiūsta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
-                            Pranesimas pranesimas_gavejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Gauta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
-                            siuntejas.NaujiNotification = true;
-                            gavejas.NaujiNotification = true;
+                            // Jei siuntejas yra isijunges Siuntimo notification
+                            if (siuntejas.Notification_Siuntimas == true)
+                            {
+                                Pranesimas pranesimas_siuntejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Išsiūsta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
+                                siuntejas.Pranesimai.Insert(0, pranesimas_siuntejui);
+                                siuntejas.NaujiNotification = true;
+                            }
 
-                            siuntejas.Pranesimai.Insert(0, pranesimas_siuntejui);
-                            siuntejas.Pranesimai.Insert(0, pranesimas_gavejui);
+                            // Jei gavejas yra isijunges Gavimo notification
+                            if (siuntejas.Notification_Gavimas == true)
+                            {
+                                Pranesimas pranesimas_gavejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Gauta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
+                                gavejas.NaujiNotification = true;
+                                siuntejas.Pranesimai.Insert(0, pranesimas_gavejui);
+                            }
 
                             await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
 
@@ -425,13 +433,22 @@ namespace FinewareWPF
                             siuntejas.Saskaitos[pagrindinesSaskNr].Israsai.Add(siuntejo);
                             gavejas.Saskaitos[gavejoSaskaitosNr].Israsai.Add(gavejo);
 
-                            Pranesimas pranesimas_siuntejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, gavejas.Vardas + " " + gavejas.Pavarde, "Išsiūsta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
-                            Pranesimas pranesimas_gavejui = new Pranesimas(gavejas.Vardas + " " + gavejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Gauta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
-                            siuntejas.NaujiNotification = true;
-                            gavejas.NaujiNotification = true;
 
-                            siuntejas.Pranesimai.Insert(0, pranesimas_siuntejui);
-                            gavejas.Pranesimai.Insert(0, pranesimas_gavejui);
+                            // Tikrinama, ar siuntejas yra isijunges 'Siuntimas' notification
+                            if (siuntejas.Notification_Siuntimas == true)
+                            {
+                                Pranesimas pranesimas_siuntejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, gavejas.Vardas + " " + gavejas.Pavarde, "Išsiūsta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
+                                siuntejas.Pranesimai.Insert(0, pranesimas_siuntejui);
+                                siuntejas.NaujiNotification = true;
+                            }
+
+                            // Tikrinama, ar gavejas yra isijunges 'Gavimas' notification
+                            if (gavejas.Notification_Gavimas == true)
+                            {
+                                Pranesimas pranesimas_gavejui = new Pranesimas(gavejas.Vardas + " " + gavejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Gauta", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
+                                gavejas.Pranesimai.Insert(0, pranesimas_gavejui);
+                                gavejas.NaujiNotification = true;
+                            }
 
                             await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
                             await client.UpdateAsync("Paskyros/" + gavejoKey, gavejas);

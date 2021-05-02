@@ -218,6 +218,16 @@ namespace FinewareWPF
                 generalEventText.Content = "Nėra tokio gavėjo!";
                 return;
             }
+
+            // Tikrinama ar gavėjas yra lygus siuntejui
+            if(gavejas.Epastas == siuntejas.Epastas)
+            {
+                Unloading();
+                generalEventText.Content = "Negalite siųsti mokėjimo prašymo sau!";
+                return;
+            }
+
+
             IsEnabled = false;
             Loading();
             if (siuntejas.Epastas == gavejas.Epastas)
