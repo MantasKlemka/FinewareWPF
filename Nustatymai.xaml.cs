@@ -160,7 +160,7 @@ namespace FinewareWPF
             MinTextBox.Text = vartotojasSaved.MinSuma.ToString();
             generalEventText2.Visibility = Visibility.Visible;
             greyedOut.Visibility = Visibility.Visible;
-
+            Border.Visibility = Visibility.Visible;
         }
 
         private void EmailButton(object sender, RoutedEventArgs e)
@@ -229,6 +229,7 @@ namespace FinewareWPF
             MinTextBox.Visibility = Visibility.Collapsed;
             generalEventText2.Content = "";
             greyedOut.Visibility = Visibility.Collapsed;
+            Border.Visibility = Visibility.Collapsed;
         }
 
         private void CloseButton3(object sender, RoutedEventArgs e)

@@ -65,6 +65,16 @@ namespace FinewareWPF
 
         }
 
+        private void PatvirtintiButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            patvirtintiBackround.Opacity = 0.8;
+        }
+
+        private void PatvirtintiButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            patvirtintiBackround.Opacity = 1;
+        }
+
         public string[] IbanArray(List<Saskaita> saskaitos)
         {
             string[] array = new string[saskaitos.Count];
@@ -118,6 +128,16 @@ namespace FinewareWPF
         private void PervestiButton_MouseLeave(object sender, MouseEventArgs e)
         {
             patvirtintiBackround.Opacity = 1;
+        }
+
+        private void PervestiButton_MouseEnter2(object sender, MouseEventArgs e)
+        {
+            patvirtintiBackround2.Opacity = 0.8;
+        }
+
+        private void PervestiButton_MouseLeave2(object sender, MouseEventArgs e)
+        {
+            patvirtintiBackround2.Opacity = 1;
         }
 
         private void IsrasasButton(object sender, RoutedEventArgs e)
@@ -200,6 +220,121 @@ namespace FinewareWPF
             var prisijungimas = new Prisijungimas();
             prisijungimas.Show();
             Close();
+        }
+
+        private async void PatvirtintiButton(object sender, RoutedEventArgs e)
+        {
+            if(Convert.ToDouble(vartotojasSaved.MinSuma) < Convert.ToDouble(sumaTextBox.Text))
+            {
+                if (gavejoTextBox.Text == "" || saskaitosTextBox.Text == "" || sumaTextBox.Text == "" || kodoTextBox.Password == "")
+                {
+                    generalEventText.Content = "Prašome užpildyti visus privalomus langelius!";
+                    return;
+                }
+                if (kodoTextBox.Password == vartotojasSaved.ShortSecurityCode.ToString())
+                {
+                    if (!IsDigitsOnly(sumaTextBox.Text))
+                    {
+                        generalEventText.Content = "Sumą turi sudaryti tik teigiami skaičiai, kurie gali būti atskirti tašku!";
+                        return;
+                    }
+                    if (double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture) <= vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis)
+                    {
+                        Loading();
+                        // nuskaitom paskyras is duomenu bazes
+                        string gavejoKey = String.Join("", Encoding.ASCII.GetBytes(gavejoTextBox.Text));
+                        var responseSiuntejas = await client.GetAsync("Paskyros/" + keySaved);
+                        Vartotojas siuntejas = responseSiuntejas.ResultAs<Vartotojas>();
+                        var responseGavejas = await client.GetAsync("Paskyros/" + gavejoKey);
+                        Vartotojas gavejas = responseGavejas.ResultAs<Vartotojas>();
+
+                        int gavejoSaskaitosNr = -1;
+                        // ieškome ar egzistuoja tokia paskyra duomenų bazėje
+                        if (gavejas != null)
+                        {
+                            Unloading();
+                            gavejoSaskaitosNr = GetBillNumber(gavejas);
+                        }
+                        else
+                        {
+                            Unloading();
+                            generalEventText.Content = "Nėra tokio gavėjo!";
+                            return;
+                        }
+                        if (gavejoSaskaitosNr == -1)
+                        {
+                            generalEventText.Content = "Nėra tokio gavėjo sąskaitos!";
+                            return;
+                        }
+                        if (siuntejas.Saskaitos[pagrindinesSaskNr].Kodas != gavejas.Saskaitos[gavejoSaskaitosNr].Kodas)
+                        {
+                            MinSumaButton(sender, e);
+                        }
+                        else
+                        {
+                            generalEventText.Content = "Negalite vesti pinigų į tą pačią sąskaitą!";
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        generalEventText.Content = "Nepakankamas sąskaitos likutis!";
+                        return;
+                    }
+
+                }
+                else
+                {
+                    generalEventText.Content = "Neteisingas 4-ių skaičių kodas!";
+                    return;
+                }
+            }
+            else
+            {
+                PervestiButton(sender, e);
+            }
+        }
+
+        private void MinSumaButton(object sender, RoutedEventArgs e)
+        {
+            KeistiMinWindow.Visibility = Visibility.Visible;
+            KeistiLabel2.Visibility = Visibility.Visible;
+            KeistiDescription2.Visibility = Visibility.Visible;
+            patvirtintiButton2.Visibility = Visibility.Visible;
+            patvirtintiBackround2.Visibility = Visibility.Visible;
+            LimitText.Visibility = Visibility.Visible;
+            generalEventText2.Visibility = Visibility.Visible;
+            greyedOut.Visibility = Visibility.Visible;
+            PassTextBox.Visibility = Visibility.Visible;
+            Border.Visibility = Visibility.Visible;
+        }
+
+        private async void PateiktiButton2(object sender, RoutedEventArgs e)
+        {
+            if(Convert.ToInt32(PassTextBox.Password) != vartotojasSaved.LongSecurityCode)
+            {
+                generalEventText2.Content = "Neteisingas 6-ių skaitmenų kodas!";
+                return;
+            }
+            else if(PassTextBox.Password.Length < 6)
+            {
+                generalEventText2.Content = "Įveskite 6-ių skaitmenų kodą!";
+                return;
+            }
+            else
+            {
+                KeistiMinWindow.Visibility = Visibility.Collapsed;
+                KeistiLabel2.Visibility = Visibility.Collapsed;
+                KeistiDescription2.Visibility = Visibility.Collapsed;
+                patvirtintiButton2.Visibility = Visibility.Collapsed;
+                patvirtintiBackround2.Visibility = Visibility.Collapsed;
+                LimitText.Visibility = Visibility.Collapsed;
+                generalEventText2.Visibility = Visibility.Collapsed;
+                greyedOut.Visibility = Visibility.Collapsed;
+                PassTextBox.Visibility = Visibility.Collapsed;
+                Border.Visibility = Visibility.Collapsed;
+                PervestiButton(sender, e);
+            }
         }
 
         private async void PervestiButton(object sender, RoutedEventArgs e)
