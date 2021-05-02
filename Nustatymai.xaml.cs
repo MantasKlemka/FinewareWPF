@@ -311,7 +311,22 @@ namespace FinewareWPF
             PassTextBox3.Clear();
             generalEventText3.Content = "";
         }
-
+        private void CloseButton4(object sender, RoutedEventArgs e)
+        {
+            closeBackground4.Visibility = Visibility.Collapsed;
+            closeButton4.Visibility = Visibility.Collapsed;
+            patvirtintiBackround4.Visibility = Visibility.Collapsed;
+            patvirtintiButton4.Visibility = Visibility.Collapsed;
+            TrintiDescription.Visibility = Visibility.Collapsed;
+            TrintiLabel.Visibility = Visibility.Collapsed;
+            DeleteWindow.Visibility = Visibility.Collapsed;
+            greyedOut.Visibility = Visibility.Collapsed;
+            passLabel4.Visibility = Visibility.Collapsed;
+            PassTextBox4.Visibility = Visibility.Collapsed;
+            passUnderLine4.Visibility = Visibility.Collapsed;
+            generalEventText4.Visibility = Visibility.Collapsed;
+            PassTextBox4.Clear();
+        }
         private async void PateiktiButton(object sender, RoutedEventArgs e)
         {
             if (!Security.PasswordMatch(PassTextBox.Password, vartotojasSaved.Slaptazodis))
@@ -533,6 +548,7 @@ namespace FinewareWPF
             generalEventText4.Visibility = Visibility.Visible;
         }
 
+
         private async void PateiktiButton4(object sender, RoutedEventArgs e)
         {
             if (!Security.PasswordMatch(PassTextBox4.Password, vartotojasSaved.Slaptazodis))
@@ -549,22 +565,11 @@ namespace FinewareWPF
             vartotojasSaved.Istrynimo_Data = DateTime.Now.AddDays(30);
             await client.UpdateAsync("Paskyros/" + keySaved, vartotojasSaved);
 
-            CloseButton(sender, e);
+            CloseButton4(sender, e);
             var nustatymai = new Nustatymai(vartotojasSaved, keySaved);
             nustatymai.Show();
             Close();
         }
-        //private async void IstrintiButton(object sender, RoutedEventArgs e)
-        //{
-        //    Atsaukti.IsEnabled = true;
-        //    Istrinti.IsEnabled = false;
-        //    vartotojasSaved.ToDelete = true;
-        //    vartotojasSaved.Istrynimo_Data = DateTime.Now.AddDays(30);
-        //    IstrynimopPranesimas.Content = "Ši paskyra bus ištrinta " + vartotojasSaved.Istrynimo_Data.ToShortDateString();
-        //    IstrynimopPranesimas.Foreground = Brushes.Red;
-        //    IstrynimopPranesimas.Visibility = Visibility.Visible;
-        //    await client.UpdateAsync("Paskyros/" + keySaved, vartotojasSaved);
-        //}
 
         private async void AtsauktiButton(object sender, RoutedEventArgs e)
         {
