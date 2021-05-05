@@ -193,6 +193,12 @@ namespace FinewareWPF
                 generalEventText.Content = "Prašome užpildyti visus privalomus langelius!";
                 return;
             }
+            
+            if(sumaTextBox.Text == "0")
+            {
+                generalEventText.Content = "Prašome įvesti sumą didesnę nei 0 !";
+                return;
+            }
 
             if (!IsDigitsOnly(sumaTextBox.Text))
             {
