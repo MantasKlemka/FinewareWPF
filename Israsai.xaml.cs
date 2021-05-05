@@ -49,6 +49,10 @@ namespace FinewareWPF
             {
                 pirmasPsl.IsEnabled = false;
                 atgal.IsEnabled = false;
+                if (vartotojas.Saskaitos[pagrindinesSaskNr].Israsai.Count == 0)
+                {
+                    toliau.IsEnabled = false;
+                }
             }
 
             //vartotojas.Saskaitos[pagrindinesSaskNr].Israsai.Sort();
