@@ -45,16 +45,28 @@ namespace FinewareWPF
             //int index = 0;
             PrintAllChecks(index);
             puslapiuNumeris.Content ="1";
-            if (puslapiuNumeris.Content == "1")
+            if ((string)puslapiuNumeris.Content == "1")
             {
-                pirmasPsl.IsEnabled = false;
                 atgal.IsEnabled = false;
-                if (vartotojas.Saskaitos[pagrindinesSaskNr].Israsai.Count == 0)
+                atgal.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("Images/disabledleftarrow.png", UriKind.Relative)),
+                    Height = 12,
+                    Width = 16
+                };
+                if (vartotojas.Saskaitos[pagrindinesSaskNr].Israsai.Count < 8)
                 {
                     toliau.IsEnabled = false;
+                    toliau.Content = new Image
+                    {
+                        Source = new BitmapImage(new Uri("Images/disabledrightarrow.png", UriKind.Relative)),
+                        Height = 12,
+                        Width = 16
+                    };
                 }
             }
 
+            avatarIcon.Source = new BitmapImage(new Uri("Images/Avatars/avatar" + vartotojas.AvatarIndex + ".png", UriKind.Relative));
             //vartotojas.Saskaitos[pagrindinesSaskNr].Israsai.Sort();
         }
 
@@ -267,21 +279,41 @@ namespace FinewareWPF
 
         private void Toliau_Click(object sender, RoutedEventArgs e)
         {
-            pirmasPsl.IsEnabled = true;
             puslapiuNumeris.Content = (Convert.ToInt32(puslapiuNumeris.Content) + 1).ToString();
             int pslKiekis = PuslapiuSkaicius(vartotojasSaved);
             if(pslKiekis.ToString() == puslapiuNumeris.Content.ToString())
             {
                 toliau.IsEnabled = false;
+                toliau.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("Images/disabledrightarrow.png", UriKind.Relative)),
+                    Height = 12,
+                    Width = 16
+                };
                 atgal.IsEnabled = true;
-                pirmasPsl.IsEnabled = true;
-
+                atgal.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("Images/leftarrow.png", UriKind.Relative)),
+                    Height = 12,
+                    Width = 16
+                };
             }
             else
             {
                 toliau.IsEnabled = true;
+                toliau.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("Images/rightarrow.png", UriKind.Relative)),
+                    Height = 12,
+                    Width = 16
+                };
                 atgal.IsEnabled = true;
-                pirmasPsl.IsEnabled = true;
+                atgal.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("Images/leftarrow.png", UriKind.Relative)),
+                    Height = 12,
+                    Width = 16
+                };
             }
 
             index = index + 7;
@@ -291,9 +323,20 @@ namespace FinewareWPF
 
         private void Pirmas_Click(object sender, RoutedEventArgs e)
         {
-            pirmasPsl.IsEnabled = false;
             atgal.IsEnabled = false;
+            atgal.Content = new Image
+            {
+                Source = new BitmapImage(new Uri("Images/disabledleftarrow.png", UriKind.Relative)),
+                Height = 12,
+                Width = 16
+            };
             toliau.IsEnabled = true;
+            toliau.Content = new Image
+            {
+                Source = new BitmapImage(new Uri("Images/rightarrow.png", UriKind.Relative)),
+                Height = 12,
+                Width = 16
+            };
             puslapiuNumeris.Content = "1";
             index = 0;
             saskaituGrid.Children.Clear();
@@ -306,14 +349,36 @@ namespace FinewareWPF
             if (puslapiuNumeris.Content.ToString() == "1")
             {
                 atgal.IsEnabled = false;
-                pirmasPsl.IsEnabled = false;
+                atgal.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("Images/disabledleftarrow.png", UriKind.Relative)),
+                    Height = 12,
+                    Width = 16
+                };
                 toliau.IsEnabled = true;
+                toliau.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("Images/rightarrow.png", UriKind.Relative)),
+                    Height = 12,
+                    Width = 16
+                };
             }
             else
             {
-                pirmasPsl.IsEnabled = true;
                 atgal.IsEnabled = true;
+                atgal.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("Images/leftarrow.png", UriKind.Relative)),
+                    Height = 12,
+                    Width = 16
+                };
                 toliau.IsEnabled = true;
+                toliau.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("Images/rightarrow.png", UriKind.Relative)),
+                    Height = 12,
+                    Width = 16
+                };
             }
             
             index = index - 7;

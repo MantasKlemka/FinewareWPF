@@ -16,6 +16,7 @@ namespace FinewareWPF
         public bool NaujiNotification { get; set; } = false;
         public int ShortSecurityCode { get; set; }
         public int LongSecurityCode { get; set; }
+        public int AvatarIndex { get; set; }
 
         // Vartotojo pranesimai
         public bool Notification_Gavimas { get; set; }
@@ -48,6 +49,7 @@ namespace FinewareWPF
             Saskaitos = saskaitos;
             MinSuma = 0;
             ToDelete = false;
+            AvatarIndex = 6;
         }
     }
 }

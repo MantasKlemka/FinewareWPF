@@ -84,7 +84,7 @@
         <Image HorizontalAlignment="Left" Height="851" Margin="804,-17,-109,-27" VerticalAlignment="Top" Width="464" Source="Images/sidePanel.png" Panel.ZIndex="2"/>
         <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="106" Margin="936,390,0,0" Source="Images/logoBaltas.png" Panel.ZIndex="3"/>
         <Image HorizontalAlignment="Left" Height="834" Margin="804,0,-85,-27" VerticalAlignment="Top" Width="440" Source="Images/sidePanelBackground.png" Panel.ZIndex="1"/>
-        <Label x:Name="Title" Content="Slaptažodžio keitimas" HorizontalAlignment="Left" Margin="236,104,0,0" VerticalAlignment="Top" FontSize="36" FontFamily="/FinewareWPF;component/Fonts/#Roboto" FontWeight="Bold" Foreground="#FF4BC4AA" />
+        <Label x:Name="Pavadinimas" Content="Slaptažodžio keitimas" HorizontalAlignment="Left" Margin="236,104,0,0" VerticalAlignment="Top" FontSize="36" FontFamily="/FinewareWPF;component/Fonts/#Roboto" FontWeight="Bold" Foreground="#FF4BC4AA" />
         <Label x:Name="Copyright" Content="© 2021 Fineware" HorizontalAlignment="Left" Margin="348,751,0,0" VerticalAlignment="Top" FontSize="18" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FFD6CECE" Background="{x:Null}"/>
         <Label x:Name="lab1" Content="El. paštas" HorizontalAlignment="Left" Margin="310,288,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
         <Label x:Name="lab2" Content="Įveskite kodą:" HorizontalAlignment="Left" Margin="310,443,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>

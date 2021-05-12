@@ -45,6 +45,7 @@ namespace FinewareWPF
             emailText.Text = vartotojasSaved.Epastas;
             LikutisText.Content = "Jūsų sąskaitos likutis: " + vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis + " €";
             saskaitosPavadinimas.Content = vartotojas.Saskaitos[pagrindinesSaskNr].Pavadinimas;
+            avatarIcon.Source = new BitmapImage(new Uri("Images/Avatars/avatar" + vartotojas.AvatarIndex + ".png", UriKind.Relative));
         }
 
         public string[] IbanArray(List<Saskaita> saskaitos)
@@ -193,13 +194,12 @@ namespace FinewareWPF
                 generalEventText.Content = "Prašome užpildyti visus privalomus langelius!";
                 return;
             }
-            
-            if(sumaTextBox.Text == "0")
+
+            if (sumaTextBox.Text == "0")
             {
                 generalEventText.Content = "Prašome įvesti sumą didesnę nei 0 !";
                 return;
             }
-
             if (!IsDigitsOnly(sumaTextBox.Text))
             {
                 generalEventText.Content = "Sumą turi sudaryti tik skaičiai, kurie gali būti atskirti tašku!";
@@ -240,14 +240,16 @@ namespace FinewareWPF
             {
                 //await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
 
-                Pranesimas pranesimas_siuntejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Prašymas", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
-                siuntejas.NaujiNotification = true;
+                if (siuntejas.Notification_Prasymas == true)
+                {
+                    Pranesimas pranesimas_siuntejui = new Pranesimas(siuntejas.Vardas + " " + siuntejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Prašymas", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
+                    siuntejas.NaujiNotification = true;
 
-
-                siuntejas.Pranesimai.Insert(0,pranesimas_siuntejui);
+                    siuntejas.Pranesimai.Insert(0,pranesimas_siuntejui);
+                }
 
                 await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
-
+      
                 vartotojasSaved = siuntejas;
                 var apzvalga = new Apzvalga(vartotojasSaved, keySaved);
                 apzvalga.Show();
@@ -255,10 +257,12 @@ namespace FinewareWPF
             }
             else
             {
-
-                Pranesimas pranesimas_gavejui = new Pranesimas(gavejas.Vardas + " " + gavejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Prašymas", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
-                gavejas.NaujiNotification = true;
-                gavejas.Pranesimai.Insert(0,pranesimas_gavejui);
+                if (gavejas.Notification_Prasymas == true)
+                {
+                    Pranesimas pranesimas_gavejui = new Pranesimas(gavejas.Vardas + " " + gavejas.Pavarde, siuntejas.Vardas + " " + siuntejas.Pavarde, "Prašymas", double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture), DateTime.Now, siuntejas.Epastas, siuntejas.Saskaitos[pagrindinesSaskNr].Kodas, paskirtisText.Text);
+                    gavejas.NaujiNotification = true;
+                    gavejas.Pranesimai.Insert(0, pranesimas_gavejui);
+                }
 
                 await client.UpdateAsync("Paskyros/" + gavejoKey, gavejas);
 

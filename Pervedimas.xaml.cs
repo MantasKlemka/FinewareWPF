@@ -46,6 +46,7 @@ namespace FinewareWPF
             emailText.Text = vartotojasSaved.Epastas;
             LikutisText.Content = "Sąskaitos likutis: " + vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis + " €";
             saskaitosPavadinimas.Content = vartotojas.Saskaitos[pagrindinesSaskNr].Pavadinimas;
+            avatarIcon.Source = new BitmapImage(new Uri("Images/Avatars/avatar" + vartotojas.AvatarIndex + ".png", UriKind.Relative));
         }
 
         public Pervedimas(Vartotojas vartotojas, string key, int nr)
@@ -309,7 +310,7 @@ namespace FinewareWPF
             Border.Visibility = Visibility.Visible;
         }
 
-        private async void PateiktiButton2(object sender, RoutedEventArgs e)
+        private void PateiktiButton2(object sender, RoutedEventArgs e)
         {
             if(Convert.ToInt32(PassTextBox.Password) != vartotojasSaved.LongSecurityCode)
             {

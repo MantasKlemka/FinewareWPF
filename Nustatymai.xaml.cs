@@ -63,7 +63,8 @@ namespace FinewareWPF
                 IstrynimopPranesimas.Foreground = Brushes.Red;
                 IstrynimopPranesimas.Visibility = Visibility.Visible;
             }
-
+            imageComboBox.SelectedIndex = vartotojas.AvatarIndex;
+            avatarIcon.Source = new BitmapImage(new Uri("Images/Avatars/avatar" + vartotojas.AvatarIndex + ".png", UriKind.Relative));
         }
 
         private async void IssaugotiPranesimus_Click(object sender, RoutedEventArgs e)
@@ -398,7 +399,7 @@ namespace FinewareWPF
             Close();
         }
 
-        private async void PateiktiButton3(object sender, RoutedEventArgs e)
+        private void PateiktiButton3(object sender, RoutedEventArgs e)
         {
             if (!Security.PasswordMatch(PassTextBox3.Password, vartotojasSaved.Slaptazodis))
             {
@@ -581,6 +582,24 @@ namespace FinewareWPF
             IstrynimopPranesimas.Foreground = Brushes.Red;
             IstrynimopPranesimas.Visibility = Visibility.Visible;
             await client.UpdateAsync("Paskyros/" + keySaved, vartotojasSaved);
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int selectedIndex = imageComboBox.SelectedIndex;
+            string choosen = "Images/Avatars/avatar" + Convert.ToInt32(selectedIndex) + ".png";
+            localImage.Source = new BitmapImage(new Uri(choosen, UriKind.Relative));
+        }
+
+        private async void KeistiDuomenisButton(object sender, RoutedEventArgs e)
+        {
+            Loading();
+            IsEnabled = false;
+            vartotojasSaved.AvatarIndex = imageComboBox.SelectedIndex;
+            await client.UpdateAsync("Paskyros/" + keySaved, vartotojasSaved);
+            var nustatymai = new Nustatymai(vartotojasSaved, keySaved);
+            nustatymai.Show();
+            Close();
         }
     }
 }

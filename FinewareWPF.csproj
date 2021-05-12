@@ -253,9 +253,6 @@
     <Resource Include="Images\Rectangle 13.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\man.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Rectangle 1.png" />
   </ItemGroup>
   <ItemGroup>
@@ -317,6 +314,30 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Path 444.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\leftarrow.png" />
+    <Resource Include="Images\rightarrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\disabledleftarrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\disabledrightarrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\profileback.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Avatars\avatar0.png" />
+    <Resource Include="Images\Avatars\avatar1.png" />
+    <Resource Include="Images\Avatars\avatar2.png" />
+    <Resource Include="Images\Avatars\avatar3.png" />
+    <Resource Include="Images\Avatars\avatar4.png" />
+    <Resource Include="Images\Avatars\avatar5.png" />
+    <Resource Include="Images\Avatars\avatar6.png" />
+    <Resource Include="Images\Avatars\avatar7.png" />
+    <Resource Include="Images\Avatars\avatar8.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

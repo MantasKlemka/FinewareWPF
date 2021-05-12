@@ -42,6 +42,7 @@ namespace FinewareWPF
             vardoPavardesText.Text = vartotojasSaved.Vardas + " " + vartotojasSaved.Pavarde;
             emailText.Text = vartotojasSaved.Epastas;
             PrintAllBills();
+            avatarIcon.Source = new BitmapImage(new Uri("Images/Avatars/avatar" + vartotojas.AvatarIndex + ".png", UriKind.Relative));
         }
 
         public string CreateIban()

@@ -91,7 +91,7 @@
         <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="106" Margin="936,390,0,0" Source="Images/logoBaltas.png" Panel.ZIndex="3"/>
         <Image HorizontalAlignment="Left" Height="834" Margin="804,0,-85,-27" VerticalAlignment="Top" Width="440" Source="Images/sidePanelBackground.png" Panel.ZIndex="1"/>
         <Label x:Name="Description" Content="Susikurkite paskyrą kad galėtumėte naudotis visomis galimybėmis!" HorizontalAlignment="Left" Margin="112,158,0,0" VerticalAlignment="Top" FontSize="20" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FFA8A8A8"/>
-        <Label x:Name="Title" Content="Registracija" HorizontalAlignment="Left" Margin="316,100,0,0" VerticalAlignment="Top" FontSize="36" FontFamily="/FinewareWPF;component/Fonts/#Roboto" FontWeight="Bold" Foreground="#FF4BC4AA" />
+        <Label x:Name="Pavadinimas" Content="Registracija" HorizontalAlignment="Left" Margin="316,100,0,0" VerticalAlignment="Top" FontSize="36" FontFamily="/FinewareWPF;component/Fonts/#Roboto" FontWeight="Bold" Foreground="#FF4BC4AA" />
         <Label Content="Vardas" HorizontalAlignment="Left" Margin="212,251,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
         <Label Content="Pavardė" HorizontalAlignment="Left" Margin="422,251,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
         <Label Content="El. paštas" HorizontalAlignment="Left" Margin="214,469,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold" RenderTransformOrigin="0.425,0.5"/>

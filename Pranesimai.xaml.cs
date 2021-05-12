@@ -49,13 +49,26 @@ namespace FinewareWPF
             int currentPage = int.Parse((string)PuslapioNumeris.Content);
             PrintAllNotifications(currentPage);
             AtgalPuslapisButton.IsEnabled = false;
-
+            AtgalPuslapisButton.Content = new Image
+            {
+                Source = new BitmapImage(new Uri("Images/disabledleftarrow.png", UriKind.Relative)),
+                Height = 12,
+                Width = 16
+            };
             if (vartotojas.Pranesimai.Count != 0)
                 NeraPranesimu.Visibility = Visibility.Hidden;
 
             if (vartotojas.Pranesimai.Count <= 9)
+            {
                 KitasPuslapisButton.IsEnabled = false;
-
+                KitasPuslapisButton.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("Images/disabledrightarrow.png", UriKind.Relative)),
+                    Height = 12,
+                    Width = 16
+                };
+            }
+            avatarIcon.Source = new BitmapImage(new Uri("Images/Avatars/avatar" + vartotojas.AvatarIndex + ".png", UriKind.Relative));
             vartotojasSaved.NaujiNotification = false;
             NotificationUpdate();
         }
@@ -518,13 +531,31 @@ namespace FinewareWPF
         {
             saskaituGrid.Children.Clear();
             KitasPuslapisButton.IsEnabled = true;
+            KitasPuslapisButton.Content = new Image
+            {
+                Source = new BitmapImage(new Uri("Images/rightarrow.png", UriKind.Relative)),
+                Height = 12,
+                Width = 16
+            };
             if (int.Parse((string)PuslapioNumeris.Content)-1 == 1)
             {
                 AtgalPuslapisButton.IsEnabled = false;
+                AtgalPuslapisButton.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("Images/disabledleftarrow.png", UriKind.Relative)),
+                    Height = 12,
+                    Width = 16
+                };
             }
             else
             {
                 AtgalPuslapisButton.IsEnabled = true;
+                AtgalPuslapisButton.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("Images/leftarrow.png", UriKind.Relative)),
+                    Height = 12,
+                    Width = 16
+                };
             }
             string text = (int.Parse((string)PuslapioNumeris.Content) - 1).ToString();
             PuslapioNumeris.Content = text;
@@ -535,13 +566,31 @@ namespace FinewareWPF
         {
             saskaituGrid.Children.Clear();
             AtgalPuslapisButton.IsEnabled = true;
+            AtgalPuslapisButton.Content = new Image
+            {
+                Source = new BitmapImage(new Uri("Images/leftarrow.png", UriKind.Relative)),
+                Height = 12,
+                Width = 16
+            };
             if (int.Parse((string)PuslapioNumeris.Content)+1 == puslapiuSk)
             {
                 KitasPuslapisButton.IsEnabled = false;
+                KitasPuslapisButton.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("Images/disabledrightarrow.png", UriKind.Relative)),
+                    Height = 12,
+                    Width = 16
+                };
             }
             else
             {
                 KitasPuslapisButton.IsEnabled = true;
+                KitasPuslapisButton.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("Images/rightarrow.png", UriKind.Relative)),
+                    Height = 12,
+                    Width = 16
+                };
             }
             string text = (int.Parse((string)PuslapioNumeris.Content) + 1).ToString();
             PuslapioNumeris.Content = text;

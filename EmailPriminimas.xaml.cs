@@ -25,7 +25,6 @@ namespace FinewareWPF
     /// </summary>
     public partial class EmailPriminimas : Window
     {
-        string key;
         string randomCode;
         string email;
         IFirebaseClient client;

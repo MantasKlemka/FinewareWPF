@@ -63,7 +63,7 @@
         <Image HorizontalAlignment="Left" Height="851" Margin="804,-17,-109,-27" VerticalAlignment="Top" Width="464" Source="Images/sidePanel.png" Panel.ZIndex="2"/>
         <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="106" Margin="936,390,0,0" Source="Images/logoBaltas.png" Panel.ZIndex="3"/>
         <Image HorizontalAlignment="Left" Height="834" Margin="804,0,-85,-27" VerticalAlignment="Top" Width="440" Source="Images/sidePanelBackground.png" Panel.ZIndex="1"/>
-        <Label x:Name="Title" Content="Apsaugos kodai" HorizontalAlignment="Left" Margin="286,104,0,0" VerticalAlignment="Top" FontSize="36" FontFamily="/FinewareWPF;component/Fonts/#Roboto" FontWeight="Bold" Foreground="#FF4BC4AA" />
+        <Label x:Name="Pavadinimas" Content="Apsaugos kodai" HorizontalAlignment="Left" Margin="286,104,0,0" VerticalAlignment="Top" FontSize="36" FontFamily="/FinewareWPF;component/Fonts/#Roboto" FontWeight="Bold" Foreground="#FF4BC4AA" />
         <Label x:Name="Description" Content="Apsaugos kodai skirti jūsų paskyros saugumo užtvirtinimui" HorizontalAlignment="Left" Margin="155,158,0,0" VerticalAlignment="Top" FontSize="20" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FFA8A8A8"/>
         <Label Content="4-ių skaičių kodas" HorizontalAlignment="Left" Margin="143,253,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
         <Label Content="Pakartokite 4-ių skaičių kodą" HorizontalAlignment="Left" Margin="140,378,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>

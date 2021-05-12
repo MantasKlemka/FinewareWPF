@@ -73,6 +73,7 @@ namespace FinewareWPF
             {
                 notificationCircle.Visibility = Visibility.Visible;
             }
+            avatarIcon.Source = new BitmapImage(new Uri("Images/Avatars/avatar" + vartotojas.AvatarIndex + ".png", UriKind.Relative));
         }
 
         private void galineData_ValueChanged(object sender, SelectionChangedEventArgs e)
