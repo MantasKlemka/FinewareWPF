@@ -84,17 +84,35 @@ namespace FinewareWPF
             return skaicius;
         }
 
+        // --------------------- SENAS 'PrintAllChecks' metodas ----------------------
+        //void PrintAllChecks(int index)
+        //{
+        //    int sk = 0;
+        //    int pslKiekis = PuslapiuSkaicius(vartotojasSaved); // israsu puslapiu kiekis
+        //    int count = 0;
+        //    CreateCheckBanner();
+        //    for (int i = index; i < vartotojasSaved.Saskaitos[pagrindinesSaskNr].Israsai.Count; i++)
+        //    {
+        //        if (count < 7)
+        //        {
+        //            CreateCheckLine(vartotojasSaved, i,sk);
+        //            sk++;
+        //        }
+        //        count++;
+        //    }
+        //}
+
         void PrintAllChecks(int index)
         {
             int sk = 0;
             int pslKiekis = PuslapiuSkaicius(vartotojasSaved); // israsu puslapiu kiekis
             int count = 0;
             CreateCheckBanner();
-            for (int i = index; i < vartotojasSaved.Saskaitos[pagrindinesSaskNr].Israsai.Count; i++)
+            for (int i = vartotojasSaved.Saskaitos[pagrindinesSaskNr].Israsai.Count-1; i > index; i--)
             {
                 if (count < 7)
                 {
-                    CreateCheckLine(vartotojasSaved, i,sk);
+                    CreateCheckLine(vartotojasSaved, i, sk);
                     sk++;
                 }
                 count++;

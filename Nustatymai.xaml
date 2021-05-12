@@ -97,7 +97,7 @@
         <Image Height="422" Margin="1036,374,-452,0" VerticalAlignment="Top" Source="Images/Path 444.png" HorizontalAlignment="Left" Width="810"/>
         <TextBlock VerticalAlignment="Top" Margin="1074,441,0,0" Foreground="#FFCDCDCD" Background="{x:Null}" Height="25" TextAlignment="Center" HorizontalAlignment="Left" Width="248" FontSize="14"><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="—"/><Run Text="——————"/><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="—————"/><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="————"/></TextBlock>
         <Label Content="Saugumas" HorizontalAlignment="Left" Margin="1081,414,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
-        <Button Content="Keisti slaptažodį" HorizontalAlignment="Left" Margin="1142,500,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="SlaptazodisButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="Black"/>
+        <Button Content="Keisti slaptažodį" HorizontalAlignment="Left" Margin="1086,474,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="SlaptazodisButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="Black" Width="118"/>
         <!-- Slaptažodžio keitimo pop up langas -->
         <Image x:Name="KeistiWindow" HorizontalAlignment="Left" Height="419" Margin="474,183,0,0" VerticalAlignment="Top" Width="684" Source="Images/Rectangle 31.png" Panel.ZIndex="6" Visibility="Collapsed"/>
         <Label x:Name="generalEventText" Content="" HorizontalAlignment="Left" Margin="607,306,0,0" VerticalAlignment="Top" Height="28" Foreground="Red" Visibility="Collapsed" Width="309" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Panel.ZIndex="6"/>
@@ -132,8 +132,8 @@
         <Label x:Name="generalEventText2" Content="" HorizontalAlignment="Left" Margin="607,316,0,0" VerticalAlignment="Top" Height="28" Foreground="Red" Visibility="Collapsed" Width="309" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Panel.ZIndex="6"/>
         <Image x:Name="Border" HorizontalAlignment="Left" Height="52" Margin="607,443,0,0" VerticalAlignment="Top" Width="309" Source="Images/Line.png" Panel.ZIndex="9" Visibility="Collapsed" />
         <!-- Min Sumos keitimo pop up langas     BAIGTA-->
-        <Button x:Name="antrasButton" Content="Patvirtinimo apsauga" HorizontalAlignment="Left" Margin="1115,540,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="MinSumaButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="Black" Width="178"/>
-        <Button Content="Keisti El. paštą" HorizontalAlignment="Left" Margin="1148,582,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="EmailButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="Black"/>
+        <Button x:Name="antrasButton" Content="Patvirtinimo apsauga" HorizontalAlignment="Left" Margin="1084,517,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="MinSumaButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="Black" Width="154"/>
+        <Button Content="Keisti El. paštą" HorizontalAlignment="Left" Margin="1086,559,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="EmailButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="Black"/>
         <!-- Email keitimo pop up langas -->
         <Image x:Name="KeistiEmailWindow" HorizontalAlignment="Left" Height="419" Margin="474,183,0,0" VerticalAlignment="Top" Width="684" Source="Images/Rectangle 31.png" Panel.ZIndex="6" Visibility="Collapsed"/>
         <Label x:Name="generalEventText3" Content="" HorizontalAlignment="Left" Margin="607,306,0,0" VerticalAlignment="Top" Height="28" Foreground="Red" Visibility="Collapsed" Width="309" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Panel.ZIndex="6"/>
@@ -157,16 +157,16 @@
 
         <!-- Notification langas-->
         <Image Height="422" Margin="736,374,0,0" VerticalAlignment="Top" Source="Images/Path 444.png" HorizontalAlignment="Left" Width="333"/>
-        <TextBlock VerticalAlignment="Top" Margin="789,441,0,0" Foreground="#FFCDCDCD" Background="{x:Null}" Height="25" TextAlignment="Center" HorizontalAlignment="Left" Width="248" FontSize="14"><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="—"/><Run Text="——————"/><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="—————"/><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="————"/></TextBlock>
-        <Label Content="Pranešimai" HorizontalAlignment="Left" Margin="796,414,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
-        <CheckBox x:Name="PajamuGavimas" Content="Pajamų gavimas" HorizontalAlignment="Left" Margin="806,484,0,0" VerticalAlignment="Top" Width="152"/>
-        <CheckBox x:Name="PajamuIssiuntimas" Content="Pajamų išsiuntimas" HorizontalAlignment="Left" Margin="806,522,0,0" VerticalAlignment="Top" Width="152"/>
-        <CheckBox x:Name="PrasymuGavimas" Content="Prašymų gavimas" HorizontalAlignment="Left" Margin="806,559,0,0" VerticalAlignment="Top" Width="152"/>
+        <TextBlock VerticalAlignment="Top" Margin="775,441,0,0" Foreground="#FFCDCDCD" Background="{x:Null}" Height="25" TextAlignment="Center" HorizontalAlignment="Left" Width="248" FontSize="14"><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="—"/><Run Text="——————"/><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="—————"/><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="————"/></TextBlock>
+        <Label Content="Pranešimai" HorizontalAlignment="Left" Margin="782,414,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
+        <CheckBox x:Name="PajamuGavimas" Content="Pajamų gavimas" HorizontalAlignment="Left" Margin="786,484,0,0" VerticalAlignment="Top" Width="152"/>
+        <CheckBox x:Name="PajamuIssiuntimas" Content="Pajamų išsiuntimas" HorizontalAlignment="Left" Margin="786,522,0,0" VerticalAlignment="Top" Width="152"/>
+        <CheckBox x:Name="PrasymuGavimas" Content="Prašymų gavimas" HorizontalAlignment="Left" Margin="786,559,0,0" VerticalAlignment="Top" Width="152"/>
         <Button x:Name="IssaugotiPranesimus" Content="Išsaugoti" HorizontalAlignment="Left" Margin="806,722,0,0" VerticalAlignment="Top" Width="75" Click="IssaugotiPranesimus_Click"/>
         <!--NOTIFICATION LANGAS BAIGTA-->
 
-        <Button x:Name="Istrinti" Content="Ištrinti paskyrą" HorizontalAlignment="Left" Margin="1148,627,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="IstrintiButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="Black"/>
-        <Button x:Name="Atsaukti" Content="Atšaukti paskyros ištrynimą" HorizontalAlignment="Left" Margin="1102,673,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="AtsauktiButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="Black"/>
+        <Button x:Name="Istrinti" Content="Ištrinti paskyrą" HorizontalAlignment="Left" Margin="1086,605,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="IstrintiButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="Black"/>
+        <Button x:Name="Atsaukti" Content="Atšaukti paskyros ištrynimą" HorizontalAlignment="Left" Margin="1086,651,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="AtsauktiButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="Black"/>
         <Label x:Name="IstrynimopPranesimas" Content="" HorizontalAlignment="Left" Margin="1067,707,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FFA8A8A8" Width="266"/>
         <!-- Paskyros ištrynimo pop up langas -->
         <Image x:Name="DeleteWindow" HorizontalAlignment="Left" Height="419" Margin="474,183,0,0" VerticalAlignment="Top" Width="684" Source="Images/Rectangle 31.png" Panel.ZIndex="6" Visibility="Collapsed"/>
@@ -180,7 +180,7 @@
         <PasswordBox x:Name="PassTextBox4" HorizontalAlignment="Left" Height="26" Margin="572,363,0,0" VerticalAlignment="Top" Width="190" FontSize="16" Foreground="#FF4BC4AA" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Style="{StaticResource customPassBox}" Panel.ZIndex="6" Visibility="Collapsed"/>
         <Label x:Name="passLabel4" Content="Jūsų slaptažodis" HorizontalAlignment="Left" Margin="574,328,0,0" VerticalAlignment="Top" Height="30" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Width="188" Foreground="#FF77C9AE" FontWeight="Bold" Panel.ZIndex="6" Visibility="Collapsed"/>
         <Image x:Name="passUnderLine4" HorizontalAlignment="Left" Height="52" Margin="572,386,0,0" VerticalAlignment="Top" Width="190" Source="Images/Line.png" Panel.ZIndex="6" Visibility="Collapsed"/>
-        <ComboBox x:Name="imageComboBox" HorizontalAlignment="Left" Margin="283,393,0,0" VerticalAlignment="Top" Width="110" Height="75" SelectedIndex="-1" Panel.ZIndex="4" SelectionChanged="ComboBox_SelectionChanged">
+        <ComboBox x:Name="imageComboBox" HorizontalAlignment="Left" Margin="511,242,0,0" VerticalAlignment="Top" Width="110" Height="75" SelectedIndex="-1" Panel.ZIndex="4" SelectionChanged="ComboBox_SelectionChanged">
             <ComboBoxItem Background="{x:Null}" Foreground="{x:Null}" FontFamily="Verdana" FontSize="12" FontWeight="Bold" BorderBrush="{x:Null}">
                 <ListBox Name="avatar0">
                     <StackPanel Orientation="Horizontal">
@@ -247,9 +247,36 @@
         </ComboBox>
         <Image Height="888" Margin="222,122,0,-203" VerticalAlignment="Top" Source="Images/profileback.png" HorizontalAlignment="Left" Width="539"/>
         <TextBlock VerticalAlignment="Top" Margin="246,183,0,0" Foreground="#FFCDCDCD" Background="{x:Null}" Height="25" TextAlignment="Center" HorizontalAlignment="Left" Width="492" FontSize="14" Panel.ZIndex="4"><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="—"/><Run Text="————"/><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="—————————————————————"/><Run Text="————"/></TextBlock>
-        <Label Content="Profilio informacija" HorizontalAlignment="Left" Margin="283,156,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold" Panel.ZIndex="4"/>
-        <Image x:Name="localImage" HorizontalAlignment="Left" Height="167" VerticalAlignment="Top" Width="106" Margin="440,224,0,0" Source="Images/Avatars/avatar6.png" Panel.ZIndex="4"/>
-        <Label Content="Nuotrauka" HorizontalAlignment="Left" Margin="283,366,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold" Panel.ZIndex="4"/>
+        <Label Content="Profilio informacija" HorizontalAlignment="Left" Margin="276,156,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold" Panel.ZIndex="4"/>
+        <Image x:Name="localImage" HorizontalAlignment="Left" Height="167" VerticalAlignment="Top" Width="106" Margin="368,227,0,0" Source="Images/Avatars/avatar6.png" Panel.ZIndex="4"/>
         <Button Content="Išsaugoti duomenis" HorizontalAlignment="Left" Margin="418,705,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Click="KeistiDuomenisButton" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.533,-0.043" MouseEnter="Button_MouseEnter"  MouseLeave="Button_MouseLeave" Style="{StaticResource buttonWithoutHighlight}" Foreground="Black"/>
+
+        <!-- Vardas -->
+        <TextBox x:Name="vardasTextbox" HorizontalAlignment="Left" Height="24" Margin="284,399,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" FontSize="16"  Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Style="{StaticResource customTextBox}"/>
+        <Label x:Name="vardasLabel" Content="Vardas" HorizontalAlignment="Left" Margin="277,365,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold" RenderTransformOrigin="0.716,0.432"/>
+        <Image HorizontalAlignment="Left" Height="52" Margin="284,423,0,0" VerticalAlignment="Top" Width="190" Source="Images/Line.png" Panel.ZIndex="5"/>
+
+        <!-- Pavardė -->
+        <TextBox x:Name="pavardeTextbox" HorizontalAlignment="Left" Height="24" Margin="515,396,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" FontSize="16"  Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Style="{StaticResource customTextBox}"/>
+        <Label Content="Pavardė" HorizontalAlignment="Left" Margin="511,362,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
+        <Image HorizontalAlignment="Left" Height="52" Margin="515,420,0,0" VerticalAlignment="Top" Width="190" Source="Images/Line.png" Panel.ZIndex="5"/>
+
+        <!-- Šalis -->
+        <TextBox x:Name="salisTextbox" HorizontalAlignment="Left" Height="24" Margin="279,498,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" FontSize="16"  Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Style="{StaticResource customTextBox}"/>
+        <Label Content="Šalis" HorizontalAlignment="Left" Margin="276,464,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
+        <Image HorizontalAlignment="Left" Height="52" Margin="280,522,0,0" VerticalAlignment="Top" Width="190" Source="Images/Line.png" Panel.ZIndex="5"/>
+
+        <!-- Adresas -->
+        <TextBox x:Name="adresasTextbox" HorizontalAlignment="Left" Height="24" Margin="515,498,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" FontSize="16"  Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Style="{StaticResource customTextBox}"/>
+        <Label Content="Adresas" HorizontalAlignment="Left" Margin="512,464,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
+        <Image HorizontalAlignment="Left" Height="52" Margin="516,522,0,0" VerticalAlignment="Top" Width="190" Source="Images/Line.png" Panel.ZIndex="5"/>
+
+        <!-- Telefono numeris -->
+        <TextBox x:Name="telefononumerisTextbox" HorizontalAlignment="Left" Height="24" Margin="279,603,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" FontSize="16"  Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Style="{StaticResource customTextBox}"/>
+        <Label Content="Telefono numeris" HorizontalAlignment="Left" Margin="276,569,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
+        <Image HorizontalAlignment="Left" Height="52" Margin="280,627,0,0" VerticalAlignment="Top" Width="190" Source="Images/Line.png" Panel.ZIndex="5"/>
+
+        <!-- Klaidos pranešimas -->
+        <Label x:Name="klaidaLabel" Content="" HorizontalAlignment="Left" Margin="246,659,0,0" VerticalAlignment="Top" Height="28" Foreground="Red" Visibility="Visible" Width="492" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="/FinewareWPF;component/Fonts/#Roboto"/>
     </Grid>
 </Window>

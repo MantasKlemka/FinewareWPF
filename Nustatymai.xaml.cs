@@ -65,6 +65,13 @@ namespace FinewareWPF
             }
             imageComboBox.SelectedIndex = vartotojas.AvatarIndex;
             avatarIcon.Source = new BitmapImage(new Uri("Images/Avatars/avatar" + vartotojas.AvatarIndex + ".png", UriKind.Relative));
+
+            // Užkraunama 'profilio informacija' lentelės informacija
+            vardasTextbox.Text = vartotojas.Vardas;
+            pavardeTextbox.Text = vartotojas.Pavarde;
+            salisTextbox.Text = vartotojas.Salis;
+            adresasTextbox.Text = vartotojas.Adresas;
+            telefononumerisTextbox.Text = vartotojas.TelefonoNumeris;
         }
 
         private async void IssaugotiPranesimus_Click(object sender, RoutedEventArgs e)
@@ -593,13 +600,33 @@ namespace FinewareWPF
 
         private async void KeistiDuomenisButton(object sender, RoutedEventArgs e)
         {
-            Loading();
-            IsEnabled = false;
-            vartotojasSaved.AvatarIndex = imageComboBox.SelectedIndex;
-            await client.UpdateAsync("Paskyros/" + keySaved, vartotojasSaved);
-            var nustatymai = new Nustatymai(vartotojasSaved, keySaved);
-            nustatymai.Show();
-            Close();
+            if (vardasTextbox.Text != "" && pavardeTextbox.Text != "")
+            {
+                Loading();
+                IsEnabled = false;
+                vartotojasSaved.AvatarIndex = imageComboBox.SelectedIndex;
+                vartotojasSaved.Vardas = vardasTextbox.Text;
+                vartotojasSaved.Pavarde = pavardeTextbox.Text;
+                vartotojasSaved.Salis = salisTextbox.Text;
+                vartotojasSaved.Adresas = adresasTextbox.Text;
+                vartotojasSaved.TelefonoNumeris = telefononumerisTextbox.Text;
+                await client.UpdateAsync("Paskyros/" + keySaved, vartotojasSaved);
+                var nustatymai = new Nustatymai(vartotojasSaved, keySaved);
+                nustatymai.Show();
+                Close();
+            }
+            else if(vardasTextbox.Text == "" && pavardeTextbox.Text == "")
+            {
+                klaidaLabel.Content = "Privalote įrašyti vartotojo vardą ir pavardę!";
+            }
+            else if (vardasTextbox.Text != "" && pavardeTextbox.Text == "")
+            {
+                klaidaLabel.Content = "Privalote įrašyti vartotojo pavardę!";
+            }
+            else if (vardasTextbox.Text == "" && pavardeTextbox.Text != "")
+            {
+                klaidaLabel.Content = "Privalote įrašyti vartotojo vardą!";
+            }
         }
     }
 }

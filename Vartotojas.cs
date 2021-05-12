@@ -12,6 +12,9 @@ namespace FinewareWPF
         public string Pavarde { get; set; }
         public string Epastas { get; set; }
         public string Slaptazodis { get; set; }
+        public string Salis { get; set; }
+        public string Adresas { get; set; }
+        public string TelefonoNumeris { get; set; }
         public bool IsStaff { get; set; }
         public bool NaujiNotification { get; set; } = false;
         public int ShortSecurityCode { get; set; }
