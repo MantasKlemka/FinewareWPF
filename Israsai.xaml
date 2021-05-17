@@ -107,6 +107,11 @@
             </StackPanel>
         </Button>
         <Label x:Name="puslapiuNumeris" Content="1" HorizontalAlignment="Left" Margin="853,688,0,0" VerticalAlignment="Top" Height="30" Width="28" RenderTransformOrigin="0.757,1.167"/>
+        <Image HorizontalAlignment="Left" Height="372" VerticalAlignment="Top" Width="324" Margin="350,93,0,0" Source="Images/Rectangle 13.png" Panel.ZIndex="-1"/>
+        <ComboBox x:Name="SaskaitosDrop" HorizontalAlignment="Left" Margin="433,179,0,0" VerticalAlignment="Top" Width="160" SelectionChanged="SaskaitosDrop_SelectionChanged" SelectedIndex="0" Height="20"/>
+        <Label x:Name="saskaitosPavadinimas" Content="Sąskaitos pavadinimas" HorizontalAlignment="Left" Margin="444,155,0,0" VerticalAlignment="Top" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold" Height="24" Width="134"/>
+        <Label Content="Pasirinkta sąskaita" HorizontalAlignment="Left" Margin="438,122,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold" Height="29" Width="147"/>
+        <TextBlock VerticalAlignment="Top" Margin="386,142,0,0" Foreground="#FFCDCDCD" Background="{x:Null}" Height="25" TextAlignment="Center" HorizontalAlignment="Left" Width="248" FontSize="14"><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="—"/><Run Text="——————"/><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="—————"/><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="————"/></TextBlock>
     </Grid>
 </Window>
 

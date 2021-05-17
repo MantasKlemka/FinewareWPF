@@ -125,7 +125,7 @@
         <Label Content="Pasirinkta sąskaita" HorizontalAlignment="Left" Margin="438,141,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold" Height="29" Width="147"/>
         <Image HorizontalAlignment="Left" Height="371" VerticalAlignment="Top" Width="325" Margin="349,107,0,0" Source="Images/Rectangle 13.png" Panel.ZIndex="-1"/>
         <Image x:Name="avatarIcon" HorizontalAlignment="Left" Height="167" VerticalAlignment="Top" Width="106" Margin="58,49,0,0" Source="Images/Avatars/avatar6.png"/>
-        <Image HorizontalAlignment="Left" Height="834" VerticalAlignment="Top" Width="854" Margin="0,-27,0,0" Source="Images/Rectangle 1.png" Panel.ZIndex="-1"/>
+        <Image HorizontalAlignment="Left" Height="834" VerticalAlignment="Top" Width="232" Margin="0,-27,0,0" Source="Images/Rectangle 1.png" Panel.ZIndex="-1"/>
         <TextBlock x:Name="emailText" Text="email@gmail.com" VerticalAlignment="Top" Margin="14,205,0,0" Foreground="#FF686868" Background="{x:Null}" Height="25" TextAlignment="Center" HorizontalAlignment="Left" Width="194"/>
         <TextBlock x:Name="vardoPavardesText" Text="Vardenis Pavardenis" VerticalAlignment="Top" Margin="14,179,0,0" Foreground="Black" Background="{x:Null}" Height="25" TextAlignment="Center" HorizontalAlignment="Left" Width="194" FontSize="18"/>
         <TextBlock Text="MENU ————————" VerticalAlignment="Top" Margin="14,247,0,0" Foreground="#FFCDCDCD" Background="{x:Null}" Height="25" TextAlignment="Center" HorizontalAlignment="Left" Width="194" FontSize="14"/>

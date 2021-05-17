@@ -42,6 +42,11 @@ namespace FinewareWPF
             pagrindinesSaskNr = 0;
             vardoPavardesText.Text = vartotojasSaved.Vardas + " " + vartotojasSaved.Pavarde;
             emailText.Text = vartotojasSaved.Epastas;
+
+
+            //IbanText.Content = vartotojasSaved.Saskaitos[pagrindinesSaskNr].Kodas;
+            SaskaitosDrop.ItemsSource = IbanArray(vartotojasSaved.Saskaitos);
+
             //int index = 0;
             PrintAllChecks(index);
             puslapiuNumeris.Content ="1";
@@ -68,6 +73,77 @@ namespace FinewareWPF
 
             avatarIcon.Source = new BitmapImage(new Uri("Images/Avatars/avatar" + vartotojas.AvatarIndex + ".png", UriKind.Relative));
             //vartotojas.Saskaitos[pagrindinesSaskNr].Israsai.Sort();
+        }
+
+        private async void SaskaitosDrop_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //Loading();
+            //ClearGetSentInfo();
+            index = 0;
+            var response = await client.GetAsync("Paskyros/" + keySaved);
+            Vartotojas vartotojas = response.ResultAs<Vartotojas>();
+
+            if (vartotojas.Saskaitos.Count > 0)
+            {
+                pagrindinesSaskNr = FindIbanNr(vartotojas.Saskaitos, e.AddedItems[0].ToString());
+                saskaitosPavadinimas.Content = vartotojas.Saskaitos[pagrindinesSaskNr].Pavadinimas;
+            }
+            //var israsas2 = new Israsai(vartotojas, keySaved);
+            vartotojasSaved = vartotojas;
+            //Pirmas_Click(sender, e);
+
+            saskaituGrid.Children.Clear();
+            PrintAllChecks(index);
+            puslapiuNumeris.Content = "1";
+            if ((string)puslapiuNumeris.Content == "1")
+            {
+                toliau.IsEnabled = true;
+                atgal.IsEnabled = false;
+                atgal.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("Images/disabledleftarrow.png", UriKind.Relative)),
+                    Height = 12,
+                    Width = 16
+                };
+                if (vartotojas.Saskaitos[pagrindinesSaskNr].Israsai.Count < 8)
+                {
+                    toliau.IsEnabled = false;
+                    toliau.Content = new Image
+                    {
+                        Source = new BitmapImage(new Uri("Images/disabledrightarrow.png", UriKind.Relative)),
+                        Height = 12,
+                        Width = 16
+                    };
+                }
+            }
+        }
+
+        public int FindIbanNr(List<Saskaita> saskaitos, string Iban)
+        {
+            for (int i = 0; i < saskaitos.Count; i++)
+            {
+                if (saskaitos[i].Kodas == Iban) return i;
+            }
+            return 0;
+        }
+
+        void Unloading()
+        {
+            dotProgress1.Visibility = Visibility.Hidden;
+            dotProgress2.Visibility = Visibility.Hidden;
+            dotProgress3.Visibility = Visibility.Hidden;
+            greyedOut.Visibility = Visibility.Hidden;
+        }
+
+        public string[] IbanArray(List<Saskaita> saskaitos)
+        {
+            string[] array = new string[saskaitos.Count];
+
+            for (int i = 0; i < saskaitos.Count; i++)
+            {
+                array[i] = saskaitos[i].Kodas;
+            }
+            return array;
         }
 
         public int PuslapiuSkaicius(Vartotojas vartotojas)
