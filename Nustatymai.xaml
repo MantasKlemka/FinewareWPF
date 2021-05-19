@@ -278,5 +278,21 @@
 
         <!-- Klaidos pranešimas -->
         <Label x:Name="klaidaLabel" Content="" HorizontalAlignment="Left" Margin="246,659,0,0" VerticalAlignment="Top" Height="28" Foreground="Red" Visibility="Visible" Width="492" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="/FinewareWPF;component/Fonts/#Roboto"/>
+        <Image Height="350" Margin="743,104,0,0" VerticalAlignment="Top" Source="Images/Path 444.png" HorizontalAlignment="Left" Width="297" RenderTransformOrigin="0.8,0.675">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="89.607"/>
+                    <TranslateTransform X="-105.519" Y="-6.274"/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+        <Label Content="Taupyklė" HorizontalAlignment="Left" Margin="775,156,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="/FinewareWPF;component/Fonts/#Roboto" Foreground="#FF4BC4AA" FontWeight="Bold"/>
+        <TextBlock VerticalAlignment="Top" Margin="766,183,0,0" Foreground="#FFCDCDCD" Background="{x:Null}" Height="25" TextAlignment="Center" HorizontalAlignment="Left" Width="248" FontSize="14"><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="—"/><Run Text="——————"/><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="—————"/><Run FontFamily="/FinewareWPF;component/Fonts/#Roboto-Bold" Text="————"/></TextBlock>
+        <TextBlock x:Name="SutaupytaText" VerticalAlignment="Top" Margin="775,213,0,0" Foreground="Black" Background="{x:Null}" FontSize="20" Height="55" TextAlignment="Right" HorizontalAlignment="Left" Width="248"/>
+        <CheckBox x:Name="Taupymas" Content="Pinigų taupymas įjungtas" HorizontalAlignment="Left" Margin="775,285,0,0" VerticalAlignment="Top" Width="152"/>
+        <Button x:Name="PatvirtintiButton" Content="Patvirtinti" HorizontalAlignment="Left" Margin="970,285,0,0" VerticalAlignment="Top" Width="75" Click="Patvirtinti_Click"/>
+        <Button x:Name="AtsiimtiButton" Content="Atsiimti" HorizontalAlignment="Left" Margin="782,316,0,0" VerticalAlignment="Top" Width="75" Click="Atsiimti_Click"/>
     </Grid>
 </Window>

@@ -241,6 +241,7 @@ namespace FinewareWPF
                     }
                     if (double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture) <= vartotojasSaved.Saskaitos[pagrindinesSaskNr].Likutis)
                     {
+
                         Loading();
                         // nuskaitom paskyras is duomenu bazes
                         string gavejoKey = String.Join("", Encoding.ASCII.GetBytes(gavejoTextBox.Text));
@@ -276,6 +277,7 @@ namespace FinewareWPF
                             generalEventText.Content = "Negalite vesti pinigų į tą pačią sąskaitą!";
                             return;
                         }
+
                     }
                     else
                     {
@@ -385,7 +387,13 @@ namespace FinewareWPF
                     {
                         IsEnabled = false;
                         Loading();
-
+                        int ceiling = (int)Math.Ceiling(double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture));
+                        if (ceiling <= siuntejas.Saskaitos[pagrindinesSaskNr].Likutis && siuntejas.Taupyti)
+                        {
+                            siuntejas.Sutaupyta_suma += ceiling - double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture);
+                            siuntejas.Saskaitos[pagrindinesSaskNr].Likutis -= ceiling - double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture);
+                            await client.UpdateAsync("Paskyros/" + keySaved, siuntejas);
+                        }
                         if (siuntejas.Epastas == gavejas.Epastas)
                         {
                             siuntejas.Saskaitos[pagrindinesSaskNr].Likutis -= double.Parse(sumaTextBox.Text, CultureInfo.InvariantCulture);
@@ -459,6 +467,7 @@ namespace FinewareWPF
                             apzvalga.Show();
                             Close();
                         }
+
                     }
                     else
                     {

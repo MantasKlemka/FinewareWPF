@@ -72,6 +72,9 @@ namespace FinewareWPF
             salisTextbox.Text = vartotojas.Salis;
             adresasTextbox.Text = vartotojas.Adresas;
             telefononumerisTextbox.Text = vartotojas.TelefonoNumeris;
+
+            //taupymas
+            SutaupytaText.Text = vartotojasSaved.Sutaupyta_suma.ToString() + " €";
         }
 
         private async void IssaugotiPranesimus_Click(object sender, RoutedEventArgs e)
@@ -105,6 +108,8 @@ namespace FinewareWPF
             if (vartotojasSaved.Notification_Siuntimas == true)
                 PajamuIssiuntimas.IsChecked = true;
 
+            if (vartotojasSaved.Taupyti == true)
+                Taupymas.IsChecked = true;
         }
 
         public string[] IbanArray(List<Saskaita> saskaitos)
@@ -627,6 +632,32 @@ namespace FinewareWPF
             {
                 klaidaLabel.Content = "Privalote įrašyti vartotojo vardą!";
             }
+        }
+
+        private async void Atsiimti_Click(object sender, RoutedEventArgs e)
+        {
+            Loading();
+
+            vartotojasSaved.Saskaitos[0].Likutis += vartotojasSaved.Sutaupyta_suma;
+            vartotojasSaved.Sutaupyta_suma = 0;
+            SutaupytaText.Text = vartotojasSaved.Sutaupyta_suma.ToString() + " €";
+
+            await client.UpdateAsync("Paskyros/" + keySaved, vartotojasSaved);
+
+            Unloading();
+        }
+
+        private async void Patvirtinti_Click(object sender, RoutedEventArgs e)
+        {
+            Loading();
+
+            if (Taupymas.IsChecked == true)
+                vartotojasSaved.Taupyti = true;
+            else vartotojasSaved.Taupyti = false;
+
+            await client.UpdateAsync("Paskyros/" + keySaved, vartotojasSaved);
+
+            Unloading();
         }
     }
 }

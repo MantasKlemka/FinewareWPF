@@ -30,6 +30,9 @@ namespace FinewareWPF
         public bool ToDelete { get; set; }
         public DateTime Istrynimo_Data { get; set; }
 
+        // Taupymas
+        public bool Taupyti { get; set; }
+        public double Sutaupyta_suma { get; set; }
 
         public int MinSuma { get; set; } //minimali suma, kuria virsijus darant pavedimus, prasoma ivesti 6-iu skaitmenu koda
         public List<Saskaita> Saskaitos = new List<Saskaita>();
@@ -53,6 +56,7 @@ namespace FinewareWPF
             MinSuma = 0;
             ToDelete = false;
             AvatarIndex = 6;
+            Sutaupyta_suma = 0;
         }
     }
 }
