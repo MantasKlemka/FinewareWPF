@@ -22,6 +22,7 @@ namespace FinewareWPF
     /// </summary>
     public partial class Israsai : Window
     {
+
         public int index = 0;
         Vartotojas vartotojasSaved;
         string keySaved;
@@ -35,6 +36,8 @@ namespace FinewareWPF
 
         public Israsai(Vartotojas vartotojas, string key)
         {
+
+
             client = new FireSharp.FirebaseClient(config);
             InitializeComponent();
             keySaved = key;

@@ -549,6 +549,7 @@ namespace FinewareWPF
             closeButton4.Visibility = Visibility.Visible;
             patvirtintiBackround4.Visibility = Visibility.Visible;
             patvirtintiButton4.Visibility = Visibility.Visible;
+            patvirtintiButton4.IsEnabled = true;
             TrintiDescription.Text = "Užpildykite reikiamus laukus kad patvirtumente paskyros ištrynimą";
             TrintiLabel.Content = "Paskyros ištrynimas";
             TrintiDescription.Visibility = Visibility.Visible;
